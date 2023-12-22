@@ -1,4 +1,4 @@
-import { Button, Typography } from "@/components";
+import { Button, Card, Typography } from "@/components";
 import Image from "next/image";
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
           />
         </a>
       </div>
-      <div className="flex flex-col flex-1 justify-evenly">
+      <div className="flex flex-col flex-1 justify-evenly gap-4">
         <Typography variant="title">Title</Typography>
         <Typography variant="title-small">Title Small</Typography>
         <Typography variant="subtitle">Subtitle</Typography>
@@ -29,7 +29,7 @@ export default function Home() {
         <Typography variant="paragraph">Paragraph / body</Typography>
         <Typography variant="caption">caption</Typography>
       </div>
-      <div className="flex flex-col flex-1 justify-around gap-2">
+      <div className="flex flex-col flex-1 justify-around gap-2 m-8">
         <Button>Filled</Button>
         <Button disabled>Filled Disabled</Button>
         <Button variant="outlined">Outline</Button>
@@ -40,6 +40,9 @@ export default function Home() {
         <Button variant="text" disabled>
           Text Disabled
         </Button>
+      </div>
+      <div className="flex flex-col flex-1 justify-around gap-2">
+        <Card.Base backgroundColor={"--colour-g100"}>Hello</Card.Base>
       </div>
     </main>
   );
