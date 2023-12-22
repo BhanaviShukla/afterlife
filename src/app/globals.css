@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import '../theme/variables.css';
+@import '../theme/typography.css';
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  color: var(--colour-black);
+  font-size: 16px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button > * {
+  cursor: pointer;
+}
+
+label {
+   font-family: var(--font-epilogue);
+   font-size: 0.875rem;
+   font-weight: 500;
+   line-height: 1.14;
+   letter-spacing: 0.28px;
+}
+

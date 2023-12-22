@@ -1,0 +1,33 @@
+:root {
+    /* colors */
+    /* theme - Neutrals */
+    --colour-white: #FFFFFF;
+    --colour-n50: #EDEDED;
+    --colour-n100: #E2E2E2;
+    --colour-n200: #BCBEBE;
+    --colour-n400: #474949;
+    --colour-n300: #6A6C6C;
+    --colour-n500: #313333;
+    --colour-black: #000000;
+    /* theme - Primary (green) */
+    --colour-g25: #E3F2EE;
+    --colour-g100: #B2E0D5;
+    --colour-g200: #379B98;
+    --colour-g300: #285857;
+    --colour-g400: #103231;
+    /* theme - Status - positive  */
+    --colour-status-p100: #89E1A1;
+    --colour-status-p300: #23B94D;
+    /* theme - Status - warning  */
+    --colour-status-w100: #E4E196;
+    --colour-status-w300: #E6DD04;
+    /* theme - Status - negative */
+    --colour-status-d100: #E19389;
+    --colour-status-d300: #B93523;
+
+    /* theme - unit spacer */
+    --dimensions-unit: 8px;
+
+    /* theme - rem root font size */
+    font-size: 16px;
+}
