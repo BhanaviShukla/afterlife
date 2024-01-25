@@ -10,9 +10,14 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${serif.variable} ${sansSerif.variable}`}>
       <body className={sansSerif.className}>
         <main className="py-20 flex h-full">
-          <div className="container flex flex-col justify-between grow basis-full">
+          <div className="container flex flex-col justify-between gap-6">
             <Logo />
-            <section id="main-content">{children}</section>
+            <section
+              className="flex flex-col justify-around grow"
+              id="main-content"
+            >
+              {children}
+            </section>
           </div>
         </main>
       </body>

@@ -1,6 +1,6 @@
-import Button from "./Button/Button";
-import Card from "./Card/Card";
-import Logo from "./Logo/logo";
-import Typography from "./Typography/typography";
+import Button from "./ui/Button/Button";
+import Card from "./ui/Card/Card";
+import Logo from "./ui/Logo/logo";
+import Typography from "./ui/Typography/typography";
 
 export { Button, Card, Logo, Typography };

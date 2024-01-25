@@ -1,8 +1,0 @@
-.base {
-    width: 269px;
-    height: 360px;
-    flex-shrink: 0;
-    border-radius: 1rem;
-    mix-blend-mode: hard-light;
-    position: relative;
-}

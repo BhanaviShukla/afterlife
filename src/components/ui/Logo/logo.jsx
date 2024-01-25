@@ -1,5 +1,5 @@
 import Image from "next/image";
-const Logo = () => {
+const Logo = ({ className }) => {
   return (
     <Image
       id="logo"
@@ -8,7 +8,7 @@ const Logo = () => {
       width={100}
       height={24}
       priority
-      className=""
+      className={className}
     />
   );
 };

@@ -1,0 +1,14 @@
+.carouselWrapper {
+    display: flex;
+    gap: var(--dimensions-3);
+    flex-wrap: nowrap;
+   overflow-x: auto;
+   -webkit-overflow-scrolling: touch;
+   -ms-overflow-style: -ms-autohiding-scrollbar; 
+   scroll-snap-type: x mandatory;
+
+   display: grid;
+   grid: auto / auto-flow max-content;
+   grid-gap: 1em;
+   align-items: center; /* vertical */
+}

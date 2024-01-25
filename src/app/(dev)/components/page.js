@@ -1,5 +1,6 @@
 import { Button, Card, Typography } from "@/components";
 import Image from "next/image";
+import CardSelectWrapper from "./clientComponents/cardSelectWrapper";
 
 export default function Dev() {
   return (
@@ -42,7 +43,8 @@ export default function Dev() {
         </Button>
       </div>
       <div className="flex flex-col flex-1 justify-around gap-2">
-        <Card.Base backgroundColor={"--colour-g100"}>Hello</Card.Base>
+        <Card.Base backgroundColor={"--colour-g100"} />
+        <CardSelectWrapper />
       </div>
     </main>
   );

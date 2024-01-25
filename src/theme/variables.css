@@ -27,6 +27,7 @@
 
     /* theme - unit spacer */
     --dimensions-unit: 8px;
+    --dimensions-3: 24px;
 
     /* theme - rem root font size */
     font-size: 16px;

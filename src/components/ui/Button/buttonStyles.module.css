@@ -1,4 +1,5 @@
 .button {
+    display: block;
     min-width: 6rem;
     padding: var(--dimensions-unit);
     border-radius: 6.25rem;
@@ -33,6 +34,7 @@
 }
 
 .text {
+    padding: var(--dimensions-unit) 0;
     color: var(--colour-g300);
 }
 .text>label {
@@ -47,5 +49,8 @@
 .text:disabled {
     text-decoration: none;
     color: var(--colour-n200);
+}
+.italic {
+    font-style: italic;
 }
 
