@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./cardStyles.module.css";
 import Image from "next/image";
 import { Typography } from "../..";
+import Check from "../Icons/Controls/Card/check.svg";
+import Plus from "../Icons/Controls/Card/plus.svg";
 
 const CardBase = ({ imageName = "pet_bowl", backgroundColor, children }) => {
   return (
@@ -29,7 +31,6 @@ const CardSelectItem = ({
   handleSelect,
   children,
 }) => {
-  console.log({ backgroundColor });
   return (
     <CardBase {...{ imageName, backgroundColor }}>
       <div className={`${styles.labelWrapper}`}>
@@ -41,12 +42,13 @@ const CardSelectItem = ({
         </div>
 
         {/* {icon here} */}
-        <div className={`${styles.iconWrapper}`} onClick={handleSelect}>
-          {isSelected ? (
-            <Typography>i+selected</Typography>
-          ) : (
-            <Typography>icon</Typography>
-          )}
+        <div
+          className={`${styles.iconWrapper} ${
+            isSelected ? styles.iconSelected : styles.iconDefault
+          }`}
+          onClick={handleSelect}
+        >
+          {isSelected ? <Check /> : <Plus />}
         </div>
       </div>
     </CardBase>

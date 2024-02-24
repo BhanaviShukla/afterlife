@@ -28,4 +28,13 @@
 }
 .iconWrapper {
     cursor: pointer;
+    border-radius: 100%;
+    padding: 4px;
+}
+.iconDefault {
+    background-color: var(--colour-white);
+}
+.iconSelected {
+    background-color: var(--colour-g200);
+    color: var(--colour-white);
 }

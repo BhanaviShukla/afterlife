@@ -1,35 +1,44 @@
-import { createContext } from "react";
-
-export const STEPS = [
-  {
-    id: 0,
-    label: "Children",
-    subLabel: "Guardianship for",
-    imageName: "backpack",
-    backgroundColor: "--colour-n50",
-  },
-  { id: 1, label: "Pets", subLabel: "Caretaker for", imageName: "pet_bowl" },
-  { id: 2, label: "Assets & Belongings", subLabel: "", imageName: "pot" },
-  { id: 3, label: "Rites", subLabel: "Specify", imageName: "candle" },
-];
-
-export const StepContext = createContext(null);
-3;
+import { createContext, useContext, useEffect, useState } from "react";
+import { getLocalStorage, setLocalStorage } from "@/utils/storage";
 
 export const initialStepsState = [];
 
-export function stepsReducer(state, action) {
-  switch (action.type) {
-    case "toggle_selection": {
-      console.log({ state });
-      if (state.includes(action.id)) {
-        return state.filter((value) => value !== action.id);
-      }
-      const newState = new Set([...state, action.id]);
-      return [...newState].sort();
+export const StepContext = createContext({ selectedSteps: initialStepsState });
+
+export function StepProvider({ children }) {
+  const [selectedSteps, setSelectedSteps] = useState(() =>
+    getLocalStorage("selectedSteps", initialStepsState)
+  );
+
+  useEffect(() => {
+    setLocalStorage("selectedSteps", selectedSteps);
+  }, [selectedSteps]);
+
+  const toggleSelectedSteps = (id) => {
+    if (selectedSteps.includes(id)) {
+      setSelectedSteps(selectedSteps.filter((value) => value !== id));
     }
-    default: {
-      throw Error("Unknown action: " + action.type);
-    }
-  }
+    const newSteps = new Set([...selectedSteps, id]);
+    setSelectedSteps([...newSteps].sort());
+  };
+
+  const clearSelectedSteps = () => {
+    setSelectedSteps(initialStepsState);
+  };
+  console.log("PROVIDER", { selectedSteps });
+  return (
+    <StepContext.Provider
+      value={{
+        selectedSteps,
+        toggleSelectedSteps,
+        clearSelectedSteps,
+      }}
+    >
+      {children}
+    </StepContext.Provider>
+  );
+}
+
+export function useSteps() {
+  return useContext(StepContext);
 }

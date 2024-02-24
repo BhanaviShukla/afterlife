@@ -35,3 +35,14 @@ label {
    letter-spacing: 0.28px;
 }
 
+nav a {
+  color: var(--colour-g200);
+  padding: 4px 0;
+}
+nav a.active { 
+  color: var(--colour-g300);
+  border-bottom: 2px solid;
+}
+nav a.disabled {
+  color: var(--colour-n200);
+}

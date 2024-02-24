@@ -12,3 +12,9 @@
    grid-gap: 1em;
    align-items: center; /* vertical */
 }
+.ctaWrapper {
+    display: flex;
+}
+.ctaWrapper > *:not(:last-child) {
+    margin-right: var(--dimensions-3);
+}
