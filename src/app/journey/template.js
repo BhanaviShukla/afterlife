@@ -8,7 +8,10 @@ export default function Template({ children }) {
         <Nav />
       </div>
 
-      <section className="flex flex-col justify-around grow" id="main-content">
+      <section
+        className="flex flex-col justify-around grow"
+        id="main-content-journey"
+      >
         {children}
       </section>
     </div>

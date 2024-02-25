@@ -21,14 +21,10 @@ const Nav = () => {
         {STEPS.map((step) => (
           <li key={step.id}>
             <Link
-              className={`link ${
-                isDisabled(step.id)
-                  ? "disabled"
-                  : isActive(step.slug)
-                  ? "active"
-                  : ""
+              className={`link ${isDisabled(step.id) ? "disabled" : ""} ${
+                isActive(step.slug) ? "active" : ""
               }`}
-              href="/"
+              href={`/journey/${step.slug}`}
             >
               {step.label}
             </Link>
