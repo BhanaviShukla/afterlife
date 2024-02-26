@@ -3,14 +3,14 @@ import Image from "next/image";
 import { getImageFromSlug } from "@/utils/step";
 import { ChildrenView, PetsView, RitesView } from "@/views";
 
-const StepView = ({ slug }) => {
+const StepView = ({ slug, data }) => {
   switch (slug) {
     case "children":
-      return <ChildrenView />;
+      return <ChildrenView data={data} />;
     case "pets":
-      return <PetsView />;
+      return <PetsView data={data} />;
     case "rites":
-      return <RitesView />;
+      return <RitesView data={data} />;
 
     default:
       return <>Default</>;
@@ -41,7 +41,7 @@ export default function Journey({ params }) {
           {stepData.description}
         </Typography>
         <Typography variant="heading">{stepData.heading}</Typography>
-        <StepView slug={params.step} />
+        <StepView slug={params.step} data={stepData} />
       </div>
     </div>
   );
@@ -53,6 +53,17 @@ const data = {
       "By naming someone you trust to care for your children (below 21), you ensure that they continue to be raised in a loving and nurturing environment in the event you are no longer around. It may be difficult to consider these possibilities, but these arrangements will guide and shelter them through any unfortunate circumstances that may happen.",
     primaryCta: "Add a child",
     secondaryCta: "Skip for now",
+    form: {
+      id: "add-child",
+      title: "Tell us about your child",
+      textInputs: [
+        {
+          id: "child-name",
+          placeholder: "Full name of child (as per passport)",
+          type: "text",
+        },
+      ],
+    },
   },
   pets: {
     title: "Assign care for your furry companions.",

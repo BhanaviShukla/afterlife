@@ -1,0 +1,23 @@
+.modalBackground {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(217, 217, 217, 0.4);
+    backdrop-filter: blur(9px);
+    z-index: 99;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    top: 0;
+    left: 0;
+}
+.modalCard {
+    width: 50vw;
+    padding: 80px 120px;
+    height: fit-content;
+    background-color: var(--colour-white);
+    border-radius: 16px;
+    display: grid;
+    place-items: center stretch;
+    position: relative;
+}
