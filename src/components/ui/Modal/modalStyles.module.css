@@ -12,7 +12,9 @@
     left: 0;
 }
 .modalCard {
-    width: 50vw;
+    max-width: 720px;
+    min-width: 50vw;
+    flex-grow: 1;
     padding: 80px 120px;
     height: fit-content;
     background-color: var(--colour-white);

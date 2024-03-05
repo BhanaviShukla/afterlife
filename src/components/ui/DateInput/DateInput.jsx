@@ -10,7 +10,6 @@ const TextInput = ({
       <input
         type={type}
         id={id}
-        name={id}
         className="form__field"
         placeholder={placeholder}
         {...inputProps}

@@ -10,7 +10,6 @@ const StepView = ({ slug, data }) => {
     case "pets":
       return <PetsView data={data} />;
     case "rites":
-      return <RitesView data={data} />;
 
     default:
       return <>Default</>;
@@ -61,8 +60,20 @@ const data = {
           id: "child-name",
           placeholder: "Full name of child (as per passport)",
           type: "text",
+          required: true,
+        },
+        {
+          id: "child-dob",
+          placeholder: "Birthday",
+          // placeholderDay: "Day",
+          // placeholderMonth: "Month",
+          // placeholderYear: "Year",
+          type: "date",
+          required: true,
         },
       ],
+      primaryCta: "Save",
+      secondaryCta: "Cancel",
     },
   },
   pets: {

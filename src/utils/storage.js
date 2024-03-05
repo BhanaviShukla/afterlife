@@ -4,6 +4,7 @@ export function setLocalStorage(key, value) {
   } catch (e) {
     // catch possible errors:
     // https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+    console.error(e);
   }
 }
 
@@ -12,6 +13,7 @@ export function getLocalStorage(key, initialValue) {
     const value = window.sessionStorage.getItem(key);
     return value ? JSON.parse(value) : initialValue;
   } catch (e) {
+    console.error(e);
     // if error, return initial value
     return initialValue;
   }
