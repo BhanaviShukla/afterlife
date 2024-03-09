@@ -9,8 +9,6 @@ const StepView = ({ slug, data }) => {
       return <ChildrenView data={data} />;
     case "pets":
       return <PetsView data={data} />;
-    case "rites":
-
     default:
       return <>Default</>;
   }
@@ -18,7 +16,6 @@ const StepView = ({ slug, data }) => {
 
 export default function Journey({ params }) {
   const imageName = getImageFromSlug(params.step);
-  console.log({ imageName, params });
   const stepData = data[params.step];
 
   return (
@@ -45,6 +42,8 @@ export default function Journey({ params }) {
     </div>
   );
 }
+
+const TODAY = new Date().toISOString().split("T")[0];
 const data = {
   children: {
     title: "About your children",
@@ -52,7 +51,7 @@ const data = {
       "By naming someone you trust to care for your children (below 21), you ensure that they continue to be raised in a loving and nurturing environment in the event you are no longer around. It may be difficult to consider these possibilities, but these arrangements will guide and shelter them through any unfortunate circumstances that may happen.",
     primaryCta: "Add a child",
     secondaryCta: "Skip for now",
-    form: {
+    childForm: {
       id: "add-child",
       title: "Tell us about your child",
       textInputs: [
@@ -69,11 +68,48 @@ const data = {
           // placeholderMonth: "Month",
           // placeholderYear: "Year",
           type: "date",
+          max: TODAY,
           required: true,
         },
       ],
       primaryCta: "Save",
       secondaryCta: "Cancel",
+    },
+    guardianForm: {
+      id: "add-guardian",
+      title: "Assign a guardian for",
+      subtitle:
+        "A guardian should be someone you trust who would be responsible for taking care of your children if both you and your spouse passes.",
+      infoText:
+        "Make sure to inform the person you are appointing so that they are aware and accept the potential responsibilities.",
+      textInputs: [
+        {
+          id: "person-name",
+          placeholder: "Full name of person (as per passport)",
+          type: "text",
+          required: true,
+        },
+        {
+          id: "person-dob",
+          placeholder: "Birthday",
+          // placeholderDay: "Day",
+          // placeholderMonth: "Month",
+          // placeholderYear: "Year",
+          type: "date",
+          max: TODAY,
+          required: true,
+        },
+      ],
+      selectInput: {
+        id: "person-relationship-child",
+        placeholder: "Relationship",
+        options: [
+          { label: "GodMother", value: "god-mother" },
+          { label: "GodFather", value: "god-father" },
+        ],
+      },
+      primaryCta: "Save",
+      secondaryCta: "Back",
     },
   },
   pets: {

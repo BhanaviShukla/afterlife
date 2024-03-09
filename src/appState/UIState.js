@@ -5,7 +5,9 @@ export const ManagedUI = createContext(undefined);
 
 //Context Wrapper
 export function ManagedUIProvider({ children }) {
-  const [isOpenModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState();
+
+  const isOpenModal = (id) => openModal === id;
 
   return (
     <ManagedUI.Provider

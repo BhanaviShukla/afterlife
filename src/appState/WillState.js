@@ -6,6 +6,7 @@ export const initialWillState = {
   pets: [],
   assets: [],
   rites: [],
+  people: [],
 };
 
 export const WillContext = createContext({
@@ -21,24 +22,34 @@ export function WillProvider({ children }) {
     setLocalStorage("will", will);
   }, [will]);
 
-  const addToWill = (id, value) => {
+  const addToWill = (category, value) => {
     const newWillObject = {
       ...will,
-      [id]: {
-        ...will[id],
-        value,
-      },
+      [category]: [...will[category], value],
     };
-    console.log("ADD TO WILL", newWillObject);
     setWill(newWillObject);
   };
 
-  const removeFromWill = (id, subId) => {
+  const removeFromWill = (category, id) => {
     const newWillObject = {
       ...will,
-      [id]: will[id].filter((items) => items.id != subId),
+      [category]: will[category].filter((item) => item.id != id),
     };
     setWill(newWillObject);
+  };
+
+  const getWillEntry = (category, id) => {
+    return will[category].find((item) => item.id === id);
+  };
+
+  const patchWillEntry = (category, id, modifiedEntry) => {
+    const newWillObject = {
+      ...will,
+      [category]: [
+        ...will[category].filter((item) => item.id != id),
+        { id, ...modifiedEntry },
+      ],
+    };
   };
   console.log("WILL PROVIDER", { will });
   return (
@@ -47,6 +58,8 @@ export function WillProvider({ children }) {
         will,
         addToWill,
         removeFromWill,
+        getWillEntry,
+        patchWillEntry,
       }}
     >
       {children}
