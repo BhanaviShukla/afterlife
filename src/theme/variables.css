@@ -10,10 +10,12 @@
     --colour-n500: #313333;
     --colour-black: #000000;
     /* theme - Primary (green) */
+    --coloud-g0: #E4F2EF;
     --colour-g25: #E3F2EE;
     --colour-g100: #B2E0D5;
     --colour-g200: #379B99;
     --colour-g300: #285857;
+    --colour-g300-rgb: 40, 88, 87;
     --colour-g400: #103231;
     /* theme - Status - positive  */
     --colour-status-p100: #89E1A1;

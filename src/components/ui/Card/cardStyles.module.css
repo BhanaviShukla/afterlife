@@ -20,11 +20,15 @@
     padding: 0 var(--dimensions-3);
     display: flex;
     justify-content: space-between;
-    align-items: last baseline;
+    align-items: flex-end;
     gap: var(--dimensions-unit)
+}
+.labelWrapper p {
+    line-height: 1.5;
 }
 .label {
     font-size: 1.3125rem;
+    line-height: 1;
 }
 .iconWrapper {
     cursor: pointer;
@@ -38,3 +42,26 @@
     background-color: var(--colour-g200);
     color: var(--colour-white);
 }
+.cancelCta {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    padding: 0;
+    min-width: unset;
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--colour-white);
+}
+
+.primaryCta {
+    cursor: pointer;
+    min-width: unset;
+    padding: 0.5rem 1rem;
+    background-color: var(--colour-white);
+    color: var(--colour-black)
+}
+.primaryCta:hover, .primaryCta:focus, .primaryCta:active {
+    background-color: var(--colour-g100);
+}
+
+

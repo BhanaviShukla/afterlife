@@ -1,0 +1,16 @@
+.wrapper {
+    border-radius: 0.5rem;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.25rem 0.5rem 0.125rem;
+    display: flex;
+    flex-grow: 1;
+    align-items: baseline;
+    justify-content: center;
+    box-sizing: content-box;
+    min-width: 72px;
+}
+.wrapper > span {
+    line-height: 1;
+}

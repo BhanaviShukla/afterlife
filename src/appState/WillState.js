@@ -23,19 +23,17 @@ export function WillProvider({ children }) {
   }, [will]);
 
   const addToWill = (category, value) => {
-    const newWillObject = {
-      ...will,
-      [category]: [...will[category], value],
-    };
-    setWill(newWillObject);
+    setWill((prevWillData) => ({
+      ...prevWillData,
+      [category]: [...prevWillData[category], value],
+    }));
   };
 
   const removeFromWill = (category, id) => {
-    const newWillObject = {
-      ...will,
-      [category]: will[category].filter((item) => item.id != id),
-    };
-    setWill(newWillObject);
+    setWill((prevWillData) => ({
+      ...prevWillData,
+      [category]: prevWillData[category].filter((item) => item.id != id),
+    }));
   };
 
   const getWillEntry = (category, id) => {
@@ -43,13 +41,13 @@ export function WillProvider({ children }) {
   };
 
   const patchWillEntry = (category, id, modifiedEntry) => {
-    const newWillObject = {
-      ...will,
+    setWill((prevWillData) => ({
+      ...prevWillData,
       [category]: [
-        ...will[category].filter((item) => item.id != id),
+        ...prevWillData[category].filter((item) => item.id != id),
         { id, ...modifiedEntry },
       ],
-    };
+    }));
   };
   console.log("WILL PROVIDER", { will });
   return (

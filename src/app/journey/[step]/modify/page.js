@@ -1,49 +1,34 @@
-import { Typography } from "@/components";
-import Image from "next/image";
-import { getImageFromSlug } from "@/utils/step";
-import { ChildrenView, PetsView, RitesView } from "@/views";
 import { childrenData } from "@/appState/childrenData";
+import { Typography } from "@/components";
+import ChildrenListView from "@/views/Children/ListView/ChildrenListView";
 
-const StepView = ({ slug, data }) => {
+const StepListView = ({ slug }) => {
   switch (slug) {
     case "children":
-      return <ChildrenView />;
+      return <ChildrenListView />;
     case "pets":
-      return <PetsView data={data} />;
+    // return <PetsView data={data} />;
     case "rites":
-      return <RitesView data={data} />;
+    // return <RitesView data={data} />;
     default:
-      return <>Default</>;
+      return <>Default List View</>;
   }
 };
 
-export default function Journey({ params }) {
-  const imageName = getImageFromSlug(params.step);
+export default function ModifyStep({ params }) {
   const stepData = data[params.step];
-
+  console.log("MODIFYSTEP", { params }, stepData);
   return (
     <div className="max-w-[75%]">
-      <div
-        style={{ width: 360, height: 360, position: "relative" }}
-        className="w-[360px] h-[360px] relative"
-      >
-        <Image
-          src={`/images/${imageName}.png`}
-          alt={imageName}
-          fill
-          className="object-contain"
-        />
-      </div>
       <Typography variant="title-small">{stepData.title}</Typography>
       <Typography className="my-10 leading-8">
         {stepData.description}
       </Typography>
       <Typography variant="heading">{stepData.heading}</Typography>
-      <StepView slug={params.step} data={stepData} />
+      <StepListView slug={params.step} />
     </div>
   );
 }
-
 const data = {
   children: childrenData,
   pets: {

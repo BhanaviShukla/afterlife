@@ -12,7 +12,9 @@ export default function Template({ children }) {
         className="flex flex-col justify-around grow"
         id="main-content-journey"
       >
-        {children}
+        <div className="flex flex-col justify-between grow gap-6">
+          {children}
+        </div>
       </section>
     </div>
   );
