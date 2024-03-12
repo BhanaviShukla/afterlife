@@ -6,13 +6,11 @@ import ChildModaView from "./ModalViews/ChildModalView";
 import PersonModalView from "./ModalViews/PersonModalView";
 import { chldrenFormData } from "@/appState/childrenData";
 
-const ADD_CHILD_MODAL = "add-child-modal";
-
 const CHILD_FORM = "child-form";
 const GUARDIAN_FORM = "guardian-form";
 
 const AddChildModal = ({ id, isOpen, setOpen }) => {
-  const { addToWill } = useWill();
+  const { will, addToWill, getWillEntry, patchWillEntry } = useWill();
 
   const [child, setChild] = useState(null);
   const [modalView, setModalView] = useState(CHILD_FORM);
@@ -35,8 +33,8 @@ const AddChildModal = ({ id, isOpen, setOpen }) => {
     setOpen(undefined);
   };
 
-  const onGuardianSubmit = (formData) => {
-    console.log("onGuardianSubmit");
+  const onNewGuardianSubmit = async (formData) => {
+    console.log("onNewGuardianSubmit");
     const person = {
       id: Date.now(),
       name: formData.get("person-name"),
@@ -50,8 +48,12 @@ const AddChildModal = ({ id, isOpen, setOpen }) => {
       ],
     };
     console.log("PERSON -> TO WILL", person);
-    // @TODO: Investigate and fix raise condition
     addToWill("people", person);
+    await attachGuardianToChild(person);
+    onCloseModal();
+  };
+
+  const attachGuardianToChild = async (person) => {
     const newChild = {
       ...child,
       guardian: {
@@ -61,6 +63,27 @@ const AddChildModal = ({ id, isOpen, setOpen }) => {
     };
     console.log("CHILD -> TO WILL", newChild);
     addToWill("children", newChild);
+  };
+
+  const onSelectGuardianSubmit = async (formData) => {
+    console.log("onSelectGuardianSubmit", Object.fromEntries(formData));
+    const personId = Number(formData.get("select-person")) || null;
+    if (!personId) {
+      console.error("PersonID wasn't parsed");
+    }
+    const person = getWillEntry("people", personId);
+    person.guardianOf.push({
+      id: child.id,
+      "child-name": child["child-name"],
+      // @TODO: Figure out relationship in this case
+    });
+    patchWillEntry("people", personId, person);
+    console.log(
+      { person },
+      will["people"],
+      will["people"].find((item) => item.id === personId)
+    );
+    await attachGuardianToChild(person);
     onCloseModal();
   };
 
@@ -77,7 +100,8 @@ const AddChildModal = ({ id, isOpen, setOpen }) => {
         <PersonModalView
           form={guardianForm}
           titleFragment={(child && child["child-name"]) || ""}
-          onSave={onGuardianSubmit}
+          onNewGuardianSave={onNewGuardianSubmit}
+          onSelectGuardianSave={onSelectGuardianSubmit}
           onBack={() => setModalView(CHILD_FORM)}
         />
       )}

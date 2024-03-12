@@ -3,7 +3,6 @@ const SelectInput = ({
   wrapperClassName,
   placeholder,
   options = [],
-  defaultValue = "",
   ...inputProps
 }) => {
   return (

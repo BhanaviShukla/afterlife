@@ -37,7 +37,7 @@ export function WillProvider({ children }) {
   };
 
   const getWillEntry = (category, id) => {
-    return will[category].find((item) => item.id === id);
+    return { ...will[category].find((item) => item.id === id) };
   };
 
   const patchWillEntry = (category, id, modifiedEntry) => {

@@ -19,14 +19,16 @@ export default function ModifyStep({ params }) {
   const stepData = data[params.step];
   console.log("MODIFYSTEP", { params }, stepData);
   return (
-    <div className="max-w-[75%]">
-      <Typography variant="title-small">{stepData.title}</Typography>
-      <Typography className="my-10 leading-8">
-        {stepData.description}
-      </Typography>
-      <Typography variant="heading">{stepData.heading}</Typography>
+    <>
+      <div className="max-w-[75%]">
+        <Typography variant="title-small">{stepData.title}</Typography>
+        <Typography className="my-10 leading-8">
+          {stepData.description}
+        </Typography>
+        <Typography variant="heading">{stepData.heading}</Typography>
+      </div>
       <StepListView slug={params.step} />
-    </div>
+    </>
   );
 }
 const data = {

@@ -13,6 +13,8 @@ const ChildrenListView = () => {
   const {
     will: { children },
     removeFromWill,
+    getWillEntry,
+    patchWillEntry,
   } = useWill();
   const {
     childrenListView: { addAnotherCard },
@@ -28,6 +30,17 @@ const ChildrenListView = () => {
       router.replace(`${pathname.replace("/modify", "")}`);
   }, [children, pathname, router]);
 
+  const handleRemoveChild = async (child) => {
+    const personId = Number(child.guardian.id);
+    const person = getWillEntry("people", personId);
+    const newGuardianOf = person.guardianOf.filter((c) => c.id !== child.id);
+    patchWillEntry("people", personId, {
+      ...person,
+      guardianOf: newGuardianOf,
+    });
+    removeFromWill("children", child.id);
+  };
+
   return (
     <>
       <div id="children-list-view" className="carouselWrapper">
@@ -36,7 +49,7 @@ const ChildrenListView = () => {
             key={child.id}
             imageName={"backpack"}
             badgeText={child.guardian.name}
-            onPressCross={() => removeFromWill("children", child.id)}
+            onPressCross={() => handleRemoveChild(child)}
             label={child["child-name"]}
             subLabel={"Your child"}
             onPressEdit={() => {
