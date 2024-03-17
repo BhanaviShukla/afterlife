@@ -23,10 +23,18 @@ export function WillProvider({ children }) {
   }, [will]);
 
   const addToWill = (category, value) => {
+    const id = Date.now();
     setWill((prevWillData) => ({
       ...prevWillData,
-      [category]: [...prevWillData[category], value],
+      [category]: [
+        ...prevWillData[category],
+        {
+          id,
+          ...value,
+        },
+      ],
     }));
+    return id;
   };
 
   const removeFromWill = (category, id) => {

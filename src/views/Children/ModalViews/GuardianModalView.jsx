@@ -1,5 +1,6 @@
 import { useWill } from "@/appState/WillState";
 import { Button, SelectInput, TextInput, Typography } from "@/components";
+import AddPersonForm from "@/components/AddPersonForm/AddPersonForm";
 import InfoIcon from "@/components/ui/Icons/Informational/info-empty.svg";
 import { useEffect, useState } from "react";
 
@@ -8,22 +9,24 @@ const SELECT_PERSON_FORM_VIEW = "select-person-form-view";
 
 const ADD_ANOTHER_GUARDIAN_OPTION = "Add Another Guardian";
 
-const PersonModalView = ({
+const GuardianModalView = ({
   form: { id, title, subtitle, infoText },
   titleFragment,
-  onNewGuardianSave,
-  onSelectGuardianSave,
+  // onNewPersonSave,
+  onGuardianSave,
   onBack,
 }) => {
   const {
     will: { people },
   } = useWill();
   const isPersonSelectable = people.length;
-  const { addPersonForm, selectPersonForm } = data;
+  const { selectPersonForm } = data;
 
   const [formView, setFormView] = useState(
     isPersonSelectable ? SELECT_PERSON_FORM_VIEW : ADD_PERSON_FORM_VIEW
   );
+  const [selectedPerson, setSelectedPerson] = useState();
+  const [guardianType, setGuardianType] = useState("main"); // main | alternative
 
   const handleAddNewGuardian = (e) => {
     // e.preventDefault();
@@ -31,8 +34,16 @@ const PersonModalView = ({
       target: { value },
     } = e;
     console.log("handleAddNewGuardian", { e }, e.target.value);
-    if (value === ADD_ANOTHER_GUARDIAN_OPTION)
+    if (value === ADD_ANOTHER_GUARDIAN_OPTION) {
+      // the new person added will be selected as the person
+      setSelectedPerson();
       setFormView(ADD_PERSON_FORM_VIEW);
+    } else setSelectedPerson(value);
+  };
+
+  const handleNewPersonSave = (personId) => {
+    setSelectedPerson(personId);
+    setFormView(SELECT_PERSON_FORM_VIEW);
   };
 
   return (
@@ -42,7 +53,10 @@ const PersonModalView = ({
       </Typography>
       {subtitle && <Typography>{subtitle}</Typography>}
       {formView === SELECT_PERSON_FORM_VIEW ? (
-        <form id={`${id}-select-person`} action={onSelectGuardianSave}>
+        <form
+          id={`${id}-select-${guardianType}-guardian`}
+          action={onGuardianSave}
+        >
           <SelectInput
             id={`select-person`}
             options={[
@@ -55,7 +69,16 @@ const PersonModalView = ({
                 value: ADD_ANOTHER_GUARDIAN_OPTION,
               },
             ]}
+            value={selectedPerson}
             onChange={handleAddNewGuardian}
+            placeholder={`main ${selectPersonForm.placeholder}`}
+          />
+          <input
+            id={`guardian-type`}
+            value={guardianType}
+            hidden
+            disabled
+            type="hidden"
           />
           <div className="flex gap-4 mt-8">
             <Button type="submit" value="submit" id={`${id}-submit-button`}>
@@ -67,71 +90,26 @@ const PersonModalView = ({
           </div>
         </form>
       ) : (
-        <form id={`${id}-add-person`} action={onNewGuardianSave}>
-          {addPersonForm.textInputs.length &&
-            addPersonForm.textInputs.map((input) => (
-              <TextInput key={input.id} {...input} />
-            ))}
-          <SelectInput {...addPersonForm.selectInput} />
-          {infoText && (
-            <div className="flex align-middle gap-2 mt-8">
-              <InfoIcon width={40} />
-              <Typography variant="caption">{infoText}</Typography>
-            </div>
-          )}
-          <div className="flex gap-4 mt-8">
-            <Button type="submit" value="submit" id={`${id}-submit-button`}>
-              {addPersonForm.primaryCta}
-            </Button>
-            <Button variant="outlined" onClick={onBack}>
-              {addPersonForm.secondaryCta}
-            </Button>
-          </div>
-        </form>
+        <AddPersonForm
+          onPersonSave={handleNewPersonSave}
+          onBack={() =>
+            // isPersonSelectable = true => the user came here from the selectView
+            // isPersonSelectable = false => the user came here directly from addChild modal
+            isPersonSelectable ? setFormView(SELECT_PERSON_FORM_VIEW) : onBack()
+          }
+          infoText={infoText}
+        />
       )}
     </>
   );
 };
-export default PersonModalView;
+export default GuardianModalView;
 
-const TODAY = new Date().toISOString().split("T")[0];
 const data = {
   selectPersonForm: {
     selectInput: {
       id: "person-select-guardian",
       placeholder: "Guardian",
-    },
-    primaryCta: "Save",
-    secondaryCta: "Back",
-  },
-  addPersonForm: {
-    textInputs: [
-      {
-        id: "person-name",
-        placeholder: "Full name of person (as per passport)",
-        type: "text",
-        required: true,
-      },
-      {
-        id: "person-dob",
-        placeholder: "Birthday",
-        // placeholderDay: "Day",
-        // placeholderMonth: "Month",
-        // placeholderYear: "Year",
-        type: "date",
-        max: TODAY,
-        required: true,
-      },
-    ],
-    selectInput: {
-      id: "person-relationship-user",
-      placeholder: "Relationship to you",
-      options: [
-        { label: "Parent", value: "parent" },
-        { label: "Sibling", value: "sibling" },
-        { label: "Relative", value: "relative" },
-        { label: "Friend", value: "friend" },
-      ],
     },
     primaryCta: "Save",
     secondaryCta: "Back",
