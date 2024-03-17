@@ -71,13 +71,14 @@ const GuardianModalView = ({
             ]}
             value={selectedPerson}
             onChange={handleAddNewGuardian}
-            placeholder={`main ${selectPersonForm.placeholder}`}
+            placeholder={`main ${selectPersonForm.selectInput.placeholder}`}
           />
           <input
             id={`guardian-type`}
+            name={"guardian-type"}
             value={guardianType}
             hidden
-            disabled
+            readOnly
             type="hidden"
           />
           <div className="flex gap-4 mt-8">

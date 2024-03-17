@@ -32,13 +32,14 @@ const AddChildModal = ({ id, isOpen, setOpen }) => {
     setOpen(undefined);
   };
 
-  const attachGuardianToChild = async (person) => {
+  const attachGuardianToChild = async (person, type) => {
     console.log(">>>>attachGuardianToChild", { person });
     const newChild = {
       ...child,
       guardian: {
         id: person.id,
         name: person.name,
+        type,
       },
     };
     console.log("CHILD -> TO WILL", newChild);
@@ -59,6 +60,7 @@ const AddChildModal = ({ id, isOpen, setOpen }) => {
 
   const onGuardianSave = async (formData) => {
     console.log("onGuardianSave", Object.fromEntries(formData));
+    const type = formData.get("guardian-type");
 
     const personId = Number(formData.get("select-person")) || null;
     if (!personId) {
@@ -66,9 +68,8 @@ const AddChildModal = ({ id, isOpen, setOpen }) => {
     }
     console.log(">>>>fetching details for person", personId);
     const person = getWillEntry("people", personId);
-
-    const childId = await attachGuardianToChild(person);
-    await attachChildToGuardian(person, childId, formData.get("guardian-type"));
+    const childId = await attachGuardianToChild(person, type);
+    await attachChildToGuardian(person, childId, type);
 
     onCloseModal();
   };
