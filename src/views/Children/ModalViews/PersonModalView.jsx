@@ -79,7 +79,7 @@ const PersonModalView = ({
               <Typography variant="caption">{infoText}</Typography>
             </div>
           )}
-          <div className="flex  gap-4 mt-8">
+          <div className="flex gap-4 mt-8">
             <Button type="submit" value="submit" id={`${id}-submit-button`}>
               {addPersonForm.primaryCta}
             </Button>
@@ -124,11 +124,13 @@ const data = {
       },
     ],
     selectInput: {
-      id: "person-relationship-child",
-      placeholder: "Relationship",
+      id: "person-relationship-user",
+      placeholder: "Relationship to you",
       options: [
-        { label: "GodMother", value: "god-mother" },
-        { label: "GodFather", value: "god-father" },
+        { label: "Parent", value: "parent" },
+        { label: "Sibling", value: "sibling" },
+        { label: "Relative", value: "relative" },
+        { label: "Friend", value: "friend" },
       ],
     },
     primaryCta: "Save",
