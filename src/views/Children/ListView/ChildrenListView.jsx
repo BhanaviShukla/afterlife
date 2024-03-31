@@ -31,13 +31,17 @@ const ChildrenListView = () => {
   }, [children, pathname, router]);
 
   const handleRemoveChild = async (child) => {
-    const personId = Number(child.guardian.id);
-    const person = getWillEntry("people", personId);
-    const newGuardianOf = person.guardianOf.filter((c) => c.id !== child.id);
-    patchWillEntry("people", personId, {
-      ...person,
-      guardianOf: newGuardianOf,
+    ["main-guardian", "alternative-guardian"].forEach((guardianType) => {
+      const personId = Number(child[guardianType]?.id);
+      if (!personId) return;
+      const person = getWillEntry("people", personId);
+      const newGuardianOf = person.guardianOf.filter((c) => c.id !== child.id);
+      patchWillEntry("people", personId, {
+        ...person,
+        guardianOf: newGuardianOf,
+      });
     });
+
     removeFromWill("children", child.id);
   };
 
@@ -48,7 +52,11 @@ const ChildrenListView = () => {
           <Card.EditItem
             key={child.id}
             imageName={"backpack"}
-            badgeText={child.guardian.name}
+            badgeText={
+              child["main-guardian"]?.name ||
+              child["alternative-guardian"]?.name ||
+              ""
+            }
             onPressCross={() => handleRemoveChild(child)}
             label={child["child-name"]}
             subLabel={"Your child"}

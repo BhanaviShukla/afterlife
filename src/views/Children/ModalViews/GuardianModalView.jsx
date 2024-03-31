@@ -26,7 +26,6 @@ const GuardianModalView = ({
     isPersonSelectable ? SELECT_PERSON_FORM_VIEW : ADD_PERSON_FORM_VIEW
   );
   const [selectedPerson, setSelectedPerson] = useState();
-  const [guardianType, setGuardianType] = useState("main"); // main | alternative
 
   const handleAddNewGuardian = (e) => {
     // e.preventDefault();
@@ -58,7 +57,7 @@ const GuardianModalView = ({
           action={onGuardianSave}
         >
           <SelectInput
-            id={`select-person`}
+            id={`main-guardian`}
             options={[
               ...people.map((person) => ({
                 label: person.name,
@@ -71,15 +70,23 @@ const GuardianModalView = ({
             ]}
             value={selectedPerson}
             onChange={handleAddNewGuardian}
-            placeholder={`main ${selectPersonForm.selectInput.placeholder}`}
+            placeholder={`Main Guardian`}
           />
-          <input
-            id={`guardian-type`}
-            name={"guardian-type"}
-            value={guardianType}
-            hidden
-            readOnly
-            type="hidden"
+          <SelectInput
+            id={`alternative-guardian`}
+            options={[
+              ...people.map((person) => ({
+                label: person.name,
+                value: person.id,
+              })),
+              {
+                label: "Add another guardian",
+                value: ADD_ANOTHER_GUARDIAN_OPTION,
+              },
+            ]}
+            value={selectedPerson}
+            onChange={handleAddNewGuardian}
+            placeholder={`Alternative Guardianb}`}
           />
           <div className="flex gap-4 mt-8">
             <Button type="submit" value="submit" id={`${id}-submit-button`}>
@@ -108,10 +115,16 @@ export default GuardianModalView;
 
 const data = {
   selectPersonForm: {
-    selectInput: {
-      id: "person-select-guardian",
-      placeholder: "Guardian",
-    },
+    selectInputs: [
+      {
+        id: "main-guardian",
+        placeholder: "Main Guardian",
+      },
+      {
+        id: "alternative-guardian",
+        placeholder: "Alternative Guardian",
+      },
+    ],
     primaryCta: "Save",
     secondaryCta: "Back",
   },
