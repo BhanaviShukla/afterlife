@@ -25,6 +25,8 @@ const GuardianModalView = ({
   // onNewPersonSave,
   onGuardianSave,
   onBack,
+  mainGuardian = undefined,
+  altGuardian = undefined,
 }) => {
   const {
     will: { people },
@@ -36,8 +38,8 @@ const GuardianModalView = ({
     isPersonSelectable ? SELECT_PERSON_FORM_VIEW : ADD_PERSON_FORM_VIEW
   );
   const [selectedPerson, setSelectedPerson] = useState({
-    "main-guardian": undefined,
-    "alternative-guardian": undefined,
+    "main-guardian": mainGuardian || undefined,
+    "alternative-guardian": altGuardian || undefined,
   });
   const [editGuardianOpen, setEditGuardianOpen] = useState(undefined);
   const [addGuardianOpen, setAddGuardianOpen] = useState(undefined);
