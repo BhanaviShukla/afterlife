@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 import AddChildModal from "../AddChild";
 import { childrenData } from "@/appState/childrenData";
+import EditPersonModal from "@/components/EditPersonModal/EditPersonModal";
 
 const ADD_ANOTHER_CHILD_MODAL = "add-another-child-modal";
 
@@ -35,7 +36,9 @@ const ChildrenListView = () => {
       const personId = Number(child[guardianType]?.id);
       if (!personId) return;
       const person = getWillEntry("people", personId);
-      const newGuardianOf = person.guardianOf.filter((c) => c.id !== child.id);
+      const newGuardianOf = (person.guardianOf || []).filter(
+        (c) => c.id !== child.id
+      );
       patchWillEntry("people", personId, {
         ...person,
         guardianOf: newGuardianOf,

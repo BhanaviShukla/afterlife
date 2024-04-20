@@ -96,6 +96,7 @@ const AddChildModal = ({ id, isOpen, setOpen }) => {
       },
       {}
     );
+    console.log({ guardianObject });
     const childId = await attachGuardianToChild(guardianObject);
     ["main-guardian", "alternative-guardian"].forEach(
       async (guardianType) =>

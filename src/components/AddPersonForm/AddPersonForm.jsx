@@ -2,10 +2,28 @@ import { useWill } from "@/appState/WillState";
 import { Button, SelectInput, TextInput, Typography } from "..";
 import InfoIcon from "../ui/Icons/Informational/info-empty.svg";
 import { TODAY } from "@/appState/childrenData";
+import { useEffect, useState } from "react";
 
-const AddPersonForm = ({ onPersonSave, onBack, infoText }) => {
-  const { addToWill } = useWill();
+const AddPersonForm = ({
+  onPersonSave,
+  onBack,
+  infoText,
+  personId = undefined,
+}) => {
+  const { addToWill, getWillEntry, patchWillEntry } = useWill();
   const { textInputs, selectInput, primaryCta, secondaryCta } = data;
+
+  const [person, setPerson] = useState();
+
+  useEffect(() => {
+    if (!personId) return;
+    const personWillEntry = getWillEntry("people", personId);
+    if (!personWillEntry) {
+      console.error("Couldn't find person in the will");
+      return;
+    }
+    setPerson(personWillEntry);
+  }, [personId, getWillEntry]);
 
   const onNewPersonSubmit = async (formData) => {
     console.log("onNewPersonSubmit");
@@ -18,11 +36,42 @@ const AddPersonForm = ({ onPersonSave, onBack, infoText }) => {
     const personId = addToWill("people", person);
     onPersonSave(personId);
   };
+
+  const onEditPersonSubmit = async (formData) => {
+    console.log("onEditPersonSubmit");
+    if (!person) {
+      console.error("Couldn't find person in the will");
+      return;
+    }
+    const newPerson = {
+      ...person,
+      name: formData.get("person-name"),
+      dob: formData.get("person-dob"),
+      relationship: formData.get("person-relationship-user"),
+    };
+    console.log("PERSON -> TO WILL", newPerson);
+    await patchWillEntry("people", personId, newPerson);
+    onPersonSave(personId);
+  };
+
+  console.log({ person });
   return (
-    <form id="add-new-person" action={onNewPersonSubmit}>
+    <form
+      id={personId ? `edit-${personId}` : "add-new-person"}
+      action={personId ? onEditPersonSubmit : onNewPersonSubmit}
+    >
       {textInputs?.length &&
-        textInputs?.map((input) => <TextInput key={input.id} {...input} />)}
-      <SelectInput {...selectInput} />
+        textInputs?.map((input) => (
+          <TextInput
+            key={input.id}
+            {...input}
+            defaultValue={person ? person[input.stateKey] : undefined}
+          />
+        ))}
+      <SelectInput
+        {...selectInput}
+        defaultValue={person ? person[selectInput.stateKey] : undefined}
+      />
       {infoText && (
         <div className="flex align-middle gap-2 mt-8">
           <InfoIcon width={40} />
@@ -52,6 +101,7 @@ const data = {
       placeholder: "Full name of person (as per passport)",
       type: "text",
       required: true,
+      stateKey: "name",
     },
     {
       id: "person-dob",
@@ -60,6 +110,7 @@ const data = {
       type: "date",
       max: TODAY,
       required: true,
+      stateKey: "dob",
     },
   ],
   selectInput: {
@@ -71,6 +122,7 @@ const data = {
       { label: "Relative", value: "relative" },
       { label: "Friend", value: "friend" },
     ],
+    stateKey: "relationship",
   },
   primaryCta: "Save",
   secondaryCta: "Back",
