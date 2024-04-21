@@ -1,6 +1,7 @@
 import Badge from "./ui/Badge/Badge";
 import Button from "./ui/Button/Button";
 import Card from "./ui/Card/Card";
+import CarouselIndicator from "./ui/CarouselIndicator/CarouselIndicator";
 import EditableSelectInput from "./ui/SelectInput/EditableSelectInput";
 import Logo from "./ui/Logo/logo";
 import Modal from "./ui/Modal/Modal";
@@ -14,6 +15,7 @@ export {
   Badge,
   Button,
   Card,
+  CarouselIndicator,
   Logo,
   Modal,
   Nav,

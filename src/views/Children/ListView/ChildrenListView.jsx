@@ -35,20 +35,21 @@ const ChildrenListView = () => {
   }, [children, pathname, router]);
 
   const handleRemoveChild = async (child) => {
-    ["main-guardian", "alternative-guardian"].forEach((guardianType) => {
+    for (const guardianType of ["main-guardian", "alternative-guardian"]) {
       const personId = Number(child[guardianType]?.id);
       if (!personId) return;
       const person = getWillEntry("people", personId);
       const newGuardianOf = (person.guardianOf || []).filter(
         (c) => c.id !== child.id
       );
-      patchWillEntry("people", personId, {
+      console.log({ newGuardianOf });
+      await patchWillEntry("people", personId, {
         ...person,
         guardianOf: newGuardianOf,
       });
-    });
+    }
 
-    removeFromWill("children", child.id);
+    await removeFromWill("children", child.id);
   };
 
   const handlePressEdit = (child) => {

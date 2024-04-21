@@ -11,7 +11,7 @@ const JourneySelectionView = ({ data }) => {
 
   useEffect(() => {
     clearSelectedSteps();
-  }, [clearSelectedSteps]);
+  }, []);
 
   const handleCardClick = (id) => {
     toggleSelectedSteps(id);

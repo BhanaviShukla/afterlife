@@ -1,6 +1,6 @@
 "use client";
 import { useWill } from "@/appState/WillState";
-import { Modal } from "@/components";
+import { CarouselIndicator, Modal } from "@/components";
 import ChildModaView from "./ModalViews/ChildModalView";
 import GuardianModalView from "./ModalViews/GuardianModalView";
 import { useEffect, useState } from "react";
@@ -76,11 +76,7 @@ const EditChildModal = ({ childId, isOpen, handleClose }) => {
       const guardian = getWillEntry("people", guardianId);
 
       const oldGuardian = people.find(
-        (person) =>
-          person.guardianOf?.length &&
-          person.guardianOf.find(
-            (c) => c.id === Number(childId) && c.type === guardianType
-          )
+        (person) => person.id === child[guardianType].id
       );
       console.log({ oldGuardian, guardian });
       const newGuardianOf = {
@@ -145,7 +141,6 @@ const EditChildModal = ({ childId, isOpen, handleClose }) => {
             onSave={onChildSave}
             onCancel={handleClose}
           />
-          step 1
         </>
       ) : (
         <>
@@ -157,9 +152,12 @@ const EditChildModal = ({ childId, isOpen, handleClose }) => {
             mainGuardian={child["main-guardian"]?.id}
             altGuardian={child["alternative-guardian"]?.id}
           />
-          step 2
         </>
       )}
+      <CarouselIndicator
+        activeItemIndex={modalView === CHILD_FORM ? 0 : 1}
+        itemCount={2}
+      />
     </Modal>
   );
 };
