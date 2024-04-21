@@ -9,7 +9,14 @@ import styles from "./buttonStyles.module.css";
  * @param {any} italic = true | false
  * @returns {any}
  */
-const Button = ({ children, variant = "filled", italic, ...props }) => {
+const Button = ({
+  children,
+  variant = "filled",
+  italic,
+  leftIcon,
+  rightIcon,
+  ...props
+}) => {
   return (
     <button
       {...props}
@@ -17,7 +24,11 @@ const Button = ({ children, variant = "filled", italic, ...props }) => {
         italic && styles.italic
       } ${props.className}`}
     >
+      {leftIcon && <div className="mr-1">{leftIcon}</div>}
       <label>{children}</label>
+      {rightIcon && (
+        <div className="ml-1 mr-[-0.25rem] pb-0.5">{rightIcon}</div>
+      )}
     </button>
   );
 };
