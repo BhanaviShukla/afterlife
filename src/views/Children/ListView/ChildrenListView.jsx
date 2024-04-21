@@ -48,7 +48,7 @@ const ChildrenListView = () => {
         guardianOf: newGuardianOf,
       });
     }
-
+    console.log("removing child >>>>", child.id);
     await removeFromWill("children", child.id);
   };
 

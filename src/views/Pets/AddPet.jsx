@@ -22,7 +22,7 @@ const AddPetModal = ({ id, isOpen, setOpen }) => {
       ...Object.fromEntries(formData),
     };
     console.log("Pet -> on Save", newPet);
-    // @TODO: add duplication check util for child
+    // @TODO: add duplication check util for pet
     setPet(newPet);
     setModalView(CARETAKER_MODAL_VIEW);
   };

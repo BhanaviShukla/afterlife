@@ -27,7 +27,10 @@ const EditChildModal = ({ childId, isOpen, handleClose }) => {
   }, [isOpen]);
 
   useEffect(() => {
-    if (!childId) return;
+    if (!childId) {
+      setChild(undefined);
+      return;
+    }
     const childWillEntry = getWillEntry("children", childId);
     if (!childWillEntry) {
       console.error("Child doesn't exist in will", childId);
@@ -136,7 +139,7 @@ const EditChildModal = ({ childId, isOpen, handleClose }) => {
       {modalView === CHILD_FORM ? (
         <ChildModaView
           form={childForm}
-          child={child}
+          dataObject={child}
           onSave={onChildSave}
           onCancel={handleClose}
         />
