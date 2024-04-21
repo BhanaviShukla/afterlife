@@ -28,8 +28,6 @@ const PetsView = ({ slug }) => {
 
   const { isOpenModal, setOpenModal } = useContext(ManagedUI);
 
-  console.log("PETS");
-
   return (
     <div className="flex gap-6">
       <AddPetModal

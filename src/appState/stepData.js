@@ -32,10 +32,6 @@ export const STEPS = [
 
 // @TODO: move this to stepState context
 export const getNextStepIndex = (currentSlug) => {
-  console.log(
-    { currentSlug },
-    STEPS.findIndex((step) => step.slug === currentSlug)
-  );
   const indexOfCurrentSlug = STEPS.findIndex(
     (step) => step.slug === currentSlug
   );
