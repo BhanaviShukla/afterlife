@@ -116,23 +116,19 @@ const AddChildModal = ({ id, isOpen, setOpen }) => {
   return (
     <Modal id={id} isOpen={isOpen} handleClose={onCloseModal}>
       {modalView === CHILD_FORM ? (
-        <>
-          <ChildModaView
-            form={childForm}
-            child={child}
-            onSave={onChildSubmit}
-            onCancel={onCloseModal}
-          />
-        </>
+        <ChildModaView
+          form={childForm}
+          child={child}
+          onSave={onChildSubmit}
+          onCancel={onCloseModal}
+        />
       ) : (
-        <>
-          <GuardianModalView
-            form={guardianForm}
-            titleFragment={(child && child["child-name"]) || ""}
-            onGuardianSave={onGuardianSave}
-            onBack={() => setModalView(CHILD_FORM)}
-          />
-        </>
+        <GuardianModalView
+          form={guardianForm}
+          titleFragment={(child && child["child-name"]) || ""}
+          onGuardianSave={onGuardianSave}
+          onBack={() => setModalView(CHILD_FORM)}
+        />
       )}
       <CarouselIndicator
         activeItemIndex={modalView === CHILD_FORM ? 0 : 1}
