@@ -47,28 +47,6 @@ const EditableSelectInput = ({
         value={options[selectedIndex] || null}
         onChange={handleChange}
       />
-      {/* <select
-        key={stateKey}
-        id={id}
-        name={id}
-        className="form__field"
-        placeholder={placeholder}
-        {...inputProps}
-      >
-        <option value={""}>{""}</option>
-        {options.map((option, index) => (
-          <option
-            key={index}
-            value={option.value}
-            selected={index === selectedIndex}
-          >
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <label htmlFor={id} className="form__label">
-        {placeholder}
-      </label> */}
     </div>
   );
 };
