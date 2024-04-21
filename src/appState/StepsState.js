@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { getLocalStorage, setLocalStorage } from "@/utils/storage";
 
 export const initialStepsState = [];
@@ -14,26 +21,29 @@ export function StepProvider({ children }) {
     setLocalStorage("selectedSteps", selectedSteps);
   }, [selectedSteps]);
 
-  const toggleSelectedSteps = (id) => {
-    if (selectedSteps.includes(id)) {
-      setSelectedSteps(selectedSteps.filter((value) => value !== id));
-    }
-    const newSteps = new Set([...selectedSteps, id]);
-    setSelectedSteps([...newSteps].sort());
-  };
+  const toggleSelectedSteps = useCallback(
+    (id) => {
+      if (selectedSteps.includes(id)) {
+        setSelectedSteps(selectedSteps.filter((value) => value !== id));
+      }
+      const newSteps = new Set([...selectedSteps, id]);
+      setSelectedSteps([...newSteps].sort());
+    },
+    [selectedSteps, setSelectedSteps]
+  );
 
-  const clearSelectedSteps = () => {
+  const clearSelectedSteps = useCallback(() => {
     setSelectedSteps(initialStepsState);
-  };
+  }, [setSelectedSteps]);
+
   console.log("PROVIDER", { selectedSteps });
+
+  const memoizedStepContextProviderValue = useMemo(
+    () => ({ selectedSteps, toggleSelectedSteps, clearSelectedSteps }),
+    [selectedSteps, toggleSelectedSteps, clearSelectedSteps]
+  );
   return (
-    <StepContext.Provider
-      value={{
-        selectedSteps,
-        toggleSelectedSteps,
-        clearSelectedSteps,
-      }}
-    >
+    <StepContext.Provider value={memoizedStepContextProviderValue}>
       {children}
     </StepContext.Provider>
   );
