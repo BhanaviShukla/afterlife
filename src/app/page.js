@@ -4,9 +4,9 @@ import JourneySelectionView from "@/views/Home";
 export default function Home() {
   return (
     <div className="container flex flex-col justify-between gap-6">
-      <div className="flex justify-between">
+      <a className="flex justify-between" href="/">
         <Logo />
-      </div>
+      </a>
 
       <section className="flex flex-col justify-around grow" id="main-content">
         <div className="flex flex-col justify-between grow gap-6">

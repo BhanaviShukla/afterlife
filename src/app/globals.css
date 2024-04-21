@@ -23,7 +23,7 @@ a {
   color: inherit;
   text-decoration: none;
 }
-button > * {
+button, button > *, *[role='button'] {
   cursor: pointer;
 }
 
