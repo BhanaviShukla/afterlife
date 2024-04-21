@@ -6,7 +6,11 @@ const SelectLabel = ({ children, ...props }) => {
   const { onEdit } = props?.selectProps;
   return (
     <components.Control {...props}>
-      <span style={{ display: "inline-flex" }} onMouseDown={onEdit}>
+      <span
+        style={{ display: "inline-flex" }}
+        onMouseDown={onEdit}
+        role="button"
+      >
         <IconPencil />
       </span>
       {children}
