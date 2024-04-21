@@ -2,18 +2,18 @@
 import { CarouselIndicator, Modal } from "@/components";
 import { useState } from "react";
 import { useWill } from "@/appState/WillState";
-import ChildModaView from "./ModalViews/ChildModalView";
+import ChildModaView from "@/components/FormModalView";
 import GuardianModalView from "./ModalViews/GuardianModalView";
 import { chldrenFormData } from "@/appState/childrenData";
 
-const CHILD_FORM = "child-form";
-const GUARDIAN_FORM = "guardian-form";
+const CHILD_MODAL_VIEW = "child-modal-view";
+const GUARDIAN_MODAL_VIEW = "guardian-modal-view";
 
 const AddChildModal = ({ id, isOpen, setOpen }) => {
-  const { will, addToWill, getWillEntry, patchWillEntry } = useWill();
+  const { addToWill, getWillEntry, patchWillEntry } = useWill();
 
   const [child, setChild] = useState(null);
-  const [modalView, setModalView] = useState(CHILD_FORM);
+  const [modalView, setModalView] = useState(CHILD_MODAL_VIEW);
 
   const { childForm, guardianForm } = chldrenFormData;
 
@@ -24,7 +24,7 @@ const AddChildModal = ({ id, isOpen, setOpen }) => {
     console.log("CHILD -> ON CLICK SAVE", child);
     // @TODO: add duplication check util for child
     setChild(child);
-    setModalView(GUARDIAN_FORM);
+    setModalView(GUARDIAN_MODAL_VIEW);
   };
 
   const onCloseModal = () => {
@@ -115,10 +115,10 @@ const AddChildModal = ({ id, isOpen, setOpen }) => {
 
   return (
     <Modal id={id} isOpen={isOpen} handleClose={onCloseModal}>
-      {modalView === CHILD_FORM ? (
+      {modalView === CHILD_MODAL_VIEW ? (
         <ChildModaView
           form={childForm}
-          child={child}
+          dataObject={child}
           onSave={onChildSubmit}
           onCancel={onCloseModal}
         />
@@ -127,11 +127,11 @@ const AddChildModal = ({ id, isOpen, setOpen }) => {
           form={guardianForm}
           titleFragment={(child && child["child-name"]) || ""}
           onGuardianSave={onGuardianSave}
-          onBack={() => setModalView(CHILD_FORM)}
+          onBack={() => setModalView(CHILD_MODAL_VIEW)}
         />
       )}
       <CarouselIndicator
-        activeItemIndex={modalView === CHILD_FORM ? 0 : 1}
+        activeItemIndex={modalView === CHILD_MODAL_VIEW ? 0 : 1}
         itemCount={2}
       />
     </Modal>

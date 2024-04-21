@@ -3,13 +3,14 @@ import Image from "next/image";
 import { getImageFromSlug } from "@/utils/step";
 import { ChildrenView, PetsView, RitesView } from "@/views";
 import { childrenData } from "@/appState/childrenData";
+import { petsData } from "@/appState/petsData";
 
 const StepView = ({ slug, data }) => {
   switch (slug) {
     case "children":
-      return <ChildrenView />;
+      return <ChildrenView slug={slug} />;
     case "pets":
-      return <PetsView data={data} />;
+      return <PetsView slug={slug} />;
     case "rites":
       return <RitesView data={data} />;
     default:
@@ -46,13 +47,7 @@ export default function Journey({ params }) {
 
 const data = {
   children: childrenData,
-  pets: {
-    title: "Assign care for your furry companions.",
-    description:
-      "By designating a responsible caretaker and setting aside funds for their upkeep, you guarantee that your beloved companions will be looked after and cherished as part of your family, as well as knowing they will receive the love and attention they deserve even in your absence.",
-    primaryCta: "Add a pet",
-    secondaryCta: "Skip for now",
-  },
+  pets: petsData,
   rites: {
     title: "Your way to be remembered",
     description:

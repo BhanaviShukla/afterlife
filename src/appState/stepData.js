@@ -29,3 +29,23 @@ export const STEPS = [
     slug: "rites",
   },
 ];
+
+// @TODO: move this to stepState context
+export const getNextStepIndex = (currentSlug) => {
+  console.log(
+    { currentSlug },
+    STEPS.findIndex((step) => step.slug === currentSlug)
+  );
+  const indexOfCurrentSlug = STEPS.findIndex(
+    (step) => step.slug === currentSlug
+  );
+  if (indexOfCurrentSlug < 0) {
+    console.error("Couldn't locate step data");
+    return -1;
+  }
+  if (indexOfCurrentSlug === STEPS.length - 1) {
+    console.error("No more steps available");
+    return -1;
+  }
+  return indexOfCurrentSlug + 1;
+};

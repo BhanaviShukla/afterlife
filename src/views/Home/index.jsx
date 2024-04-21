@@ -5,6 +5,7 @@ import styles from "./homeViewStyles.module.css";
 import Link from "next/link";
 import { useEffect } from "react";
 import { STEPS } from "@/appState/stepData";
+import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 
 const JourneySelectionView = ({ data }) => {
   const { selectedSteps, toggleSelectedSteps, clearSelectedSteps } = useSteps();
@@ -37,7 +38,11 @@ const JourneySelectionView = ({ data }) => {
       </div>
       <div className={styles.ctaWrapper}>
         {selectedSteps.length ? (
-          <Button variant="filled" className="self-start">
+          <Button
+            variant="filled"
+            className="self-start"
+            rightIcon={<ArrowRightIcon />}
+          >
             <Link href={`/journey/${STEPS[selectedSteps[0]].slug}`}>
               {data.primaryCta}
             </Link>

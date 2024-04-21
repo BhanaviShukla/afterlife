@@ -1,7 +1,8 @@
 import { Button, TextInput, Typography } from "@/components";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
-const ChildModaView = ({ form, child, onSave, onCancel }) => {
+const FormModalView = ({ form, dataObject, onSave, onCancel }) => {
+  console.log({ form });
   return (
     <>
       <Typography variant="title-small">{form.title}</Typography>
@@ -12,7 +13,7 @@ const ChildModaView = ({ form, child, onSave, onCancel }) => {
               <TextInput
                 key={input.id}
                 {...input}
-                defaultValue={child ? child[input.id] : undefined}
+                defaultValue={dataObject ? dataObject[input.id] : undefined}
               />
             ))}
           <div className="flex gap-4 mt-8">
@@ -32,4 +33,4 @@ const ChildModaView = ({ form, child, onSave, onCancel }) => {
     </>
   );
 };
-export default ChildModaView;
+export default FormModalView;

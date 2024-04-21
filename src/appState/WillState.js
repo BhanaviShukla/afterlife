@@ -51,7 +51,7 @@ export function WillProvider({ children }) {
     (category, id) => {
       setWill((prevWillData) => ({
         ...prevWillData,
-        [category]: prevWillData[category].filter((item) => item.id != id),
+        [category]: prevWillData[category].filter((item) => item.id !== id),
       }));
     },
     [setWill]

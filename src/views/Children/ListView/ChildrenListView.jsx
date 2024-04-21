@@ -37,7 +37,7 @@ const ChildrenListView = () => {
   const handleRemoveChild = async (child) => {
     for (const guardianType of ["main-guardian", "alternative-guardian"]) {
       const personId = Number(child[guardianType]?.id);
-      if (!personId) return;
+      if (!personId) continue;
       const person = getWillEntry("people", personId);
       const newGuardianOf = (person.guardianOf || []).filter(
         (c) => c.id !== child.id
