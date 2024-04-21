@@ -87,17 +87,17 @@ const ChildrenListView = () => {
           backgroundColor={"--colour-n50"}
           handleSelect={() => setOpenModal(ADD_ANOTHER_CHILD_MODAL)}
         />
-        <AddChildModal
-          id={ADD_ANOTHER_CHILD_MODAL}
-          isOpen={isOpenModal(ADD_ANOTHER_CHILD_MODAL)}
-          setOpen={setOpenModal}
-        />
-        <EditChildModal
-          childId={selectedChild}
-          isOpen={isOpenModal(EDIT_CHILD_MODAL) && selectedChild}
-          handleClose={handleCloseEditModal}
-        />
       </div>
+      <AddChildModal
+        id={ADD_ANOTHER_CHILD_MODAL}
+        isOpen={isOpenModal(ADD_ANOTHER_CHILD_MODAL)}
+        setOpen={setOpenModal}
+      />
+      <EditChildModal
+        childId={selectedChild}
+        isOpen={isOpenModal(EDIT_CHILD_MODAL) && selectedChild}
+        handleClose={handleCloseEditModal}
+      />
     </>
   );
 };
