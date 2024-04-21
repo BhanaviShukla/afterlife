@@ -2,7 +2,7 @@ import EllipseIcon from "../Icons/Informational/ellipse.svg";
 const CarouselIndicator = ({ itemCount, activeItemIndex }) => {
   const indicatorArray = [...Array(itemCount)].map((_, index) => (
     <EllipseIcon
-      key={index}
+      key={`icon-${index}`}
       style={{
         color:
           index === activeItemIndex

@@ -47,6 +47,8 @@ const CardSelectItem = ({
             isSelected ? styles.iconSelected : styles.iconDefault
           }`}
           onClick={handleSelect}
+          role="button"
+          tabIndex={0}
         >
           {isSelected ? <Check /> : <Plus />}
         </div>
@@ -77,6 +79,8 @@ const CardEditItem = ({
       <div
         className={`${styles.iconWrapper} ${styles.cancelCta}`}
         onClick={onPressCross}
+        role="button"
+        tabIndex={0}
       >
         <Cancel width={12} height={12} />
       </div>
@@ -96,7 +100,6 @@ const CardEditItem = ({
     </CardBase>
   );
 };
-const CancelIconButton = () => {};
 const Card = {
   Base: CardBase,
   SelectItem: CardSelectItem,

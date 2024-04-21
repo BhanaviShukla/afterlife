@@ -3,13 +3,14 @@ import Select, { components } from "react-select";
 import IconPencil from "../Icons/Controls/edit-pencil.svg";
 
 const SelectLabel = ({ children, ...props }) => {
-  const { onEdit } = props?.selectProps;
+  const { onEdit } = props?.selectProps || {};
   return (
     <components.Control {...props}>
       <span
         style={{ display: "inline-flex" }}
         onMouseDown={onEdit}
         role="button"
+        tabIndex={1}
       >
         <IconPencil />
       </span>
