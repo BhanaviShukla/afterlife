@@ -3,11 +3,14 @@ import { ManagedUI } from "@/appState/UIState";
 import { useWill } from "@/appState/WillState";
 import { Card } from "@/components";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddChildModal from "../AddChild";
 import { childrenData } from "@/appState/childrenData";
+import EditPersonModal from "@/components/EditPersonModal/EditPersonModal";
+import EditChildModal from "../EditChild";
 
 const ADD_ANOTHER_CHILD_MODAL = "add-another-child-modal";
+const EDIT_CHILD_MODAL = "edit-child-modal";
 
 const ChildrenListView = () => {
   const {
@@ -24,6 +27,7 @@ const ChildrenListView = () => {
   const pathname = usePathname();
 
   const { isOpenModal, setOpenModal } = useContext(ManagedUI);
+  const [selectedChild, setSelectedChild] = useState(undefined);
 
   useEffect(() => {
     if (children && !children.length)
@@ -31,14 +35,32 @@ const ChildrenListView = () => {
   }, [children, pathname, router]);
 
   const handleRemoveChild = async (child) => {
-    const personId = Number(child.guardian.id);
-    const person = getWillEntry("people", personId);
-    const newGuardianOf = person.guardianOf.filter((c) => c.id !== child.id);
-    patchWillEntry("people", personId, {
-      ...person,
-      guardianOf: newGuardianOf,
-    });
-    removeFromWill("children", child.id);
+    for (const guardianType of ["main-guardian", "alternative-guardian"]) {
+      const personId = Number(child[guardianType]?.id);
+      if (!personId) return;
+      const person = getWillEntry("people", personId);
+      const newGuardianOf = (person.guardianOf || []).filter(
+        (c) => c.id !== child.id
+      );
+      console.log({ newGuardianOf });
+      await patchWillEntry("people", personId, {
+        ...person,
+        guardianOf: newGuardianOf,
+      });
+    }
+
+    await removeFromWill("children", child.id);
+  };
+
+  const handlePressEdit = (child) => {
+    console.log("handlePressEdit", child);
+    setSelectedChild(child.id);
+    setOpenModal(EDIT_CHILD_MODAL);
+  };
+
+  const handleCloseEditModal = () => {
+    setOpenModal(undefined);
+    setSelectedChild(undefined);
   };
 
   return (
@@ -48,13 +70,15 @@ const ChildrenListView = () => {
           <Card.EditItem
             key={child.id}
             imageName={"backpack"}
-            badgeText={child.guardian.name}
+            badgeText={
+              child["main-guardian"]?.name ||
+              child["alternative-guardian"]?.name ||
+              ""
+            }
             onPressCross={() => handleRemoveChild(child)}
             label={child["child-name"]}
             subLabel={"Your child"}
-            onPressEdit={() => {
-              alert("You pressed Edit");
-            }}
+            onPressEdit={() => handlePressEdit(child)}
           />
         ))}
         <Card.SelectItem
@@ -67,6 +91,11 @@ const ChildrenListView = () => {
           id={ADD_ANOTHER_CHILD_MODAL}
           isOpen={isOpenModal(ADD_ANOTHER_CHILD_MODAL)}
           setOpen={setOpenModal}
+        />
+        <EditChildModal
+          childId={selectedChild}
+          isOpen={isOpenModal(EDIT_CHILD_MODAL) && selectedChild}
+          handleClose={handleCloseEditModal}
         />
       </div>
     </>

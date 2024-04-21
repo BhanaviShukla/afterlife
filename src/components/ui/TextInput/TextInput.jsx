@@ -3,11 +3,13 @@ const TextInput = ({
   wrapperClassName,
   placeholder,
   type,
+  stateKey,
   ...inputProps
 }) => {
   return (
     <div className={`form__group ${wrapperClassName}`}>
       <input
+        key={stateKey}
         type={type}
         id={id}
         name={id}

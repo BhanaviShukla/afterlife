@@ -3,11 +3,16 @@ const SelectInput = ({
   wrapperClassName,
   placeholder,
   options = [],
+  stateKey,
   ...inputProps
 }) => {
+  const selectedIndex = inputProps.value
+    ? options.findIndex((option) => option.value === inputProps.value)
+    : -1;
   return (
     <div className={`form__group ${wrapperClassName}`}>
       <select
+        key={stateKey}
         id={id}
         name={id}
         className="form__field"
@@ -16,7 +21,11 @@ const SelectInput = ({
       >
         <option value={""}>{""}</option>
         {options.map((option, index) => (
-          <option key={index} value={option.value}>
+          <option
+            key={index}
+            value={option.value}
+            selected={index === selectedIndex}
+          >
             {option.label}
           </option>
         ))}
