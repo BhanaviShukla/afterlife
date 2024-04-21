@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useMemo, useState } from "react";
 
 //Defining context
 export const ManagedUI = createContext(undefined);
@@ -7,15 +7,15 @@ export const ManagedUI = createContext(undefined);
 export function ManagedUIProvider({ children }) {
   const [openModal, setOpenModal] = useState();
 
-  const isOpenModal = (id) => openModal === id;
+  const isOpenModal = useCallback((id) => openModal === id, [openModal]);
+
+  const memoizedModalProviderValue = useMemo(
+    () => ({ isOpenModal, setOpenModal }),
+    [isOpenModal, setOpenModal]
+  );
 
   return (
-    <ManagedUI.Provider
-      value={{
-        isOpenModal,
-        setOpenModal,
-      }}
-    >
+    <ManagedUI.Provider value={memoizedModalProviderValue}>
       {children}
     </ManagedUI.Provider>
   );

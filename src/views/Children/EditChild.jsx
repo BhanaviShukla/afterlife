@@ -76,7 +76,7 @@ const EditChildModal = ({ childId, isOpen, handleClose }) => {
       const guardian = getWillEntry("people", guardianId);
 
       const oldGuardian = people.find(
-        (person) => person.id === child[guardianType].id
+        (person) => person.id === child[guardianType]?.id
       );
       console.log({ oldGuardian, guardian });
       const newGuardianOf = {
