@@ -25,9 +25,10 @@ export function StepProvider({ children }) {
     (id) => {
       if (selectedSteps.includes(id)) {
         setSelectedSteps(selectedSteps.filter((value) => value !== id));
+      } else {
+        const newSteps = new Set([...selectedSteps, id]);
+        setSelectedSteps([...newSteps].sort());
       }
-      const newSteps = new Set([...selectedSteps, id]);
-      setSelectedSteps([...newSteps].sort());
     },
     [selectedSteps, setSelectedSteps]
   );
