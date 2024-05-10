@@ -15,6 +15,5 @@ jobs:
         with:
           project: Afterlife
           column: Todo
-          content-type: issue
           title: "Review needed for new branch: ${{ github.ref_name }}"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
