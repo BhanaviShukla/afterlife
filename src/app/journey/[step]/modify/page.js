@@ -1,6 +1,6 @@
 import { childrenData } from "@/appState/childrenData";
 import { Typography } from "@/components";
-import ChildrenListView from "@/views/Children/ListView/ChildrenListView";
+import ChildrenListView from "@/views/Children/ChildrenListView";
 
 const StepListView = ({ slug }) => {
   switch (slug) {
