@@ -1,7 +1,6 @@
 import "./globals.css";
 import { serif, sansSerif } from "../theme/fonts";
 import { metadata } from "../config/metadata";
-import { Logo, Nav } from "@/components";
 import { Providers } from "./providers";
 
 export { metadata };
