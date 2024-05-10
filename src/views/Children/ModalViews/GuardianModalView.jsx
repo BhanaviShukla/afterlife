@@ -1,14 +1,7 @@
 import { useWill } from "@/appState/WillState";
-import {
-  Button,
-  EditableSelectInput,
-  SelectInput,
-  TextInput,
-  Typography,
-} from "@/components";
+import { Button, EditableSelectInput, Typography } from "@/components";
 import AddPersonForm from "@/components/AddPersonForm/AddPersonForm";
 import EditPersonModal from "@/components/EditPersonModal/EditPersonModal";
-import InfoIcon from "@/components/ui/Icons/Informational/info-empty.svg";
 import { useEffect, useState } from "react";
 
 const ADD_PERSON_FORM_VIEW = "add-person-form-view";
@@ -105,6 +98,7 @@ const GuardianModalView = ({
             placeholder={`Main Guardian`}
             isEditable
             onEdit={() => setEditGuardianOpen("main-guardian")}
+            required
           />
           <EditableSelectInput
             id={`alternative-guardian`}
@@ -129,7 +123,12 @@ const GuardianModalView = ({
             onEdit={() => setEditGuardianOpen("alternative-guardian")}
           />
           <div className="flex gap-4 mt-8">
-            <Button type="submit" value="submit" id={`${id}-submit-button`}>
+            <Button
+              type="submit"
+              value="submit"
+              id={`${id}-submit-button`}
+              disabled={!selectedPerson["main-guardian"]}
+            >
               {selectPersonForm.primaryCta}
             </Button>
             <Button variant="outlined" onClick={onBack}>
