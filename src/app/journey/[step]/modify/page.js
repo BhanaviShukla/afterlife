@@ -1,13 +1,14 @@
 import { childrenData } from "@/appState/childrenData";
 import { Typography } from "@/components";
-import ChildrenListView from "@/views/Children/ListView/ChildrenListView";
+import ChildrenListView from "@/views/Children/ChildrenListView";
+import PetsListView from "@/views/Pets/PetsListView";
 
 const StepListView = ({ slug }) => {
   switch (slug) {
     case "children":
-      return <ChildrenListView />;
+      return <ChildrenListView slug={slug} />;
     case "pets":
-    // return <PetsView data={data} />;
+      return <PetsListView slug={slug} />;
     case "rites":
     // return <RitesView data={data} />;
     default:
