@@ -29,7 +29,7 @@ const CaretakerModalView = ({
     isPersonSelectable ? SELECT_PERSON_FORM_VIEW : ADD_PERSON_FORM_VIEW
   );
 
-  const [selectedPerson, setSelectedPerson] = useState(undefined);
+  const [selectedPerson, setSelectedPerson] = useState(caretaker || undefined);
 
   const [isEditCaretakerOpen, setEditCaretakerOpen] = useState(false);
   const [isAddCaretakerOpen, setAddCaretakerOpen] = useState(false);

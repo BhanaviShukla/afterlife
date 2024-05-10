@@ -8,9 +8,12 @@ export const petsData = {
   },
   petsListView: {
     primaryCta: "Continue to Assets",
+    itemCard: {
+      subLabel: "Your companion",
+    },
     addAnotherCard: {
-      imageName: "pet",
-      label: "Add another pet",
+      imageName: "pet_bowl",
+      label: "Add another",
       subLabel: "Have more pets",
     },
   },
