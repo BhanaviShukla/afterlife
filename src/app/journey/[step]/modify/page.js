@@ -5,7 +5,7 @@ import ChildrenListView from "@/views/Children/ListView/ChildrenListView";
 const StepListView = ({ slug }) => {
   switch (slug) {
     case "children":
-      return <ChildrenListView />;
+      return <ChildrenListView slug={slug} />;
     case "pets":
     // return <PetsView data={data} />;
     case "rites":

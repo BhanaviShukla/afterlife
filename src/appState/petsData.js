@@ -6,6 +6,14 @@ export const petsData = {
     primaryCta: "Add a pet",
     secondaryCta: "Skip for now",
   },
+  petsListView: {
+    primaryCta: "Continue to Assets",
+    addAnotherCard: {
+      imageName: "pet",
+      label: "Add another pet",
+      subLabel: "Have more pets",
+    },
+  },
 };
 
 export const petFormData = {
@@ -27,5 +35,11 @@ export const petFormData = {
     ],
     primaryCta: "Save",
     secondaryCta: "Cancel",
+  },
+  caretakerForm: {
+    id: "add-caretaker",
+    title: "Assign a caretaker for",
+    infoText:
+      "Make sure to inform the person you are appointing so that they are aware and accept the potential responsibilities.",
   },
 };

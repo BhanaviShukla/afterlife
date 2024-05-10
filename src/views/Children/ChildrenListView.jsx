@@ -4,15 +4,15 @@ import { useWill } from "@/appState/WillState";
 import { Card } from "@/components";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-import AddChildModal from "../AddChild";
+import AddChildModal from "./AddChild";
 import { childrenData } from "@/appState/childrenData";
-import EditPersonModal from "@/components/EditPersonModal/EditPersonModal";
-import EditChildModal from "../EditChild";
+import EditChildModal from "./EditChild";
+import NextStepButton from "@/components/NextStepButton";
 
 const ADD_ANOTHER_CHILD_MODAL = "add-another-child-modal";
 const EDIT_CHILD_MODAL = "edit-child-modal";
 
-const ChildrenListView = () => {
+const ChildrenListView = ({ slug }) => {
   const {
     will: { children },
     removeFromWill,
@@ -98,6 +98,13 @@ const ChildrenListView = () => {
         isOpen={isOpenModal(EDIT_CHILD_MODAL) && selectedChild}
         handleClose={handleCloseEditModal}
       />
+      <div>
+        <NextStepButton
+          slug={slug}
+          label={"Continue to pets"}
+          variant="filled"
+        />
+      </div>
     </>
   );
 };
