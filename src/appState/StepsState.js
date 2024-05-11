@@ -7,6 +7,8 @@ import {
   useState,
 } from "react";
 import { getLocalStorage, setLocalStorage } from "@/utils/storage";
+import { FINALIZE_WILL_STEP_INDEX, STEPS } from "./stepData";
+import { getCurrentSlugIndex } from "@/utils/step";
 
 export const initialStepsState = [];
 
@@ -25,10 +27,10 @@ export function StepProvider({ children }) {
     (id) => {
       if (selectedSteps.includes(id)) {
         setSelectedSteps(selectedSteps.filter((value) => value !== id));
-      } else {
-        const newSteps = new Set([...selectedSteps, id]);
-        setSelectedSteps([...newSteps].sort());
+        return;
       }
+      const newSteps = new Set([...selectedSteps, id]);
+      setSelectedSteps([...newSteps].sort());
     },
     [selectedSteps, setSelectedSteps]
   );
@@ -37,11 +39,37 @@ export function StepProvider({ children }) {
     setSelectedSteps(initialStepsState);
   }, [setSelectedSteps]);
 
+  const getNextStepIndex = useCallback(
+    (currentSlug) => {
+      const indexOfCurrentSlug = getCurrentSlugIndex(currentSlug);
+      if (indexOfCurrentSlug < 0) {
+        console.error("Couldn't locate step data");
+        return -1;
+      }
+
+      const nextIndex = selectedSteps.find((step) => step > indexOfCurrentSlug);
+      if (
+        indexOfCurrentSlug === STEPS.length - 1 ||
+        typeof nextIndex === "undefined"
+      ) {
+        console.log("No more steps available");
+        return FINALIZE_WILL_STEP_INDEX;
+      }
+      return nextIndex;
+    },
+    [selectedSteps]
+  );
+
   console.log("PROVIDER", { selectedSteps });
 
   const memoizedStepContextProviderValue = useMemo(
-    () => ({ selectedSteps, toggleSelectedSteps, clearSelectedSteps }),
-    [selectedSteps, toggleSelectedSteps, clearSelectedSteps]
+    () => ({
+      selectedSteps,
+      toggleSelectedSteps,
+      clearSelectedSteps,
+      getNextStepIndex,
+    }),
+    [selectedSteps, toggleSelectedSteps, clearSelectedSteps, getNextStepIndex]
   );
   return (
     <StepContext.Provider value={memoizedStepContextProviderValue}>
