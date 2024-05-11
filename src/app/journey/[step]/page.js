@@ -5,14 +5,14 @@ import { ChildrenView, PetsView, RitesView } from "@/views";
 import { childrenData } from "@/appState/childrenData";
 import { petsData } from "@/appState/petsData";
 
-const StepView = ({ slug, data }) => {
+const StepView = ({ slug }) => {
   switch (slug) {
     case "children":
       return <ChildrenView slug={slug} />;
     case "pets":
       return <PetsView slug={slug} />;
     case "rites":
-      return <RitesView data={data} />;
+      return <RitesView slug={slug} />;
     default:
       return <>Default</>;
   }
@@ -40,7 +40,7 @@ export default function Journey({ params }) {
         {stepData.description}
       </Typography>
       <Typography variant="heading">{stepData.heading}</Typography>
-      <StepView slug={params.step} data={stepData} />
+      <StepView slug={params.step} />
     </div>
   );
 }
