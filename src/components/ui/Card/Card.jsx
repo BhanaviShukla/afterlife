@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useRef, useState } from "react";
 import styles from "./cardStyles.module.css";
 import Image from "next/image";
 import { Badge, Button, Typography } from "../..";
@@ -6,15 +7,43 @@ import Check from "../Icons/Controls/Card/check.svg";
 import Plus from "../Icons/Controls/Card/plus.svg";
 import Cancel from "../Icons/Controls/cancel.svg";
 
-const CardBase = ({ imageName = "pet_bowl", style, children }) => {
+const CardBase = ({ imageName = "pet_bowl", videoName, style, children }) => {
+  const videoRef = useRef(null);
+
+  const playVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  };
+
+  const pauseAndRestartVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
+
   return (
     <div className={`${styles.base}`} style={style}>
-      <Image
-        src={`/images/${imageName}.png`}
-        alt={imageName}
-        fill
-        quality={90}
-      />
+      {!videoName && (
+        <Image
+          src={`/images/${imageName}.png`}
+          alt={imageName}
+          fill
+          quality={90}
+        />
+      )}
+
+      {videoName && (
+        <video
+          ref={videoRef}
+          src={`/videos/${videoName}.mp4`}
+          onMouseEnter={playVideo}
+          onMouseLeave={pauseAndRestartVideo}
+          onMouse
+          muted
+        ></video>
+      )}
       <div className={`${styles.contentWrapper}`}> {children}</div>
     </div>
   );
@@ -28,10 +57,18 @@ const CardSelectItem = ({
   isSelected,
   handleSelect,
   children,
+  videoName,
 }) => {
   return (
     <CardBase
-      {...{ imageName, style: { backgroundColor: `var(${backgroundColor})` } }}
+      {...{
+        imageName,
+        style: {
+          backgroundColor: `var(${backgroundColor})`,
+          overflow: "hidden",
+        },
+      }}
+      videoName={videoName}
     >
       <div className={`${styles.labelWrapper}`}>
         <div>
@@ -72,7 +109,9 @@ const CardEditItem = ({
     <CardBase
       {...{
         imageName,
-        style: { backgroundColor: `var(${backgroundColor})` },
+        style: {
+          backgroundColor: `var(${backgroundColor})`,
+        },
       }}
     >
       <Badge label={badgeText} backgroundColor={badgeColor} />

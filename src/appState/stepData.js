@@ -26,6 +26,7 @@ export const STEPS = [
     label: "Rites",
     subLabel: "Specify",
     imageName: "candle",
+    videoName: "candle",
     slug: "rites",
   },
 ];

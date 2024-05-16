@@ -21,11 +21,13 @@ const JourneySelectionView = ({ data }) => {
     <>
       <div className={styles.carouselWrapper}>
         {STEPS.map((step) => {
+          console.log("STEPS >>>", step.videoName);
           return (
             <Card.SelectItem
               key={step.id}
               backgroundColor={step.backgroundColor || "--colour-n50"}
               imageName={step.imageName}
+              videoName={step.videoName}
               isSelected={selectedSteps.includes(step.id)}
               handleSelect={() => handleCardClick(step.id)}
               subLabel={step.subLabel}
