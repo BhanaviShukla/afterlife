@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { STEPS } from "@/appState/stepData";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
+import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 
 const JourneySelectionView = ({ data }) => {
   const { selectedSteps, toggleSelectedSteps, clearSelectedSteps } = useSteps();
@@ -37,25 +38,30 @@ const JourneySelectionView = ({ data }) => {
         })}
       </div>
       <div className={styles.ctaWrapper}>
-        {selectedSteps.length ? (
-          <Button
-            variant="filled"
-            className="self-start"
-            rightIcon={<ArrowRightIcon />}
-          >
-            <Link href={`/journey/${STEPS[selectedSteps[0]].slug}`}>
-              {data.primaryCta}
-            </Link>
-          </Button>
-        ) : null}
-        <Button variant="text" italic className="self-start">
-          {data.secondaryCta}
+        <Button
+          variant="outlined"
+          className="self-start"
+          leftIcon={<ArrowLeftIcon />}
+        >
+          <Link href={`/`}>{data.secondaryCta}</Link>
         </Button>
-        {data.secondaryCta2 && (
-          <Button variant="text" italic className="self-start">
-            {data.secondaryCta2}
-          </Button>
-        )}
+        <Button
+          variant="filled"
+          className="self-start"
+          rightIcon={<ArrowRightIcon />}
+          disabled={!selectedSteps.length}
+        >
+          <Link
+            style={{ pointerEvents: selectedSteps.length ? "auto" : "none" }}
+            href={
+              selectedSteps.length
+                ? `/journey/${STEPS[selectedSteps[0]].slug}`
+                : ""
+            }
+          >
+            {data.primaryCta}
+          </Link>
+        </Button>
       </div>
     </>
   );

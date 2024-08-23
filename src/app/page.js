@@ -1,5 +1,6 @@
-import { Logo, Typography } from "@/components";
-import JourneySelectionView from "@/views/Home";
+import { Button, Logo, Typography } from "@/components";
+import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -17,8 +18,13 @@ export default function Home() {
             </Typography>
             <Typography variant="heading">{data.heading}</Typography>
           </div>
-
-          <JourneySelectionView data={data} />
+          <Button
+            variant="filled"
+            className="self-start"
+            rightIcon={<ArrowRightIcon />}
+          >
+            <Link href={`/will`}>{data.primaryCta}</Link>
+          </Button>
         </div>
       </section>
     </div>
@@ -28,10 +34,10 @@ const data = {
   title: "Planning for what comes after",
   description:
     "Creating a will isn’t about us. It’s about building shelter and protection that will endure past our lifetime for the ones we care about. Give them the security they deserve and protect them from the uncertainties life will throw at them. Will-making services, free for all.",
-  heading: "What are you looking after today?",
-  primaryCta: "Begin",
-  secondaryCta: "What do I need?",
-  secondaryCta2: "Why create a will?",
+  heading: "Create your will without a lawyer. Completely free",
+  primaryCta: "Start here",
+  // secondaryCta: "What do I need?",
+  // secondaryCta2: "Why create a will?",
   requirementsModal: {
     title: "Before you start, make sure you meet the following requirements:",
     description: {
