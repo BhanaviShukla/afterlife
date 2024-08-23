@@ -3,13 +3,19 @@ import { useSteps } from "@/appState/StepsState";
 import { Button, Card } from "@/components";
 import styles from "./homeViewStyles.module.css";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { STEPS } from "@/appState/stepData";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
+import DisclaimerModal from "./ModalViews/DisclaimerModal";
+import { ManagedUI } from "@/appState/UIState";
+
+const DISCLAIMER_MODAL = "disclaimer-modal";
 
 const JourneySelectionView = ({ data }) => {
   const { selectedSteps, toggleSelectedSteps, clearSelectedSteps } = useSteps();
+
+  const { isOpenModal, setOpenModal } = useContext(ManagedUI);
 
   useEffect(() => {
     clearSelectedSteps();
@@ -50,19 +56,17 @@ const JourneySelectionView = ({ data }) => {
           className="self-start"
           rightIcon={<ArrowRightIcon />}
           disabled={!selectedSteps.length}
+          onClick={() => setOpenModal(DISCLAIMER_MODAL)}
         >
-          <Link
-            style={{ pointerEvents: selectedSteps.length ? "auto" : "none" }}
-            href={
-              selectedSteps.length
-                ? `/journey/${STEPS[selectedSteps[0]].slug}`
-                : ""
-            }
-          >
-            {data.primaryCta}
-          </Link>
+          {data.primaryCta}
         </Button>
       </div>
+      <DisclaimerModal
+        id={DISCLAIMER_MODAL}
+        isOpen={isOpenModal(DISCLAIMER_MODAL)}
+        handleClose={() => setOpenModal(undefined)}
+        nextLink={selectedSteps.length && `/will/about-you`}
+      />
     </>
   );
 };
