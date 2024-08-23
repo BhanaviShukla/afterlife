@@ -8,7 +8,7 @@ import PlusIcon from "@/components/ui/Icons/Controls/Buttons/plus-button-white.s
 import { ManagedUI } from "@/appState/UIState";
 import { petsData } from "@/appState/petsData";
 import AddPetModal from "./AddPet";
-import NextStepButton from "@/components/NextStepButton";
+import { SkipStepButton } from "@/components/NextStepButton";
 
 const ADD_PET_MODAL = "add_pet_modal";
 
@@ -41,7 +41,7 @@ const PetsView = ({ slug }) => {
       >
         {data.primaryCta}
       </Button>
-      <NextStepButton slug={slug} />
+      <SkipStepButton slug={slug} />
     </div>
   );
 };
