@@ -1,33 +1,58 @@
 "use client";
 import { Button, TextInput } from "@/components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
-import Link from "next/link";
 import { STEPS } from "@/appState/stepData";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSteps } from "@/appState/StepsState";
 import { useWill } from "@/appState/WillState";
+
+// developer notes:
+// use: ?userId=<userId> for EDIT VIEW
 
 const AboutYouForm = ({ ...props }) => {
   console.log({ props });
   const { fields, primaryCta, secondaryCta } = formData;
   const { userName } = fields;
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("id");
 
-  const [userDetails, setUserDetails] = useState();
+  const [user, setUser] = useState();
 
   const { selectedSteps } = useSteps();
   const { addToWill, getWillEntry, patchWillEntry } = useWill();
-  console.log({ selectedSteps });
 
   const handleOnSubmit = async (formData) => {
     console.log(formData);
     const nextLink = `/journey/${STEPS[selectedSteps[0]].slug}`;
     console.log({ nextLink });
 
-    router.push(nextLink);
+    const newUser = formData.keys().reduce((prevValue, userKey) => {
+      return {
+        ...prevValue,
+        [userKey]: formData.get(userKey),
+      };
+    }, {});
+    console.log("USER -> TO WILL", newUser);
+    const newUserId = addToWill("user", newUser);
+    if (newUserId) {
+      console.log("New user added!", newUserId);
+      router.push(nextLink);
+    }
   };
+
+  useEffect(() => {
+    console.log({ userId });
+    if (!userId) return;
+    const userWillEntry = getWillEntry("user", userId);
+    if (!userId) {
+      console.error("Couldn't find person in the will");
+      return;
+    }
+    setUser(userWillEntry);
+  }, [userId, getWillEntry]);
 
   return (
     <form id="about-you-form" action={handleOnSubmit}>
@@ -35,7 +60,7 @@ const AboutYouForm = ({ ...props }) => {
       <TextInput
         key={userName.id}
         {...userName}
-        defaultValue={userDetails ? userDetails[stateKey] : undefined}
+        defaultValue={user ? user[userName.stateKey] : undefined}
       />
       <div className="flex">
         <Button
@@ -73,7 +98,7 @@ const formData = {
 
   fields: {
     userName: {
-      id: "userNme",
+      id: "userName",
       placeholder: "Your full name (as per passport)",
       type: "text",
       required: true,

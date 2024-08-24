@@ -9,6 +9,7 @@ import {
 import { getLocalStorage, setLocalStorage } from "@/utils/storage";
 
 export const initialWillState = {
+  user: [],
   children: [],
   pets: [],
   assets: [],
