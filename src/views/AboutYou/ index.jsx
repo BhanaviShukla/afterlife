@@ -5,7 +5,7 @@ import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-rig
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import Link from "next/link";
 import { STEPS } from "@/appState/stepData";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useSteps } from "@/appState/StepsState";
 import { useWill } from "@/appState/WillState";
 
@@ -13,7 +13,7 @@ const AboutYouForm = ({ ...props }) => {
   console.log({ props });
   const { fields, primaryCta, secondaryCta } = formData;
   const { userName } = fields;
-  const router = useRouter;
+  const router = useRouter();
 
   const [userDetails, setUserDetails] = useState();
 
@@ -22,7 +22,11 @@ const AboutYouForm = ({ ...props }) => {
   console.log({ selectedSteps });
 
   const handleOnSubmit = async (formData) => {
+    console.log(formData);
     const nextLink = `/journey/${STEPS[selectedSteps[0]].slug}`;
+    console.log({ nextLink });
+
+    router.push(nextLink);
   };
 
   return (
@@ -38,7 +42,10 @@ const AboutYouForm = ({ ...props }) => {
           variant="outlined"
           className="self-start"
           leftIcon={<ArrowLeftIcon />}
-          onClick={() => router.back()}
+          onClick={() => {
+            console.log("back clicked");
+            router.back();
+          }}
         >
           {secondaryCta}
         </Button>
@@ -46,10 +53,12 @@ const AboutYouForm = ({ ...props }) => {
           variant="filled"
           className="self-start"
           rightIcon={<ArrowRightIcon />}
-          onClick={handleOnSubmit}
           type="submit"
           value="submit"
-        />
+          id={`about-user-submit-button`}
+        >
+          {primaryCta}
+        </Button>
       </div>
     </form>
   );

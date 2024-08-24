@@ -15,10 +15,12 @@ const Button = ({
   italic,
   leftIcon,
   rightIcon,
+  type = "button",
   ...props
 }) => {
   return (
     <button
+      type={type}
       {...props}
       className={`${styles.button} ${styles[variant]} ${
         italic && styles.italic
