@@ -25,7 +25,7 @@ export const STEPS = [
   {
     id: 3,
     label: "Assets & Belongings",
-    subLabel: "",
+    subLabel: "Distribute",
     imageName: "pot",
     slug: "assets",
   },
@@ -33,8 +33,15 @@ export const STEPS = [
     id: 4,
     label: "Rites",
     subLabel: "Specify",
-    imageName: "candle",
+    imageName: "frame",
     slug: "rites",
+  },
+  {
+    id: 5,
+    label: "Dashboard",
+    subLabel: "",
+    imageName: "candle",
+    slug: "dashboard",
   },
 ];
 
