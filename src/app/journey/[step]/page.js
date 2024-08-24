@@ -4,9 +4,13 @@ import { getImageFromSlug } from "@/utils/step";
 import { ChildrenView, PetsView, RitesView } from "@/views";
 import { childrenData } from "@/appState/childrenData";
 import { petsData } from "@/appState/petsData";
+import { aboutYouData } from "@/appState/aboutYouData";
+import AboutYouForm from "@/views/AboutYou/ index";
 
 const StepView = ({ slug, data }) => {
   switch (slug) {
+    case "about-you":
+      return <AboutYouForm />;
     case "children":
       return <ChildrenView slug={slug} />;
     case "pets":
@@ -23,10 +27,18 @@ export default function Journey({ params }) {
   const stepData = data[params.step];
 
   return (
-    <div className="max-w-[75%]">
+    <div className="flex justify-between gap-6">
+      <div className="max-w-[65%] align-middle grow">
+        <Typography variant="title-small">{stepData.title}</Typography>
+        <Typography className="my-10 leading-8">
+          {stepData.description}
+        </Typography>
+        <Typography variant="heading">{stepData.heading}</Typography>
+        <StepView slug={params.step} data={stepData} />
+      </div>
       <div
-        style={{ width: 360, height: 360, position: "relative" }}
-        className="w-[360px] h-[360px] relative"
+        style={{ width: 474, height: 474, position: "relative" }}
+        className="max-w-[30%] h-[474px] relative"
       >
         <Image
           src={`/images/${imageName}.png`}
@@ -35,17 +47,12 @@ export default function Journey({ params }) {
           className="object-contain"
         />
       </div>
-      <Typography variant="title-small">{stepData.title}</Typography>
-      <Typography className="my-10 leading-8">
-        {stepData.description}
-      </Typography>
-      <Typography variant="heading">{stepData.heading}</Typography>
-      <StepView slug={params.step} data={stepData} />
     </div>
   );
 }
 
 const data = {
+  "about-you": aboutYouData,
   children: childrenData,
   pets: petsData,
   rites: {

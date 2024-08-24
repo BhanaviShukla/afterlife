@@ -1,6 +1,14 @@
 export const STEPS = [
   {
     id: 0,
+    label: "About",
+    subLabel: "",
+    imageName: "pot",
+    backgroundColor: "--colour-n50",
+    slug: "about-you",
+  },
+  {
+    id: 1,
     label: "Children",
     subLabel: "Guardianship for",
     imageName: "backpack",
@@ -8,21 +16,21 @@ export const STEPS = [
     slug: "children",
   },
   {
-    id: 1,
+    id: 2,
     label: "Pets",
     subLabel: "Caretaker for",
     imageName: "pet_bowl",
     slug: "pets",
   },
   {
-    id: 2,
+    id: 3,
     label: "Assets & Belongings",
     subLabel: "",
     imageName: "pot",
     slug: "assets",
   },
   {
-    id: 3,
+    id: 4,
     label: "Rites",
     subLabel: "Specify",
     imageName: "candle",

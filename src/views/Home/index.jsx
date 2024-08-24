@@ -28,6 +28,7 @@ const JourneySelectionView = ({ data }) => {
     <>
       <div className={styles.carouselWrapper}>
         {STEPS.map((step) => {
+          if (step.id === 0) return <></>;
           return (
             <Card.SelectItem
               key={step.id}
@@ -65,7 +66,7 @@ const JourneySelectionView = ({ data }) => {
         id={DISCLAIMER_MODAL}
         isOpen={isOpenModal(DISCLAIMER_MODAL)}
         handleClose={() => setOpenModal(undefined)}
-        nextLink={selectedSteps.length && `/will/about-you`}
+        nextLink={selectedSteps.length && `/journey/about-you`}
       />
     </>
   );

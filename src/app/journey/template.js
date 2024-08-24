@@ -9,14 +9,11 @@ export default function Template({ children }) {
         </a>
         <Nav />
       </div>
-
       <section
-        className="flex flex-col justify-around grow"
+        className="flex flex-col justify-center"
         id="main-content-journey"
       >
-        <div className="flex flex-col justify-between grow gap-6">
-          {children}
-        </div>
+        {children}
       </section>
     </div>
   );

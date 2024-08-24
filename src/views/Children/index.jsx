@@ -9,8 +9,6 @@ import AddChildModal from "./AddChild";
 import { childrenData } from "@/appState/childrenData";
 import { STEPS, getNextStepIndex } from "@/appState/stepData";
 import PlusIcon from "@/components/ui/Icons/Controls/Buttons/plus-button-white.svg";
-import Link from "next/link";
-import { useSteps } from "@/appState/StepsState";
 import NextStepButton from "@/components/NextStepButton";
 
 const ADD_CHILD_MODAL = "add-child-modal";

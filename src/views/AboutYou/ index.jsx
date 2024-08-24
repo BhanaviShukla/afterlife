@@ -4,15 +4,20 @@ import { useState } from "react";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import Link from "next/link";
+import { STEPS } from "@/appState/stepData";
 import { useRouter } from "next/router";
+import { useSteps } from "@/appState/StepsState";
 
-const AboutYouForm = ({ primaryCta, secondaryCta }) => {
-  const { fields } = formData;
+const AboutYouForm = () => {
+  const { fields, primaryCta, secondaryCta } = formData;
   const router = useRouter;
 
   const [userDetails, setUserDetails] = useState();
+
+  const { selectedSteps } = useSteps();
+  console.log({ selectedSteps });
   return (
-    <form id="about-you-form" action={"something"}>
+    <form id="about-you-form">
       {fields?.length &&
         fields.map(({ component, stateKey, ...props }) => (
           <TextInput
@@ -35,7 +40,9 @@ const AboutYouForm = ({ primaryCta, secondaryCta }) => {
           className="self-start"
           rightIcon={<ArrowRightIcon />}
         >
-          <Link href={`/`}>{primaryCta}</Link>
+          <Link href={`/journey/${STEPS[selectedSteps[0]].slug}`}>
+            {primaryCta}
+          </Link>
         </Button>
       </div>
     </form>
@@ -43,6 +50,12 @@ const AboutYouForm = ({ primaryCta, secondaryCta }) => {
 };
 
 const formData = {
+  title: "First, tell us about yourself",
+  description: "",
+  primaryCta: "Next",
+  secondaryCta: "",
+  imageName: "pot",
+
   fields: [
     {
       id: "user-name",
