@@ -7,25 +7,32 @@ import Link from "next/link";
 import { STEPS } from "@/appState/stepData";
 import { useRouter } from "next/router";
 import { useSteps } from "@/appState/StepsState";
+import { useWill } from "@/appState/WillState";
 
-const AboutYouForm = () => {
+const AboutYouForm = ({ ...props }) => {
+  console.log({ props });
   const { fields, primaryCta, secondaryCta } = formData;
+  const { userName } = fields;
   const router = useRouter;
 
   const [userDetails, setUserDetails] = useState();
 
   const { selectedSteps } = useSteps();
+  const { addToWill, getWillEntry, patchWillEntry } = useWill();
   console.log({ selectedSteps });
+
+  const handleOnSubmit = async (formData) => {
+    const nextLink = `/journey/${STEPS[selectedSteps[0]].slug}`;
+  };
+
   return (
-    <form id="about-you-form">
-      {fields?.length &&
-        fields.map(({ component, stateKey, ...props }) => (
-          <TextInput
-            key={props.id}
-            {...props}
-            defaultValue={userDetails ? userDetails[stateKey] : undefined}
-          />
-        ))}
+    <form id="about-you-form" action={handleOnSubmit}>
+      {/* userName */}
+      <TextInput
+        key={userName.id}
+        {...userName}
+        defaultValue={userDetails ? userDetails[stateKey] : undefined}
+      />
       <div className="flex">
         <Button
           variant="outlined"
@@ -39,11 +46,10 @@ const AboutYouForm = () => {
           variant="filled"
           className="self-start"
           rightIcon={<ArrowRightIcon />}
-        >
-          <Link href={`/journey/${STEPS[selectedSteps[0]].slug}`}>
-            {primaryCta}
-          </Link>
-        </Button>
+          onClick={handleOnSubmit}
+          type="submit"
+          value="submit"
+        />
       </div>
     </form>
   );
@@ -56,16 +62,15 @@ const formData = {
   secondaryCta: "",
   imageName: "pot",
 
-  fields: [
-    {
-      id: "user-name",
+  fields: {
+    userName: {
+      id: "userNme",
       placeholder: "Your full name (as per passport)",
-      component: TextInput,
       type: "text",
       required: true,
       stateKey: "name",
     },
-  ],
+  },
 };
 
 export default AboutYouForm;

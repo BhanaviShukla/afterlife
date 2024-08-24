@@ -7,24 +7,28 @@ import { petsData } from "@/appState/petsData";
 import { aboutYouData } from "@/appState/aboutYouData";
 import AboutYouForm from "@/views/AboutYou/ index";
 
-const StepView = ({ slug, data }) => {
-  switch (slug) {
+const StepView = ({ ...props }) => {
+  console.log({ props });
+  switch (props.slug) {
     case "about-you":
-      return <AboutYouForm />;
+      return <AboutYouForm {...props} />;
     case "children":
-      return <ChildrenView slug={slug} />;
+      return <ChildrenView {...props} />;
     case "pets":
-      return <PetsView slug={slug} />;
+      return <PetsView {...props} />;
     case "rites":
-      return <RitesView data={data} />;
+      return <RitesView {...props} />;
     default:
       return <>Default</>;
   }
 };
 
 export default function Journey({ params }) {
-  const imageName = getImageFromSlug(params.step);
-  const stepData = data[params.step];
+  console.log({ params });
+  const slug = params.step[0];
+  const imageName = getImageFromSlug(slug);
+  const stepData = data[slug];
+  console.log({ slug });
 
   return (
     <div className="flex justify-between gap-6">
@@ -34,7 +38,7 @@ export default function Journey({ params }) {
           {stepData.description}
         </Typography>
         <Typography variant="heading">{stepData.heading}</Typography>
-        <StepView slug={params.step} data={stepData} />
+        <StepView slug={slug} data={stepData} {...params} />
       </div>
       <div
         style={{ width: 474, height: 474, position: "relative" }}
