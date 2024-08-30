@@ -7,6 +7,7 @@ import { STEPS } from "@/appState/stepData";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSteps } from "@/appState/StepsState";
 import { useWill } from "@/appState/WillState";
+import { TODAY } from "@/appState/childrenData";
 
 // developer notes:
 // use: ?userId=<userId> for EDIT VIEW
@@ -14,7 +15,7 @@ import { useWill } from "@/appState/WillState";
 const AboutYouForm = ({ ...props }) => {
   console.log({ props });
   const { fields, primaryCta, secondaryCta } = formData;
-  const { userName } = fields;
+  const { userName, email, dob } = fields;
   const router = useRouter();
   const searchParams = useSearchParams();
   const userId = searchParams.get("id");
@@ -62,6 +63,24 @@ const AboutYouForm = ({ ...props }) => {
         {...userName}
         defaultValue={user ? user[userName.stateKey] : undefined}
       />
+      {/* email */}
+      <TextInput
+        key={email.id}
+        {...email}
+        defaultValue={user ? user[email.stateKey] : undefined}
+      />
+      {/* date-of-birth */}
+      <TextInput
+        key={dob.id}
+        {...dob}
+        defaultValue={user ? user[dob.stateKey] : undefined}
+      />
+      {/* date-of-birth */}
+      <TextInput
+        key={dob.id}
+        {...dob}
+        defaultValue={user ? user[email.stateKey] : undefined}
+      />
       <div className="flex">
         <Button
           variant="outlined"
@@ -103,6 +122,21 @@ const formData = {
       type: "text",
       required: true,
       stateKey: "name",
+    },
+    email: {
+      id: "email",
+      placeholder: "Your email address",
+      type: "email",
+      required: true,
+      stateKey: "email",
+    },
+    dob: {
+      id: "dob",
+      placeholder: "Birthday",
+      type: "date",
+      required: true,
+      stateKey: "dob",
+      max: TODAY,
     },
   },
 };

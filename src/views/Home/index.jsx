@@ -28,7 +28,7 @@ const JourneySelectionView = ({ data }) => {
     <>
       <div className={styles.carouselWrapper}>
         {STEPS.map((step) => {
-          if (step.id === 0) return <></>;
+          if (step.id === 0 || step.id > 4) return <></>;
           return (
             <Card.SelectItem
               key={step.id}
