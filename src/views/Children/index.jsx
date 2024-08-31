@@ -4,47 +4,92 @@ import { ManagedUI } from "@/appState/UIState";
 import { useContext, useEffect, useMemo } from "react";
 import { useWill } from "@/appState/WillState";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import AddChildModal from "./AddChild";
-import { childrenData } from "@/appState/childrenData";
+import { childrenData, childrenNestedViews } from "@/appState/childrenData";
 import { STEPS, getNextStepIndex } from "@/appState/stepData";
 import PlusIcon from "@/components/ui/Icons/Controls/Buttons/plus-button-white.svg";
 import NextStepButton from "@/components/NextStepButton";
+import CountView from "./CountView";
+import DetailsView from "./DetailsView";
+import GuardianView from "./GuardianView";
+import ConfirmView from "./ConfirmView";
 
 const ADD_CHILD_MODAL = "add-child-modal";
 
-const ChildrenView = ({ slug, ...props }) => {
-  console.log({ props, slug });
-  const { isOpenModal, setOpenModal } = useContext(ManagedUI);
-  const {
-    will: { children },
-  } = useWill();
+const NestedChildrenView = ({
+  nestedSlug,
+  nestedProps,
+  searchParams,
+  pathname,
+}) => {
+  console.log({ nestedSlug, nestedProps });
+  switch (nestedSlug) {
+    case childrenNestedViews.COUNT:
+      return (
+        <CountView
+          pathname={pathname}
+          searchParams={searchParams}
+          {...nestedProps}
+        />
+      );
+    case childrenNestedViews.DETAILS:
+      return (
+        <DetailsView
+          pathname={pathname}
+          searchParams={searchParams}
+          {...nestedProps}
+        />
+      );
+    case childrenNestedViews.GUARDIAN:
+      return (
+        <GuardianView
+          pathname={pathname}
+          searchParams={searchParams}
+          {...nestedProps}
+        />
+      );
+    case childrenNestedViews.CONFIRM:
+      return (
+        <ConfirmView
+          pathname={pathname}
+          searchParams={searchParams}
+          {...nestedProps}
+        />
+      );
+    default:
+      return (
+        <CountView
+          pathname={pathname}
+          searchParams={searchParams}
+          {...nestedProps}
+        />
+      );
+  }
+};
+
+const ChildrenView = ({ slug, step, data, ...props }) => {
+  console.log({ props, slug, step, data });
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const { addChildView: data } = childrenData;
+  const nestedSlug = step[step.length - 1];
+  console.log({ nestedSlug });
 
   useEffect(() => {
-    if (children && children.length) router.replace(`${pathname}/modify`);
-  }, [children, pathname, router]);
-
-  const nextStepIndex = useMemo(() => getNextStepIndex(slug), [slug]);
-  console.log({ nextStepIndex, data: STEPS[nextStepIndex] });
+    if (step?.length && step[step.length - 1] === "children")
+      router.replace(`${pathname}/count`);
+  }, [step, pathname, router]);
 
   return (
     <div className="flex gap-6">
-      <AddChildModal
-        id={ADD_CHILD_MODAL}
-        isOpen={isOpenModal(ADD_CHILD_MODAL)}
-        setOpen={setOpenModal}
+      <NestedChildrenView
+        nestedSlug={nestedSlug}
+        nestedProps={data[nestedSlug]}
+        searchParams={searchParams}
+        pathname={pathname}
       />
-      <Button
-        onClick={() => setOpenModal(ADD_CHILD_MODAL)}
-        rightIcon={<PlusIcon />}
-      >
-        {data.primaryCta}
-      </Button>
-      <NextStepButton slug={slug} label={data.secondaryCta} />
     </div>
   );
 };

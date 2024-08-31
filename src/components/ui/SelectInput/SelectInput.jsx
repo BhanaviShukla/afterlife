@@ -12,7 +12,7 @@ const SelectInput = ({
   return (
     <div className={`form__group ${wrapperClassName}`}>
       <select
-        key={stateKey}
+        key={stateKey || id}
         id={id}
         name={id}
         className="form__field"

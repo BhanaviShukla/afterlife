@@ -1,17 +1,38 @@
 export const TODAY = new Date().toISOString().split("T")[0];
+export const childrenNestedViews = {
+  COUNT: "count",
+  DETAILS: "details",
+  GUARDIAN: "guardian",
+  CONFIRM: "confirm",
+};
+
 export const childrenCountData = {
-  title: "Do you have children that require to be put under guardianship?",
+  title: "",
   description: "",
-  countForm: {
-    yes: "I have {{count}} child(ren) under the age of 21.",
-    no: "I do not have any children under the age of 21.",
-  },
-  views: {
-    "/": "count",
-    "/details": "details",
-    "/guardian": "guardian",
-    "/confirm": "confirmation",
-    "/edit": "edit",
+  [childrenNestedViews.COUNT]: {
+    title: "Do you have children that require to be put under guardianship?",
+    description: "",
+    formData: {
+      answer: {
+        type: "select",
+        id: "answer",
+        value: "yes",
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
+      count: {
+        type: "number",
+        id: "count",
+        max: 100,
+      },
+      sentence: {
+        yes: "I have {{count}} child(ren) under the age of 21.",
+        no: "I do not have any children under the age of 21.",
+      },
+    },
+    nextLink: `/${childrenNestedViews.DETAILS}?count=`, // insert count here
   },
 };
 export const childrenData = {
