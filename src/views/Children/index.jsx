@@ -77,11 +77,13 @@ const ChildrenView = ({ slug, step, data, ...props }) => {
   const nestedSlug = step[step.length - 1];
   console.log({ nestedSlug });
 
-  useEffect(() => {
-    if (step?.length && step[step.length - 1] === "children")
-      router.replace(`${pathname}/count`);
-  }, [step, pathname, router]);
+  const isNotRedirected = step?.length && step[step.length - 1] === "children";
 
+  useEffect(() => {
+    if (isNotRedirected) router.replace(`${pathname}/count`);
+  }, [isNotRedirected, pathname, router]);
+
+  if (isNotRedirected) return <></>;
   return (
     <div className="flex gap-6">
       <NestedChildrenView

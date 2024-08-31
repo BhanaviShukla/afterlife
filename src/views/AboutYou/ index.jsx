@@ -32,18 +32,28 @@ const AboutYouForm = ({ ...props }) => {
     const nextLink = `/journey/${STEPS[selectedSteps[0]].slug}`;
     console.log({ nextLink });
 
-    const newUser = formData.keys().reduce((prevValue, userKey) => {
-      return {
-        ...prevValue,
-        [userKey]: formData.get(userKey),
-      };
-    }, {});
-    console.log("USER -> TO WILL", newUser);
-    const newUserId = addToWill("user", newUser);
-    if (newUserId) {
+    if (userId) {
+      const userFromWill = getWillEntry("user", userId);
+      const newUser = formData.keys().reduce((prevValue, userKey) => {
+        return {
+          ...prevValue,
+          [userKey]: formData.get(userKey),
+        };
+      }, userFromWill);
+      await patchWillEntry("user", userId, newUser);
+    } else {
+      const newUser = formData.keys().reduce((prevValue, userKey) => {
+        return {
+          ...prevValue,
+          [userKey]: formData.get(userKey),
+        };
+      }, {});
+      console.log("USER -> TO WILL", newUser);
+      const newUserId = addToWill("user", newUser);
       console.log("New user added!", newUserId);
-      router.push(nextLink);
     }
+
+    router.push(nextLink);
   };
 
   useEffect(() => {

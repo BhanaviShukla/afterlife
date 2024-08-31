@@ -16,23 +16,28 @@ export const childrenCountData = {
       answer: {
         type: "select",
         id: "answer",
-        value: "yes",
+        defaultValue: "yes",
+        required: true,
         options: [
           { label: "Yes", value: "yes" },
           { label: "No", value: "no" },
         ],
       },
       count: {
-        type: "number",
+        required: true,
+        type: "select",
         id: "count",
         max: 100,
       },
       sentence: {
-        yes: "I have {{count}} child(ren) under the age of 21.",
+        yes: "I have {{count}} {{child}} under the age of 21.",
         no: "I do not have any children under the age of 21.",
       },
     },
     nextLink: `/${childrenNestedViews.DETAILS}?count=`, // insert count here
+    backLink: `/journey/about-you?userId=`, // insert userId here
+    primaryCta: "Next",
+    secondaryCta: "",
   },
 };
 export const childrenData = {

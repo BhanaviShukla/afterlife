@@ -71,7 +71,7 @@ nav a.disabled {
   margin: 0.75rem 0;
 }
 
-.form__field {
+.form__field,.form__field_select__control {
   font-family: inherit;
   width: 100%;
   border: 0;
@@ -100,7 +100,7 @@ nav a.disabled {
   background-color: var(--colour-white);
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.05);
   border-radius: 0px 0px 8px 8px;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 1rem;
 }
 .form__field_select__option {
   margin: 1rem 0;
