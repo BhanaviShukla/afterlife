@@ -13,8 +13,7 @@ import NextStepButton from "@/components/NextStepButton";
 
 const ADD_CHILD_MODAL = "add-child-modal";
 
-const ChildrenView = ({ slug, ...props }) => {
-  console.log({ props, slug });
+const ChildrenView = ({ slug }) => {
   const { isOpenModal, setOpenModal } = useContext(ManagedUI);
   const {
     will: { children },

@@ -25,6 +25,7 @@ const EditableSelectInput = ({
   options = [],
   stateKey,
   onEdit,
+  isSearchable = false,
   onChange,
   ...inputProps
 }) => {
@@ -45,12 +46,16 @@ const EditableSelectInput = ({
         unstyled
         className="form__field"
         classNamePrefix="form__field_select"
-        // isSearchable
-        components={{ Control: SelectLabel }}
+        isSearchable={isSearchable}
+        {...(typeof onEdit !== "undefined" && {
+          components: { Control: SelectLabel },
+        })}
         onEdit={onEdit}
         {...inputProps}
-        value={options[selectedIndex] || null}
-        onChange={handleChange}
+        {...(onChange && {
+          onChange: handleChange,
+          value: options[selectedIndex] || null,
+        })}
       />
     </div>
   );

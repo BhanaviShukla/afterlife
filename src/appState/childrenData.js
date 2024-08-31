@@ -1,4 +1,19 @@
 export const TODAY = new Date().toISOString().split("T")[0];
+export const childrenCountData = {
+  title: "Do you have children that require to be put under guardianship?",
+  description: "",
+  countForm: {
+    yes: "I have {{count}} child(ren) under the age of 21.",
+    no: "I do not have any children under the age of 21.",
+  },
+  views: {
+    "/": "count",
+    "/details": "details",
+    "/guardian": "guardian",
+    "/confirm": "confirmation",
+    "/edit": "edit",
+  },
+};
 export const childrenData = {
   title: "About your children",
   description:

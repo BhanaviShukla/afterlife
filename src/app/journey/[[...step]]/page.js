@@ -2,7 +2,7 @@ import { Typography } from "@/components";
 import Image from "next/image";
 import { getImageFromSlug } from "@/utils/step";
 import { ChildrenView, PetsView, RitesView } from "@/views";
-import { childrenData } from "@/appState/childrenData";
+import { childrenCountData } from "@/appState/childrenData";
 import { petsData } from "@/appState/petsData";
 import { aboutYouData } from "@/appState/aboutYouData";
 import AboutYouForm from "@/views/AboutYou/ index";
@@ -57,7 +57,7 @@ export default function Journey({ params }) {
 
 const data = {
   "about-you": aboutYouData,
-  children: childrenData,
+  children: childrenCountData,
   pets: petsData,
   assets: {
     title: "assets and belongings",

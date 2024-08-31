@@ -1,6 +1,6 @@
 "use client";
-import { Button, TextInput } from "@/components";
-import { useEffect, useState } from "react";
+import { Button, EditableSelectInput, TextInput } from "@/components";
+import { useEffect, useMemo, useState } from "react";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import { STEPS } from "@/appState/stepData";
@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSteps } from "@/appState/StepsState";
 import { useWill } from "@/appState/WillState";
 import { TODAY } from "@/appState/childrenData";
+import countryList from "react-select-country-list";
 
 // developer notes:
 // use: ?userId=<userId> for EDIT VIEW
@@ -15,10 +16,11 @@ import { TODAY } from "@/appState/childrenData";
 const AboutYouForm = ({ ...props }) => {
   console.log({ props });
   const { fields, primaryCta, secondaryCta } = formData;
-  const { userName, email, dob } = fields;
+  const { userName, email, dob, citizenship, idNumber } = fields;
   const router = useRouter();
   const searchParams = useSearchParams();
   const userId = searchParams.get("id");
+  const countryOptions = useMemo(() => countryList().getData(), []);
 
   const [user, setUser] = useState();
 
@@ -75,13 +77,20 @@ const AboutYouForm = ({ ...props }) => {
         {...dob}
         defaultValue={user ? user[dob.stateKey] : undefined}
       />
-      {/* date-of-birth */}
-      <TextInput
-        key={dob.id}
-        {...dob}
-        defaultValue={user ? user[email.stateKey] : undefined}
+      {/* Citizenship */}
+      <EditableSelectInput
+        key={citizenship.id}
+        {...citizenship}
+        options={countryOptions}
+        defaultValue={user ? user[citizenship.stateKey] : undefined}
       />
-      <div className="flex">
+      {/* identification */}
+      <TextInput
+        key={idNumber.id}
+        {...idNumber}
+        defaultValue={user ? user[idNumber.stateKey] : undefined}
+      />
+      <div className="flex mt-14 gap-4">
         <Button
           variant="outlined"
           className="self-start"
@@ -137,6 +146,21 @@ const formData = {
       required: true,
       stateKey: "dob",
       max: TODAY,
+    },
+    citizenship: {
+      id: "citizenship",
+      placeholder: "Citizenship",
+      type: "select",
+      stateKey: "citizenship",
+      isSearchable: true,
+      required: true,
+    },
+    idNumber: {
+      id: "idNumber",
+      placeholder: "NRIC or Passport number",
+      type: "text",
+      required: true,
+      maxLength: 32,
     },
   },
 };
