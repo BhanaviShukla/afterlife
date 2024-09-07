@@ -59,7 +59,6 @@ nav a.disabled {
  -webkit-overflow-scrolling: touch;
  -ms-overflow-style: -ms-autohiding-scrollbar; 
  scroll-snap-type: x mandatory;
-
 }
 
 
@@ -126,3 +125,65 @@ label.form__label,
 .form__field:focus {
   border-bottom: 1px solid #009788;
 }
+
+/* Selector wrapper */
+.selector {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+}
+
+/* handling the browser's default checkbox */
+.selector input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* creating a custom checkbox */
+.selector__checkmark {
+  position: absolute;
+  border-radius: 100%;
+  height: 100%;
+  width: 100%;
+  padding: 20%;
+  background-color: var(--colour-content-disabled);
+
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+/* When the checkbox is checked, add the theme background */
+.selector input:checked ~ .selector__checkmark {
+  background-color: var(--colour-g300);
+}
+
+/* Show the checkmark when checked */
+.selector input:checked ~ .selector__checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.selector .selector__checkmark:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  display: none;
+  background-size: contain;
+  background-image: url('data:image/svg+xml;utf8,<svg width="10" height="9" viewBox="0 0 10 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.916748 5.08334L3.25008 7.41668L9.08341 1.58334" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+  background-repeat: no-repeat ;
+  background-position: bottom center;
+}
+
+

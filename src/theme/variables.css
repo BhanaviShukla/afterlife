@@ -26,6 +26,8 @@
     /* theme - Status - negative */
     --colour-status-d100: #E19389;
     --colour-status-d300: #B93523;
+    /* theme - Content - disab;ed */
+    --colour-content-disabled: #979797;
 
     /* theme - unit spacer */
     --dimensions-unit: 8px;

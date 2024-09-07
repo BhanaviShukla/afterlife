@@ -7,6 +7,7 @@ import LinkButton from "./ui/Button/LinkButton";
 import Logo from "./ui/Logo/logo";
 import Modal from "./ui/Modal/Modal";
 import SelectInput from "./ui/SelectInput/SelectInput";
+import Selector from "./ui/Selector/Selector";
 import TextInput from "./ui/TextInput/TextInput";
 import Typography from "./ui/Typography/typography";
 
@@ -23,6 +24,7 @@ export {
   EditableSelectInput,
   LinkButton,
   SelectInput,
+  Selector,
   TextInput,
   Typography,
 };

@@ -1,9 +1,7 @@
 import React from "react";
 import styles from "./cardStyles.module.css";
 import Image from "next/image";
-import { Badge, Button, Typography } from "../..";
-import Check from "../Icons/Controls/Card/check.svg";
-import Plus from "../Icons/Controls/Card/plus.svg";
+import { Badge, Button, Selector, Typography } from "../..";
 import Cancel from "../Icons/Controls/cancel.svg";
 
 const CardBase = ({ imageName = "pet_bowl", style, children }) => {
@@ -21,6 +19,7 @@ const CardBase = ({ imageName = "pet_bowl", style, children }) => {
 };
 
 const CardSelectItem = ({
+  id,
   imageName = "pet_bowl",
   backgroundColor,
   label,
@@ -42,16 +41,13 @@ const CardSelectItem = ({
         </div>
 
         {/* {icon here} */}
-        <div
-          className={`${styles.iconWrapper} ${
-            isSelected ? styles.iconSelected : styles.iconDefault
-          }`}
-          onClick={handleSelect}
-          role="button"
-          tabIndex={0}
-        >
-          {isSelected ? <Check /> : <Plus />}
-        </div>
+        <Selector
+          onToggleSelect={handleSelect}
+          isSelected={isSelected}
+          id={`selector-${id}`}
+          width={32}
+          height={32}
+        />
       </div>
     </CardBase>
   );

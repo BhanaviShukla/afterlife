@@ -36,6 +36,7 @@ const JourneySelectionView = ({ data }) => {
           return (
             <Card.SelectItem
               key={step.id}
+              id={step.id}
               backgroundColor={step.backgroundColor || "--colour-n50"}
               imageName={step.imageName}
               isSelected={selectedSteps.includes(step.id)}
