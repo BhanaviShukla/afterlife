@@ -16,14 +16,6 @@ const NestedChildrenView = ({
 }) => {
   console.log({ nestedSlug, nestedProps });
   switch (nestedSlug) {
-    case childrenNestedViews.COUNT:
-      return (
-        <CountView
-          pathname={pathname}
-          searchParams={searchParams}
-          {...nestedProps}
-        />
-      );
     case childrenNestedViews.DETAILS:
       return (
         <DetailsView
@@ -48,6 +40,7 @@ const NestedChildrenView = ({
           {...nestedProps}
         />
       );
+    case childrenNestedViews.COUNT:
     default:
       return (
         <CountView
