@@ -34,7 +34,7 @@ export const childrenCountData = {
         no: "I do not have any children under the age of 21.",
       },
     },
-    nextLink: `/${childrenNestedViews.DETAILS}?count=`, // insert count here
+    nextLink: `/journey/children/${childrenNestedViews.DETAILS}?count=`, // insert count here
     backLink: `/journey/about-you?userId=`, // insert userId here
     primaryCta: "Next",
     secondaryCta: "",
