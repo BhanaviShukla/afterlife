@@ -102,7 +102,7 @@ const CountView = ({
             rightIcon={<ArrowRightIcon />}
             type="submit"
             value="submit"
-            id={`about-user-submit-button`}
+            id={`children-count-submit-button`}
             title={`${nextLink}${count}`}
           >
             {primaryCta}

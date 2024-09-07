@@ -43,6 +43,16 @@ export const childrenCountData = {
     title: "About your children",
     description: "",
     formData: {},
+    nextLink: `/journey/children/${childrenNestedViews.CONFIRM}`,
+    backLink: `/journey/children/${childrenNestedViews.GUARDIAN}`,
+    primaryCta: "Next",
+    secondaryCta: "",
+  },
+  [childrenNestedViews.GUARDIAN]: {
+    title: "Appoint a guardian",
+    description:
+      "A guardian should be someone you trust who would be responsible for taking care of your children if both you and your spouse pass.",
+    formData: {},
     nextLink: `/journey/children/${childrenNestedViews.GUARDIAN}`,
     backLink: `/journey/children/${childrenNestedViews.COUNT}?count=`, // insert count here
     primaryCta: "Next",
