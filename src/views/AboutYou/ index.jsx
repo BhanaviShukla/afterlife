@@ -22,14 +22,16 @@ const AboutYouForm = ({ ...props }) => {
   const userId = searchParams.get("id");
   const countryOptions = useMemo(() => countryList().getData(), []);
 
-  const [user, setUser] = useState();
-
   const { selectedSteps } = useSteps();
   const { addToWill, getWillEntry, patchWillEntry } = useWill();
 
+  const [user, setUser] = useState();
+  const nextLink = selectedSteps
+    ? `/journey/${STEPS[selectedSteps[0]].slug}`
+    : "";
+
   const handleOnSubmit = async (formData) => {
     console.log(formData);
-    const nextLink = `/journey/${STEPS[selectedSteps[0]].slug}`;
     console.log({ nextLink });
 
     if (userId) {
@@ -119,6 +121,7 @@ const AboutYouForm = ({ ...props }) => {
           type="submit"
           value="submit"
           id={`about-user-submit-button`}
+          title={nextLink}
         >
           {primaryCta}
         </Button>

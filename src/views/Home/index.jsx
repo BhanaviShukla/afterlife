@@ -21,6 +21,10 @@ const JourneySelectionView = ({ data }) => {
     clearSelectedSteps();
   }, [clearSelectedSteps]);
 
+  useEffect(() => {
+    setOpenModal(undefined);
+  }, [setOpenModal]);
+
   const handleCardClick = (id) => {
     toggleSelectedSteps(id);
   };
@@ -66,7 +70,7 @@ const JourneySelectionView = ({ data }) => {
         id={DISCLAIMER_MODAL}
         isOpen={isOpenModal(DISCLAIMER_MODAL)}
         handleClose={() => setOpenModal(undefined)}
-        nextLink={selectedSteps.length && `/journey/about-you`}
+        nextLink={selectedSteps.length ? `/journey/about-you` : ""}
       />
     </>
   );
