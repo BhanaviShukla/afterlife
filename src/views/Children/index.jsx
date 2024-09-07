@@ -1,21 +1,12 @@
 "use client";
-import { Button } from "@/components";
-import { ManagedUI } from "@/appState/UIState";
-import { useContext, useEffect, useMemo } from "react";
-import { useWill } from "@/appState/WillState";
+import { useEffect } from "react";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import AddChildModal from "./AddChild";
-import { childrenData, childrenNestedViews } from "@/appState/childrenData";
-import { STEPS, getNextStepIndex } from "@/appState/stepData";
-import PlusIcon from "@/components/ui/Icons/Controls/Buttons/plus-button-white.svg";
-import NextStepButton from "@/components/NextStepButton";
+import { childrenNestedViews } from "@/appState/childrenData";
 import CountView from "./CountView";
 import DetailsView from "./DetailsView";
 import GuardianView from "./GuardianView";
 import ConfirmView from "./ConfirmView";
-
-const ADD_CHILD_MODAL = "add-child-modal";
 
 const NestedChildrenView = ({
   nestedSlug,

@@ -1,7 +1,7 @@
 "use client";
 import { useWill } from "@/appState/WillState";
 import { CarouselIndicator, Modal } from "@/components";
-import ChildModaView from "../../components/FormModalView";
+import ChildModaView from "../../../components/FormModalView";
 import GuardianModalView from "./ModalViews/GuardianModalView";
 import { useEffect, useState } from "react";
 import { chldrenFormData } from "@/appState/childrenData";

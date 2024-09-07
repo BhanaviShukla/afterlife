@@ -87,7 +87,7 @@ const CountView = ({
               (option) => option.value === hasChildren
             )}
             wrapperClassName="min-w-16"
-            onChange={(id, newValue) => {
+            onChange={(_, newValue) => {
               setHasChildren(newValue);
               console.log({ newValue });
             }}
