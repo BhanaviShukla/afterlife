@@ -5,14 +5,17 @@ import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-rig
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import { useRouter } from "next/navigation";
 import { useWill } from "@/appState/WillState";
+import { getNextStepIndex, STEPS } from "@/appState/stepData";
 
+// @TODO: add logic to delete children when in edit flow, if the user changes the count
+const CURRENT_SLUG = "children";
 const CountView = ({
   searchParams,
   // pathname,
   title,
   description,
   formData,
-  nextLink,
+  nextLink: defaultNextLink,
   backLink,
   primaryCta,
   secondaryCta,
@@ -21,14 +24,22 @@ const CountView = ({
   const router = useRouter();
 
   const { will } = useWill();
+  const altNextLink = `/journey/${STEPS[getNextStepIndex(CURRENT_SLUG)].slug}`;
 
   const [hasChildren, setHasChildren] = useState("yes");
   const [count, setCount] = useState(searchParams.get("count") || 1);
+  const [nextLink, setNextLink] = useState(`${defaultNextLink}${count}`);
 
   useEffect(() => {
-    if (hasChildren === "yes") setCount(1);
-    else setCount(0);
-  }, [hasChildren]);
+    if (hasChildren === "yes") {
+      setCount(1);
+      setNextLink(`${defaultNextLink}${count}`);
+    } else {
+      setCount(0);
+      setNextLink(altNextLink);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasChildren, defaultNextLink, altNextLink]);
 
   const countOptions = Array.from(
     { length: formData.count.max },
@@ -36,7 +47,7 @@ const CountView = ({
   );
 
   const handleNext = () => {
-    router.push(`${nextLink}${count}`);
+    router.push(`${nextLink}`);
   };
   const handleBack = () => {
     const userId = will.user[0].id;
@@ -103,7 +114,7 @@ const CountView = ({
             type="submit"
             value="submit"
             id={`children-count-submit-button`}
-            title={`${nextLink}${count}`}
+            title={`${nextLink}`}
           >
             {primaryCta}
           </Button>
