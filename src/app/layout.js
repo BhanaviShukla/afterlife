@@ -2,6 +2,7 @@ import "./globals.css";
 import { serif, sansSerif } from "../theme/fonts";
 import { metadata } from "../config/metadata";
 import { Providers } from "./providers";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export { metadata };
 
@@ -12,6 +13,7 @@ export default function RootLayout({ children }) {
         <main className="py-20 flex h-full">
           <Providers>{children}</Providers>
         </main>
+        <SpeedInsights />
       </body>
     </html>
   );
