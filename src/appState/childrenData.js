@@ -39,6 +39,15 @@ export const childrenCountData = {
     primaryCta: "Next",
     secondaryCta: "",
   },
+  [childrenNestedViews.DETAILS]: {
+    title: "About your children",
+    description: "",
+    formData: {},
+    nextLink: `/journey/children/${childrenNestedViews.GUARDIAN}`,
+    backLink: `/journey/children/${childrenNestedViews.COUNT}?count=`, // insert count here
+    primaryCta: "Next",
+    secondaryCta: "",
+  },
 };
 export const childrenData = {
   title: "About your children",

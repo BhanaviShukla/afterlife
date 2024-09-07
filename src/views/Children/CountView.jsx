@@ -1,9 +1,4 @@
-import {
-  Button,
-  EditableSelectInput,
-  SelectInput,
-  Typography,
-} from "@/components";
+import { Button, EditableSelectInput, Typography } from "@/components";
 import pluralize from "pluralize";
 import { useEffect, useState } from "react";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
@@ -13,7 +8,7 @@ import { useWill } from "@/appState/WillState";
 
 const CountView = ({
   searchParams,
-  pathname,
+  // pathname,
   title,
   description,
   formData,
@@ -108,6 +103,7 @@ const CountView = ({
             type="submit"
             value="submit"
             id={`about-user-submit-button`}
+            title={`${nextLink}${count}`}
           >
             {primaryCta}
           </Button>
