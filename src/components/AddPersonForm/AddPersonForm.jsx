@@ -60,14 +60,13 @@ const AddPersonForm = ({
       id={personId ? `edit-${personId}` : "add-new-person"}
       action={personId ? onEditPersonSubmit : onNewPersonSubmit}
     >
-      {textInputs?.length &&
-        textInputs?.map((input) => (
-          <TextInput
-            key={input.id}
-            {...input}
-            defaultValue={person ? person[input.stateKey] : undefined}
-          />
-        ))}
+      {textInputs?.map((input) => (
+        <TextInput
+          key={input.id}
+          {...input}
+          defaultValue={person ? person[input.stateKey] : undefined}
+        />
+      ))}
       <SelectInput
         {...selectInput}
         defaultValue={person ? person[selectInput.stateKey] : undefined}

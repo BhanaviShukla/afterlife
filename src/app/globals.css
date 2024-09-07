@@ -50,7 +50,9 @@ nav a.disabled {
 }
 
 .carouselWrapper {
-  display: flex;
+  display: grid;
+  grid: auto / auto-flow max-content;
+  align-items: center; /* vertical */
   gap: var(--dimensions-3);
   flex-wrap: nowrap;
  overflow-x: auto;
@@ -58,10 +60,6 @@ nav a.disabled {
  -ms-overflow-style: -ms-autohiding-scrollbar; 
  scroll-snap-type: x mandatory;
 
- display: grid;
- grid: auto / auto-flow max-content;
- grid-gap: 1em;
- align-items: center; /* vertical */
 }
 
 
@@ -126,6 +124,5 @@ label.form__label,
 }
 
 .form__field:focus {
-  /* padding-bottom: 0.375rem; */
   border-bottom: 1px solid #009788;
 }
