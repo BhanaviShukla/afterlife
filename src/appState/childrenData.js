@@ -43,8 +43,8 @@ export const childrenCountData = {
     title: "About your children",
     description: "",
     formData: {},
-    nextLink: `/journey/children/${childrenNestedViews.CONFIRM}`,
-    backLink: `/journey/children/${childrenNestedViews.GUARDIAN}`,
+    nextLink: `/journey/children/${childrenNestedViews.GUARDIAN}`,
+    backLink: `/journey/children/${childrenNestedViews.COUNT}?count=`, // insert count here
     primaryCta: "Next",
     secondaryCta: "",
   },
@@ -53,8 +53,17 @@ export const childrenCountData = {
     description:
       "A guardian should be someone you trust who would be responsible for taking care of your children if both you and your spouse pass.",
     formData: {},
-    nextLink: `/journey/children/${childrenNestedViews.GUARDIAN}`,
-    backLink: `/journey/children/${childrenNestedViews.COUNT}?count=`, // insert count here
+    nextLink: `/journey/children/${childrenNestedViews.CONFIRM}`,
+    backLink: `/journey/children/${childrenNestedViews.DETAILS}?count=`, // insert count here
+    primaryCta: "Next",
+    secondaryCta: "",
+  },
+  [childrenNestedViews.CONFIRM]: {
+    title: "Confirm your details",
+    description: "Make sure all the information here is correct.",
+    formData: {},
+    nextLink: `/journey/pets`,
+    backLink: `/journey/children/${childrenNestedViews.GUARDIAN}`,
     primaryCta: "Next",
     secondaryCta: "",
   },

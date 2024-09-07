@@ -1,12 +1,11 @@
 import { Button, Typography } from "@/components";
-import { useEffect, useState } from "react";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import { useRouter } from "next/navigation";
 import { useWill } from "@/appState/WillState";
 
 const GuardianView = ({
-  searchParams,
+  // searchParams,
   // pathname,
   title,
   description,
@@ -16,7 +15,7 @@ const GuardianView = ({
   primaryCta,
   secondaryCta,
 }) => {
-  console.log("children -> DETAILS VIEW", searchParams.get("count"));
+  console.log("children -> GUARDIAN VIEW");
   const router = useRouter();
 
   const { will } = useWill();
