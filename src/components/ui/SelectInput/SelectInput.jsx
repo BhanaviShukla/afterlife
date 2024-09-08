@@ -22,7 +22,7 @@ const SelectInput = ({
         <option value={""}>{""}</option>
         {options.map((option, index) => (
           <option
-            key={index}
+            key={`key-${option.value.join("_")}`}
             value={option.value}
             selected={index === selectedIndex}
           >

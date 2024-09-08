@@ -137,7 +137,7 @@ const EditPetModal = ({ petId, isOpen, handleClose }) => {
       ) : (
         <CaretakerModalView
           form={caretakerForm}
-          titleFragment={(pet && pet["pet-name"]) || ""}
+          titleFragment={pet?.["pet-name"] || ""}
           onCaretakerSave={onCaretakerSave}
           onBack={() => setModalView(PET_FORM)}
           caretaker={pet.caretaker?.id}
