@@ -4,15 +4,14 @@ import CardSelectWrapper from "./clientComponents/cardSelectWrapper";
 
 export default function Dev() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
+    <main className="flex flex-1 min-h-screen flex-row justify-stretch p-24 gap-4">
+      <div className="flex w-full flex-1 justify-evenly gap-2">
         <a
           className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
           href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
         >
-          By{" "}
           <Image
             src="/afterlife.svg"
             alt="afterlife"
@@ -22,7 +21,7 @@ export default function Dev() {
           />
         </a>
       </div>
-      <div className="flex flex-col flex-1 justify-evenly gap-4">
+      <div className="flex flex-col flex-1 justify-evenly gap-2">
         <Typography variant="title">Title</Typography>
         <Typography variant="title-small">Title Small</Typography>
         <Typography variant="subtitle">Subtitle</Typography>
@@ -42,7 +41,7 @@ export default function Dev() {
           Text Disabled
         </Button>
       </div>
-      <div className="flex flex-col flex-1 justify-around gap-2">
+      <div className="flex flex-col flex-1 justify-evenly gap-2">
         <Card.Base backgroundColor={"--colour-g100"} />
         <CardSelectWrapper />
       </div>
