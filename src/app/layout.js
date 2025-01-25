@@ -10,8 +10,8 @@ export default function RootLayout({ children, modal }) {
   return (
     <html lang="en" className={`${serif.variable} ${sansSerif.variable}`}>
       <body className={sansSerif.className}>
-      {modal}
-        <main className="py-20 h-full">
+        {modal}
+        <main className="h-full">
           <Providers>{children} </Providers>
         </main>
         <SpeedInsights />

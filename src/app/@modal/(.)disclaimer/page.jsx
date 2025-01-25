@@ -8,7 +8,7 @@ export default function DisclaimerModal() {
       id="disclaimer-modal"
       secondaryCta={
         <Button>
-          <Link href="/will">Continue</Link>
+          <Link href="/journey/about-you">Continue</Link>
         </Button>
       }
     >

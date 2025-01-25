@@ -79,6 +79,7 @@ const data = {
         privacyPolicyLink: "link",
       },
     },
+    // this is actually defined in the Modal
     primaryCta: {
       variant: "filled",
       label: "Continue",

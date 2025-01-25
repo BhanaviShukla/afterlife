@@ -3,9 +3,7 @@ import { Button, EditableSelectInput, TextInput } from "@/components";
 import { useEffect, useMemo, useState } from "react";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
-import { STEPS } from "@/appState/stepData";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useSteps } from "@/appState/StepsState";
 import { useWill } from "@/appState/WillState";
 import { TODAY } from "@/appState/childrenData";
 import countryList from "react-select-country-list";
@@ -22,13 +20,10 @@ const AboutYouForm = ({ ...props }) => {
   const userId = searchParams.get("id");
   const countryOptions = useMemo(() => countryList().getData(), []);
 
-  const { selectedSteps } = useSteps();
   const { addToWill, getWillEntry, patchWillEntry } = useWill();
 
   const [user, setUser] = useState();
-  const nextLink = selectedSteps
-    ? `/journey/${STEPS[selectedSteps[0]].slug}`
-    : "";
+  const nextLink = `/journey/will`;
 
   const handleOnSubmit = async (formData) => {
     console.log(formData);

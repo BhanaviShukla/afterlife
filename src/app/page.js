@@ -8,25 +8,32 @@ import { serif } from "@/theme/fonts";
 export default function Home() {
   return (
     <>
-      <div className="container min-h-screen flex flex-col justify-between gap-6">
+      <div className="container min-h-screen flex flex-col justify-between gap-6 py-20">
         <a className="flex" href="/">
           <Logo width={125} height={31} />
         </a>
 
-        <section className="flex flex-col grow justify-center" id="main-content">
+        <section
+          className="flex flex-col grow justify-center"
+          id="main-content"
+        >
           <div className="flex flex-row justify-between gap-6">
             <div className="flex flex-col justify-center max-w-[75%]">
               <Typography variant="title">{data.title}</Typography>
               <Typography className="my-10 leading-8">
                 {data.description}
               </Typography>
-              <Typography variant="heading" className="text-accent">{data.heading}</Typography>
+              <Typography variant="heading" className="text-accent">
+                {data.heading}
+              </Typography>
               <Button
                 variant="filled"
                 className="self-start mt-8"
                 rightIcon={<ArrowRightIcon />}
               >
-                <Link href={`/disclaimer`} scroll={false}>{data.primaryCta}</Link>
+                <Link href={`/disclaimer`} scroll={false}>
+                  {data.primaryCta}
+                </Link>
               </Button>
             </div>
             <div className="flex-1 relative min-w-[40%] h-fit">
@@ -49,52 +56,61 @@ export default function Home() {
       <div className="container">
         {/* About wills section */}
         <section className="py-20">
-          <Typography variant="title-small">{data.aboutSection.title}</Typography>
+          <Typography variant="title-small">
+            {data.aboutSection.title}
+          </Typography>
           <div className="grid grid-cols-3 gap-8 mt-10">
             {data.aboutSection.cards.map((card, index) => (
               <div key={index}>
-                <Image 
-                  src={`/icons/${card.icon}.svg`} 
-                  alt={`${card.icon} icon`} 
-                  width={48} 
-                  height={48} 
-                  className="mb-4" 
+                <Image
+                  src={`/icons/${card.icon}.svg`}
+                  alt={`${card.icon} icon`}
+                  width={48}
+                  height={48}
+                  className="mb-4"
                 />
-                <Typography>
-                  {card.text}
-                </Typography>
+                <Typography>{card.text}</Typography>
               </div>
             ))}
           </div>
         </section>
-        </div>
+      </div>
 
-        {/* Mission section */}
-        <div className="bg-secondary text-white py-20">
-          <section className="container flex justify-between items-center">
-            <div className="min-w-[40%]"> <Typography variant="title-small">{data.missionSection.title}</Typography></div>
-            <div>
-             
-              {data.missionSection.paragraphs.map((text, index) => (
-                <Typography key={index} className={`mt-6 text-2xl ${serif.className}`}>
-                  {text}
-                </Typography>
-              ))}
-            </div>
-          </section>
-        </div>
+      {/* Mission section */}
+      <div className="bg-secondary text-white py-20">
+        <section className="container flex justify-between items-center">
+          <div className="min-w-[40%]">
+            {" "}
+            <Typography variant="title-small">
+              {data.missionSection.title}
+            </Typography>
+          </div>
+          <div>
+            {data.missionSection.paragraphs.map((text, index) => (
+              <Typography
+                key={index}
+                className={`mt-6 text-2xl ${serif.className}`}
+              >
+                {text}
+              </Typography>
+            ))}
+          </div>
+        </section>
+      </div>
 
-        <div className="container">
+      <div className="container">
         {/* Services section */}
         <section className="py-20">
           <div className="flex gap-12">
             <div className="flex-1">
-              <Typography variant="title-small">{data.servicesSection.title}</Typography>
+              <Typography variant="title-small">
+                {data.servicesSection.title}
+              </Typography>
               <Typography className="mt-6">
                 {data.servicesSection.description}
               </Typography>
               <Typography className="mt-6">
-                {data.servicesSection.questions.join('\n')}
+                {data.servicesSection.questions.join("\n")}
               </Typography>
               <Typography className="mt-4">
                 {data.servicesSection.callToAction}
@@ -104,7 +120,7 @@ export default function Home() {
               </Button>
             </div>
             <div className="flex-1">
-              <Image 
+              <Image
                 src={data.servicesSection.imagePath}
                 alt={data.servicesSection.imageAlt}
                 width={500}
@@ -118,18 +134,23 @@ export default function Home() {
         {/* CTA section */}
         <section className="py-20 text-center relative justify-center">
           <Typography variant="title-small">
-            {data.ctaSection.title.split('\n').map((line, index) => (
+            {data.ctaSection.title.split("\n").map((line, index) => (
               <React.Fragment key={index}>
-                {line}<br />
+                {line}
+                <br />
               </React.Fragment>
             ))}
           </Typography>
-          <Button variant="filled" className="mt-8 mx-auto" rightIcon={<ArrowRightIcon />}>
+          <Button
+            variant="filled"
+            className="mt-8 mx-auto"
+            rightIcon={<ArrowRightIcon />}
+          >
             {data.ctaSection.buttonText}
           </Button>
           {/* Decorative leaves */}
           {data.ctaSection.decorativeImages.map((image, index) => (
-            <Image 
+            <Image
               key={index}
               src={image.src}
               alt=""
@@ -141,11 +162,13 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="py-8 text-center">
+        <footer className="pt-8 pb-16 text-center">
           <div className="flex justify-center gap-8">
             {data.footer.links.map((link, index) => (
               <Link key={index} href={link.href}>
-                <Typography variant="caption" className="underline text-accent">{link.text}</Typography>
+                <Typography variant="caption" className="underline text-accent">
+                  {link.text}
+                </Typography>
               </Link>
             ))}
           </div>
@@ -213,36 +236,37 @@ const data = {
     cards: [
       {
         icon: "brain",
-        text: "Anyone can write a will in Singapore without a lawyer, as long as they are at least 21 years old and mentally sound."
+        text: "Anyone can write a will in Singapore without a lawyer, as long as they are at least 21 years old and mentally sound.",
       },
       {
         icon: "scale",
-        text: "If you pass on without a will, your assets will be distributed according to the Intestate Succession Act."
+        text: "If you pass on without a will, your assets will be distributed according to the Intestate Succession Act.",
       },
       {
         icon: "heart",
-        text: "Planning ahead serves to take care of your loved ones from having to figure it out during a difficult time."
-      }
-    ]
+        text: "Planning ahead serves to take care of your loved ones from having to figure it out during a difficult time.",
+      },
+    ],
   },
   missionSection: {
     title: "Our mission",
     paragraphs: [
       "We believe everyone should have access to creating a will regardless of their age, background, income level or beliefs.",
-      "Which is why our service will always be free to use."
-    ]
+      "Which is why our service will always be free to use.",
+    ],
   },
   servicesSection: {
     title: "Our services",
-    description: "We collaborated with legal professionals to make this will-creation service to allow anyone in Singapore to plan for the most important things in their lives effortlessly.",
+    description:
+      "We collaborated with legal professionals to make this will-creation service to allow anyone in Singapore to plan for the most important things in their lives effortlessly.",
     questions: [
       "Not sure how to begin? Already have an existing will?",
-      "Don't know if this is right for you?"
+      "Don't know if this is right for you?",
     ],
     callToAction: "We might have the answers to your questions here.",
     buttonText: "Learn more",
     imagePath: "/images/services-illustration.png",
-    imageAlt: "Services illustration"
+    imageAlt: "Services illustration",
   },
   ctaSection: {
     title: "Start planning,\nfor the people you love.",
@@ -250,24 +274,24 @@ const data = {
     decorativeImages: [
       {
         src: "/images/leaf-left.png",
-        className: "absolute left-0 bottom-0"
+        className: "absolute left-0 bottom-0",
       },
       {
         src: "/images/leaf-right.png",
-        className: "absolute right-0 bottom-0"
-      }
-    ]
+        className: "absolute right-0 bottom-0",
+      },
+    ],
   },
   footer: {
     links: [
       {
         text: "Privacy Policy",
-        href: "/privacy-policy"
+        href: "/privacy-policy",
       },
       {
         text: "Terms of Use",
-        href: "/terms"
-      }
-    ]
-  }
+        href: "/terms",
+      },
+    ],
+  },
 };

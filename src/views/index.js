@@ -2,5 +2,12 @@ import JourneySelectionView from "./Home";
 import ChildrenView from "./Children";
 import PetsView from "./Pets";
 import RitesView from "./Rites";
+import AboutYouForm from "./AboutYou/ index";
 
-export { JourneySelectionView, ChildrenView, PetsView, RitesView };
+export {
+  AboutYouForm,
+  JourneySelectionView,
+  ChildrenView,
+  PetsView,
+  RitesView,
+};
