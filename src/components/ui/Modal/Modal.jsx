@@ -16,9 +16,15 @@ function Modal({ id, isOpen, children, handleClose }) {
 
   return (
     <ReactPortal wrapperId={id || "modal-container"}>
-      <div id="modal-wrapper" className={styles.modalBackground}>
+      <dialog
+        id="modal-wrapper"
+        className={styles.modalBackground}
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
         <div className={styles.modalCard}>{children}</div>
-      </div>
+      </dialog>
     </ReactPortal>
   );
 }

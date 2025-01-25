@@ -1,59 +1,168 @@
+import React from "react";
 import { Button, Logo, Typography } from "@/components";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { serif } from "@/theme/fonts";
 
 export default function Home() {
   return (
-    <div className="container flex flex-col justify-between gap-6">
-      <a className="flex" href="/">
-        <Logo width={125} height={31} />
-      </a>
+    <>
+      <div className="container min-h-screen flex flex-col justify-between gap-6">
+        <a className="flex" href="/">
+          <Logo width={125} height={31} />
+        </a>
 
-      <section className="flex flex-col grow justify-center" id="main-content">
-        <div className="flex flex-row justify-between gap-6">
-          <div className="flex flex-col justify-center max-w-[75%]">
-            <Typography variant="title">{data.title}</Typography>
-            <Typography className="my-10 leading-8">
-              {data.description}
-            </Typography>
-            <Typography variant="heading">{data.heading}</Typography>
-            <Button
-              variant="filled"
-              className="self-start mt-16"
-              rightIcon={<ArrowRightIcon />}
-            >
-              <Link href={`/will`}>{data.primaryCta}</Link>
-            </Button>
+        <section className="flex flex-col grow justify-center" id="main-content">
+          <div className="flex flex-row justify-between gap-6">
+            <div className="flex flex-col justify-center max-w-[75%]">
+              <Typography variant="title">{data.title}</Typography>
+              <Typography className="my-10 leading-8">
+                {data.description}
+              </Typography>
+              <Typography variant="heading" className="text-accent">{data.heading}</Typography>
+              <Button
+                variant="filled"
+                className="self-start mt-8"
+                rightIcon={<ArrowRightIcon />}
+              >
+                <Link href={`/will`}>{data.primaryCta}</Link>
+              </Button>
+            </div>
+            <div className="flex-1 relative min-w-[40%] h-fit">
+              <Image
+                src={`/images/${data.imageName}.png`}
+                alt={data.imageName}
+                className="relative object-cover"
+                width={646}
+                height={646}
+              />
+            </div>
           </div>
-          <div className="flex-1 relative min-w-[40%] h-fit">
-            <Image
-              src={`/images/${data.imageName}.png`}
-              alt={data.imageName}
-              className="relative object-cover"
-              width={646}
-              height={646}
-            />
+        </section>
+
+        <Button className="self-start mt-16" variant="text" italic>
+          {data.secondaryCta}
+        </Button>
+      </div>
+
+      <div className="container">
+        {/* About wills section */}
+        <section className="py-20">
+          <Typography variant="title-small">{data.aboutSection.title}</Typography>
+          <div className="grid grid-cols-3 gap-8 mt-10">
+            {data.aboutSection.cards.map((card, index) => (
+              <div key={index}>
+                <Image 
+                  src={`/icons/${card.icon}.svg`} 
+                  alt={`${card.icon} icon`} 
+                  width={48} 
+                  height={48} 
+                  className="mb-4" 
+                />
+                <Typography>
+                  {card.text}
+                </Typography>
+              </div>
+            ))}
           </div>
+        </section>
         </div>
-      </section>
 
-      <Button className="self-start mt-16" variant="text" italic>
-        {data.secondaryCta}
-      </Button>
-    </div>
+        {/* Mission section */}
+        <div className="bg-secondary text-white py-20">
+          <section className="container flex justify-between items-center">
+            <div className="min-w-[40%]"> <Typography variant="title-small">{data.missionSection.title}</Typography></div>
+            <div>
+             
+              {data.missionSection.paragraphs.map((text, index) => (
+                <Typography key={index} className={`mt-6 text-2xl ${serif.className}`}>
+                  {text}
+                </Typography>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <div className="container">
+        {/* Services section */}
+        <section className="py-20">
+          <div className="flex gap-12">
+            <div className="flex-1">
+              <Typography variant="title-small">{data.servicesSection.title}</Typography>
+              <Typography className="mt-6">
+                {data.servicesSection.description}
+              </Typography>
+              <Typography className="mt-6">
+                {data.servicesSection.questions.join('\n')}
+              </Typography>
+              <Typography className="mt-4">
+                {data.servicesSection.callToAction}
+              </Typography>
+              <Button variant="outlined" className="mt-6">
+                {data.servicesSection.buttonText}
+              </Button>
+            </div>
+            <div className="flex-1">
+              <Image 
+                src={data.servicesSection.imagePath}
+                alt={data.servicesSection.imageAlt}
+                width={500}
+                height={500}
+                className="object-contain"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* CTA section */}
+        <section className="py-20 text-center relative justify-center">
+          <Typography variant="title-small">
+            {data.ctaSection.title.split('\n').map((line, index) => (
+              <React.Fragment key={index}>
+                {line}<br />
+              </React.Fragment>
+            ))}
+          </Typography>
+          <Button variant="filled" className="mt-8 mx-auto" rightIcon={<ArrowRightIcon />}>
+            {data.ctaSection.buttonText}
+          </Button>
+          {/* Decorative leaves */}
+          {data.ctaSection.decorativeImages.map((image, index) => (
+            <Image 
+              key={index}
+              src={image.src}
+              alt=""
+              width={200}
+              height={200}
+              className={image.className}
+            />
+          ))}
+        </section>
+
+        {/* Footer */}
+        <footer className="py-8 text-center">
+          <div className="flex justify-center gap-8">
+            {data.footer.links.map((link, index) => (
+              <Link key={index} href={link.href}>
+                <Typography variant="caption" className="underline text-accent">{link.text}</Typography>
+              </Link>
+            ))}
+          </div>
+        </footer>
+      </div>
+    </>
   );
 }
+
 const data = {
   title: "Planning for what comes after",
   description:
-    "Creating a will isn’t about us. It’s about building shelter and protection that will endure past our lifetime for the ones we care about. Give them the security they deserve and protect them from the uncertainties life will throw at them. Will-making services, free for all.",
+    "Creating a will isn't about us. It's about building shelter and protection that will endure past our lifetime for the ones we care about. Give them the security they deserve and protect them from the uncertainties life will throw at them. Will-making services, free for all.",
   heading: "Create your will without a lawyer. Completely free",
   primaryCta: "Start here",
   secondaryCta: "Why create a will?",
   imageName: "pot",
-  // secondaryCta: "What do I need?",
-  // secondaryCta2: "Why create a will?",
   requirementsModal: {
     title: "Before you start, make sure you meet the following requirements:",
     description: {
@@ -77,7 +186,7 @@ const data = {
         },
         {
           icon: "text-size",
-          text: "Official full names and birth dates of people you’re planning to put in your will",
+          text: "Official full names and birth dates of people you're planning to put in your will",
         },
         {
           icon: "doc-search-alt",
@@ -99,4 +208,66 @@ const data = {
       label: "close",
     },
   },
+  aboutSection: {
+    title: "About wills in Singapore",
+    cards: [
+      {
+        icon: "brain",
+        text: "Anyone can write a will in Singapore without a lawyer, as long as they are at least 21 years old and mentally sound."
+      },
+      {
+        icon: "scale",
+        text: "If you pass on without a will, your assets will be distributed according to the Intestate Succession Act."
+      },
+      {
+        icon: "heart",
+        text: "Planning ahead serves to take care of your loved ones from having to figure it out during a difficult time."
+      }
+    ]
+  },
+  missionSection: {
+    title: "Our mission",
+    paragraphs: [
+      "We believe everyone should have access to creating a will regardless of their age, background, income level or beliefs.",
+      "Which is why our service will always be free to use."
+    ]
+  },
+  servicesSection: {
+    title: "Our services",
+    description: "We collaborated with legal professionals to make this will-creation service to allow anyone in Singapore to plan for the most important things in their lives effortlessly.",
+    questions: [
+      "Not sure how to begin? Already have an existing will?",
+      "Don't know if this is right for you?"
+    ],
+    callToAction: "We might have the answers to your questions here.",
+    buttonText: "Learn more",
+    imagePath: "/images/services-illustration.png",
+    imageAlt: "Services illustration"
+  },
+  ctaSection: {
+    title: "Start planning,\nfor the people you love.",
+    buttonText: "Create my free will",
+    decorativeImages: [
+      {
+        src: "/images/leaf-left.png",
+        className: "absolute left-0 bottom-0"
+      },
+      {
+        src: "/images/leaf-right.png",
+        className: "absolute right-0 bottom-0"
+      }
+    ]
+  },
+  footer: {
+    links: [
+      {
+        text: "Privacy Policy",
+        href: "/privacy-policy"
+      },
+      {
+        text: "Terms of Use",
+        href: "/terms"
+      }
+    ]
+  }
 };
