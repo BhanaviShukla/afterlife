@@ -18,7 +18,7 @@ const DisclaimerModal = ({ id, isOpen, handleClose, nextLink }) => {
           className="self-start"
           leftIcon={<ArrowLeftIcon />}
         >
-          <Link href={`/`}>{secondaryCta}</Link>
+          <Link href={`/disclaimer`}>{secondaryCta}</Link>
         </Button>
         <Button
           variant="filled"

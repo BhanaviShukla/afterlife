@@ -26,7 +26,7 @@ export default function Home() {
                 className="self-start mt-8"
                 rightIcon={<ArrowRightIcon />}
               >
-                <Link href={`/will`}>{data.primaryCta}</Link>
+                <Link href={`/disclaimer`} scroll={false}>{data.primaryCta}</Link>
               </Button>
             </div>
             <div className="flex-1 relative min-w-[40%] h-fit">

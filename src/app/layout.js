@@ -6,12 +6,13 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export { metadata };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children, modal }) {
   return (
     <html lang="en" className={`${serif.variable} ${sansSerif.variable}`}>
       <body className={sansSerif.className}>
+      {modal}
         <main className="py-20 h-full">
-          <Providers>{children}</Providers>
+          <Providers>{children} </Providers>
         </main>
         <SpeedInsights />
       </body>

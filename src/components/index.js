@@ -3,6 +3,7 @@ import Button from "./ui/Button/Button";
 import Card from "./ui/Card/Card";
 import CarouselIndicator from "./ui/CarouselIndicator/CarouselIndicator";
 import EditableSelectInput from "./ui/SelectInput/EditableSelectInput";
+import Icon from "./ui/Icons/Icon";
 import LinkButton from "./ui/Button/LinkButton";
 import Logo from "./ui/Logo/logo";
 import Modal from "./ui/Modal/Modal";
@@ -22,6 +23,7 @@ export {
   Modal,
   Nav,
   EditableSelectInput,
+  Icon,
   LinkButton,
   SelectInput,
   Selector,

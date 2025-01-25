@@ -7,7 +7,6 @@ import { useContext, useEffect } from "react";
 import { STEPS } from "@/appState/stepData";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
-import DisclaimerModal from "./ModalViews/DisclaimerModal";
 import { ManagedUI } from "@/appState/UIState";
 
 const DISCLAIMER_MODAL = "disclaimer-modal";
@@ -67,12 +66,6 @@ const JourneySelectionView = ({ data }) => {
           {data.primaryCta}
         </Button>
       </div>
-      <DisclaimerModal
-        id={DISCLAIMER_MODAL}
-        isOpen={isOpenModal(DISCLAIMER_MODAL)}
-        handleClose={() => setOpenModal(undefined)}
-        nextLink={selectedSteps.length ? `/journey/about-you` : ""}
-      />
     </>
   );
 };
