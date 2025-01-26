@@ -74,6 +74,18 @@ export function WillProvider({ children }) {
     [will]
   );
 
+  const UNSAFE_replaceWillCategoryByValue = useCallback(
+    (category, value) => {
+      if (will.hasOwnProperty(category))
+        setWill((prevWillData) => ({
+          ...prevWillData,
+          [category]: value,
+        }));
+      else return undefined;
+    },
+    [will]
+  );
+
   const patchWillEntry = useCallback(
     (category, id, modifiedEntry) => {
       setWill((prevWillData) => ({
@@ -95,6 +107,7 @@ export function WillProvider({ children }) {
       removeFromWill,
       getWillEntry,
       getWillCategory,
+      UNSAFE_replaceWillCategoryByValue,
       patchWillEntry,
     }),
     [
@@ -103,6 +116,7 @@ export function WillProvider({ children }) {
       removeFromWill,
       getWillCategory,
       getWillEntry,
+      UNSAFE_replaceWillCategoryByValue,
       patchWillEntry,
     ]
   );

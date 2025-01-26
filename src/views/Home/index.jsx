@@ -8,8 +8,6 @@ import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-rig
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import { useRouter } from "next/navigation";
 
-const DISCLAIMER_MODAL = "disclaimer-modal";
-
 const JourneySelectionView = ({ data }) => {
   const { selectedSteps, toggleSelectedSteps, clearSelectedSteps } = useSteps();
   const router = useRouter();

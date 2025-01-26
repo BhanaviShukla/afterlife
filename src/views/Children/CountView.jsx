@@ -24,7 +24,9 @@ const CountView = ({
   const router = useRouter();
 
   const { will } = useWill();
-  const altNextLink = `/journey/${STEPS[getNextStepIndex(CURRENT_SLUG)].slug}`;
+  const altNextLink = `/journey/will/step/${
+    STEPS[getNextStepIndex(CURRENT_SLUG)].slug
+  }`;
 
   const [hasChildren, setHasChildren] = useState("yes");
   const [count, setCount] = useState(searchParams.get("count") || 1);
@@ -32,14 +34,14 @@ const CountView = ({
 
   useEffect(() => {
     if (hasChildren === "yes") {
-      setCount(1);
+      setCount((prevCount) => prevCount || 1);
       setNextLink(`${defaultNextLink}${count}`);
     } else {
       setCount(0);
       setNextLink(altNextLink);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasChildren, defaultNextLink, altNextLink]);
+  }, [hasChildren, defaultNextLink, altNextLink, count]);
 
   const countOptions = Array.from(
     { length: formData.count.max },
@@ -50,8 +52,7 @@ const CountView = ({
     router.push(`${nextLink}`);
   };
   const handleBack = () => {
-    const userId = will.user[0].id;
-    if (userId) router.replace(`${backLink}${userId}`);
+    if (backLink) router.replace(`${backLink}`);
     else router.back();
   };
 
@@ -60,17 +61,21 @@ const CountView = ({
       String(arr).split("{{count}}");
     return [
       preCountSentence,
-      <EditableSelectInput
-        key={"number"}
-        {...formData.count}
-        defaultValue={countOptions[count - 1]}
-        wrapperClassName="min-w-10"
-        onChange={(id, newValue) => {
-          setCount(newValue);
-          console.log({ newValue });
-        }}
-        options={countOptions}
-      />,
+      hasChildren === "yes" ? (
+        <EditableSelectInput
+          key={"number"}
+          {...formData.count}
+          defaultValue={countOptions[count - 1]}
+          wrapperClassName="min-w-10"
+          onChange={(id, newValue) => {
+            setCount(newValue);
+            console.log({ newValue });
+          }}
+          options={countOptions}
+        />
+      ) : (
+        ""
+      ),
       postCountSentence?.replace(`{{child}}`, pluralize("child", count)),
     ];
   };

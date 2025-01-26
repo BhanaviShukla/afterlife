@@ -1,4 +1,8 @@
 export const TODAY = new Date().toISOString().split("T")[0];
+const MAX_CHILD_DOB = new Date().setFullYear(new Date().getFullYear() - 21);
+const MAX_CHILD_DOB_FORMATTED = new Date(MAX_CHILD_DOB)
+  .toISOString()
+  .split("T")[0];
 export const childrenNestedViews = {
   COUNT: "count",
   DETAILS: "details",
@@ -34,17 +38,31 @@ export const childrenCountData = {
         no: "I do not have any children under the age of 21.",
       },
     },
-    nextLink: `/journey/children/${childrenNestedViews.DETAILS}?count=`, // insert count here
-    backLink: `/journey/about-you?userId=`, // insert userId here
+    nextLink: `/journey/will/step/children/${childrenNestedViews.DETAILS}?count=`, // insert count here
+    backLink: `/journey/will`, // insert userId here
     primaryCta: "Next",
     secondaryCta: "",
   },
   [childrenNestedViews.DETAILS]: {
     title: "About your children",
     description: "",
-    formData: {},
-    nextLink: `/journey/children/${childrenNestedViews.GUARDIAN}`,
-    backLink: `/journey/children/${childrenNestedViews.COUNT}?count=`, // insert count here
+    formData: {
+      childName: {
+        type: "text",
+        name: "childName",
+        required: true,
+        placeholder: "Full name of child (as per passport)",
+      },
+      dob: {
+        name: "dob",
+        placeholder: "Birthday",
+        type: "date",
+        max: MAX_CHILD_DOB_FORMATTED,
+        required: true,
+      },
+    },
+    nextLink: `/journey/will/step/children/${childrenNestedViews.GUARDIAN}`,
+    backLink: `/journey/will/step/children/${childrenNestedViews.COUNT}?count=`, // insert count here
     primaryCta: "Next",
     secondaryCta: "",
   },
@@ -53,8 +71,8 @@ export const childrenCountData = {
     description:
       "A guardian should be someone you trust who would be responsible for taking care of your children if both you and your spouse pass.",
     formData: {},
-    nextLink: `/journey/children/${childrenNestedViews.CONFIRM}`,
-    backLink: `/journey/children/${childrenNestedViews.DETAILS}?count=`, // insert count here
+    nextLink: `/journey/will/step/children/${childrenNestedViews.CONFIRM}`,
+    backLink: `/journey/will/step/children/${childrenNestedViews.DETAILS}?count=`, // insert count here
     primaryCta: "Next",
     secondaryCta: "",
   },
@@ -62,8 +80,8 @@ export const childrenCountData = {
     title: "Confirm your details",
     description: "Make sure all the information here is correct.",
     formData: {},
-    nextLink: `/journey/pets`,
-    backLink: `/journey/children/${childrenNestedViews.GUARDIAN}`,
+    nextLink: `/journey/will/step/pets`,
+    backLink: `/journey/will/step/children/${childrenNestedViews.GUARDIAN}`,
     primaryCta: "Next",
     secondaryCta: "",
   },
