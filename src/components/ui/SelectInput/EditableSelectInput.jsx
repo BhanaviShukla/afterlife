@@ -29,9 +29,12 @@ const EditableSelectInput = ({
   onChange,
   ...inputProps
 }) => {
-  console.log("EDITABLE SELECT");
   const selectedIndex = inputProps.value
     ? options.findIndex((option) => option.value === inputProps.value)
+    : -1;
+
+  const selectedDefaultIndex = inputProps.defaultValue
+    ? options.findIndex((option) => option.value === inputProps.defaultValue)
     : -1;
 
   const handleChange = (selectedOption) => {
@@ -52,6 +55,9 @@ const EditableSelectInput = ({
         })}
         onEdit={onEdit}
         {...inputProps}
+        {...(options[selectedDefaultIndex] && {
+          defaultValue: options[selectedDefaultIndex],
+        })}
         {...(onChange && {
           onChange: handleChange,
           value: selectedIndex ? options[selectedIndex] : undefined,

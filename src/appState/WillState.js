@@ -66,6 +66,14 @@ export function WillProvider({ children }) {
     [will]
   );
 
+  const getWillCategory = useCallback(
+    (category) => {
+      if (will.hasOwnProperty(category)) return will[category];
+      else return undefined;
+    },
+    [will]
+  );
+
   const patchWillEntry = useCallback(
     (category, id, modifiedEntry) => {
       setWill((prevWillData) => ({
@@ -86,9 +94,17 @@ export function WillProvider({ children }) {
       addToWill,
       removeFromWill,
       getWillEntry,
+      getWillCategory,
       patchWillEntry,
     }),
-    [will, addToWill, removeFromWill, getWillEntry, patchWillEntry]
+    [
+      will,
+      addToWill,
+      removeFromWill,
+      getWillCategory,
+      getWillEntry,
+      patchWillEntry,
+    ]
   );
   return (
     <WillContext.Provider value={memoizedWillProviderValue}>
