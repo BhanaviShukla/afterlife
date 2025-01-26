@@ -74,7 +74,7 @@ const DetailsView = ({
 
   const handleNext = () => {
     UNSAFE_replaceWillCategoryByValue("children", [...children]);
-    router.push(`${nextLink}`);
+    router.push(`${nextLink}${count}`);
   };
   const handleBack = () => {
     router.replace(`${backLink}${count}`);
@@ -188,7 +188,7 @@ const DetailsView = ({
             type="submit"
             value="submit"
             id={`children-details-submit-button`}
-            title={`${nextLink}`}
+            title={`${nextLink}${count}`}
           >
             {primaryCta}
           </Button>
