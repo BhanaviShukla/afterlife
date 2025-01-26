@@ -59,7 +59,7 @@ const DetailsView = ({
   console.log("children -> DETAILS VIEW", searchParams.get("count"));
   const router = useRouter();
 
-  const { will, UNSAFE_replaceWillCategoryByValue } = useWill();
+  const { will, UNSAFE_replaceWillCategoryByValue, removeFromWill } = useWill();
 
   const [count, setCount] = useState(Number(searchParams.get("count")) || 1);
   const childrenFromSearchParamsOrWill = useCountToGenerateChildrenForm(
@@ -97,6 +97,7 @@ const DetailsView = ({
     setChildren((prevChildren) => [
       ...prevChildren.filter((child) => child.id !== id),
     ]);
+    removeFromWill("children", id);
   };
   const onChangeInput = (id, name, value) => {
     console.log("ON chjange input", id, name, value);
