@@ -5,13 +5,10 @@ import { ChildrenView, PetsView, RitesView } from "@/views";
 import { childrenCountData } from "@/appState/childrenData";
 import { petsData } from "@/appState/petsData";
 import { aboutYouData } from "@/appState/aboutYouData";
-import AboutYouForm from "@/views/AboutYou/ index";
 
 const StepView = ({ ...props }) => {
   console.log({ props });
   switch (props.slug) {
-    case "about-you":
-      return <AboutYouForm {...props} />;
     case "children":
       return <ChildrenView {...props} />;
     case "pets":

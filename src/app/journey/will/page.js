@@ -14,8 +14,9 @@ export default function Will() {
   );
 }
 const data = {
-  title: "What are you planning for today?",
-  description: "Select all that apply.",
+  title: "What would you like to plan for?",
+  description:
+    "You may finalise and review your will once you have filled out all the items.",
   primaryCta: "Next",
   secondaryCta: "Back",
 };

@@ -5,7 +5,7 @@ import { STEPS, getNextStepIndex } from "@/appState/stepData";
 const NextStepButton = ({
   slug,
   label = "Skip for now",
-  variant = "outlined",
+  variant = "filled",
 }) => {
   const nextStepIndex = getNextStepIndex(slug);
   console.log({ nextStepIndex, data: STEPS[nextStepIndex] });

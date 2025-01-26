@@ -14,6 +14,8 @@ const JourneySelectionView = ({ data }) => {
   const { selectedSteps, toggleSelectedSteps, clearSelectedSteps } = useSteps();
   const router = useRouter();
 
+  const nextSlug = STEPS[selectedSteps[0] || 0].slug || "";
+
   useEffect(() => {
     clearSelectedSteps();
   }, [clearSelectedSteps]);
@@ -25,7 +27,7 @@ const JourneySelectionView = ({ data }) => {
     <>
       <div className={styles.carouselWrapper}>
         {STEPS.map((step) => {
-          if (step.id === 0 || step.id > 4) return <></>;
+          if (step.id > 4) return <></>;
           return (
             <Card.SelectItem
               key={step.id}
@@ -56,7 +58,7 @@ const JourneySelectionView = ({ data }) => {
           className="self-start"
           rightIcon={<ArrowRightIcon />}
           disabled={!selectedSteps.length}
-          // onClick={() => setOpenModal(DISCLAIMER_MODAL)}
+          onClick={() => router.push(`/journey/will/step/${nextSlug}`)}
         >
           {data.primaryCta}
         </Button>
