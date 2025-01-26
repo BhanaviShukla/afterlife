@@ -117,7 +117,6 @@ const AboutYouForm = ({ ...props }) => {
           {...citizenship}
           options={countryOptions}
           defaultValue={user ? user[citizenship.stateKey] : undefined}
-          // value={user ? user[citizenship.stateKey] : undefined}
         />
       )}
 

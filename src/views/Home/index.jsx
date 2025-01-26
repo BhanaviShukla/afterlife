@@ -2,27 +2,21 @@
 import { useSteps } from "@/appState/StepsState";
 import { Button, Card } from "@/components";
 import styles from "./homeViewStyles.module.css";
-import Link from "next/link";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { STEPS } from "@/appState/stepData";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
-import { ManagedUI } from "@/appState/UIState";
+import { useRouter } from "next/navigation";
 
 const DISCLAIMER_MODAL = "disclaimer-modal";
 
 const JourneySelectionView = ({ data }) => {
   const { selectedSteps, toggleSelectedSteps, clearSelectedSteps } = useSteps();
-
-  const { isOpenModal, setOpenModal } = useContext(ManagedUI);
+  const router = useRouter();
 
   useEffect(() => {
     clearSelectedSteps();
   }, [clearSelectedSteps]);
-
-  useEffect(() => {
-    setOpenModal(undefined);
-  }, [setOpenModal]);
 
   const handleCardClick = (id) => {
     toggleSelectedSteps(id);
@@ -53,15 +47,16 @@ const JourneySelectionView = ({ data }) => {
           variant="outlined"
           className="self-start"
           leftIcon={<ArrowLeftIcon />}
+          onClick={() => router.back()}
         >
-          <Link href={`/`}>{data.secondaryCta}</Link>
+          {data.secondaryCta}
         </Button>
         <Button
           variant="filled"
           className="self-start"
           rightIcon={<ArrowRightIcon />}
           disabled={!selectedSteps.length}
-          onClick={() => setOpenModal(DISCLAIMER_MODAL)}
+          // onClick={() => setOpenModal(DISCLAIMER_MODAL)}
         >
           {data.primaryCta}
         </Button>
