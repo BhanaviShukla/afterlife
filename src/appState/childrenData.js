@@ -63,7 +63,7 @@ export const childrenCountData = {
     },
     nextLink: `/journey/will/step/children/${childrenNestedViews.GUARDIAN}`,
     backLink: `/journey/will/step/children/${childrenNestedViews.COUNT}?count=`, // insert count here
-    primaryCta: "Next",
+    primaryCta: "Appoint a guardian",
     secondaryCta: "",
   },
   [childrenNestedViews.GUARDIAN]: {
