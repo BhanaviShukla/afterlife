@@ -20,11 +20,13 @@ const GuardianView = ({
 
   const { will } = useWill();
 
+  const count = will.children.length;
+
   const handleNext = () => {
     router.push(`${nextLink}`);
   };
   const handleBack = () => {
-    router.replace(`${backLink}`);
+    router.replace(`${backLink}${count}`);
   };
 
   return (
@@ -39,7 +41,7 @@ const GuardianView = ({
             className="self-start"
             leftIcon={<ArrowLeftIcon />}
             onClick={handleBack}
-            title={`${backLink}`}
+            title={`${backLink}${count}`}
           >
             {secondaryCta}
           </Button>

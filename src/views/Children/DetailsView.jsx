@@ -1,5 +1,5 @@
 import { Button, TextInput, Typography } from "@/components";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import CrossIcon from "@/components/ui/Icons/Controls/cancel.svg";
@@ -8,42 +8,11 @@ import { useRouter } from "next/navigation";
 import { useWill } from "@/appState/WillState";
 import Image from "next/image";
 import { useDebouncedCallback } from "@/utils/hooks";
-
-const sortObjectByDob = (a, b) => {
-  // no sorting if DOB not provided to avoid confusion for the user
-  if (!a.dob || !b.dob) return 0; //
-  else return new Date(b.dob) - new Date(a.dob);
-};
-
-const useCountToGenerateChildrenForm = (count, childrenFromState) => {
-  const countOfChildrenInWill = childrenFromState.length;
-
-  const children = [...childrenFromState.sort(sortObjectByDob)];
-
-  console.log({ count, children });
-
-  if (countOfChildrenInWill > count) {
-    // if count from UI has been updated to be less,
-    // we need to remove the younger children
-    const difference = countOfChildrenInWill - count;
-    children.splice(-difference);
-  } else if (countOfChildrenInWill < count) {
-    // if count from UI has been updated to be less
-    // we need to add UI for the difference
-    const difference = count - countOfChildrenInWill;
-    for (let i = 0; i < difference; i++) {
-      const newChild = {
-        id: Date.now() + i,
-        dob: "",
-        childName: "",
-      };
-      children.push(newChild);
-    }
-  }
-  // if count is the same as length of children
-  // simply return children from will
-  return children;
-};
+import {
+  sortObjectByDob,
+  useChildrenList,
+  useCountFromWillOrSearchParams,
+} from "./useCountHook";
 
 const DetailsView = ({
   searchParams,
@@ -56,17 +25,12 @@ const DetailsView = ({
   primaryCta,
   secondaryCta,
 }) => {
-  console.log("children -> DETAILS VIEW", searchParams.get("count"));
   const router = useRouter();
 
   const { will, UNSAFE_replaceWillCategoryByValue, removeFromWill } = useWill();
 
-  const [count, setCount] = useState(Number(searchParams.get("count")) || 1);
-  const childrenFromSearchParamsOrWill = useCountToGenerateChildrenForm(
-    count,
-    will.children
-  );
-  const [children, setChildren] = useState([...childrenFromSearchParamsOrWill]);
+  const [count, setCount] = useCountFromWillOrSearchParams(searchParams);
+  const [children, setChildren] = useChildrenList(count);
 
   useEffect(() => {
     setCount(Number(searchParams.get("count")) || 1);
@@ -74,7 +38,7 @@ const DetailsView = ({
 
   const handleNext = () => {
     UNSAFE_replaceWillCategoryByValue("children", [...children]);
-    router.push(`${nextLink}${count}`);
+    router.push(`${nextLink}`);
   };
   const handleBack = () => {
     router.replace(`${backLink}${count}`);
@@ -97,15 +61,18 @@ const DetailsView = ({
     setChildren((prevChildren) => [
       ...prevChildren.filter((child) => child.id !== id),
     ]);
-    removeFromWill("children", id);
+
+    if (will.children.find((child) => child.id === id)) {
+      console.warn("Removing from will", id);
+      removeFromWill("children", id);
+    }
   };
   const onChangeInput = (id, name, value) => {
-    console.log("ON chjange input", id, name, value);
     const editedChild = children.find((child) => child.id === id);
 
     setChildren((prevChildren) => [
       // unrelated children remain as i
-      ...prevChildren.filter((child) => child.id !== id).sort(sortObjectByDob),
+      ...prevChildren.filter((child) => child.id !== id),
       { ...editedChild, [name]: value },
     ]);
   };
@@ -116,7 +83,7 @@ const DetailsView = ({
       <Typography variant="title-small">{title}</Typography>
       <Typography className="my-10 leading-8">{description}</Typography>
       <form id="children-details-form" action={handleNext}>
-        {children.map((child, index) => (
+        {children.sort(sortObjectByDob).map((child, index) => (
           <div key={child?.id} className="flex items-center gap-3">
             <Image
               src={`/images/backpack.png`}
@@ -188,7 +155,7 @@ const DetailsView = ({
             type="submit"
             value="submit"
             id={`children-details-submit-button`}
-            title={`${nextLink}${count}`}
+            title={`${nextLink}`}
           >
             {primaryCta}
           </Button>

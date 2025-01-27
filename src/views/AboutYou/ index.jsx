@@ -69,14 +69,15 @@ const AboutYouForm = ({ ...props }) => {
     let tempUserId = userId;
     console.log({ userId });
     if (!userId) {
-      console.error("No user ID was provided, checking will");
+      console.warn("No user ID was provided, checking will");
       // no user ID, so check if a user exists
       const userCategory = getWillCategory("user");
       if (userCategory && userCategory.length === 1) {
         setUser(userCategory[0]);
-        setLoading(false);
-        return;
+      } else {
+        console.warn("No user in the will");
       }
+      setLoading(false);
       return;
     }
     const userWillEntry = getWillEntry("user", tempUserId);
