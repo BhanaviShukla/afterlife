@@ -23,6 +23,9 @@ module.exports = {
       backgroundColor: {
         secondary: "#285857", // Added this line - matches --colour-g300
       },
+      borderColor: {
+        secondary: "#285857", // Added this line - matches --colour-g300
+      },
     },
   },
   plugins: [],

@@ -1,4 +1,10 @@
-import { Button, EditableSelectInput, Typography } from "@/components";
+import {
+  Button,
+  Checkbox,
+  EditableSelectInput,
+  TextInput,
+  Typography,
+} from "@/components";
 import CrossIcon from "@/components/ui/Icons/Controls/cancel.svg";
 import { useWill } from "@/appState/WillState";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
@@ -33,9 +39,21 @@ export const GuardianForChild = memo(
     useEffect(() => {
       setIsLoading(true);
       const allChildren = getWillCategory("children").sort(sortObjectByDob);
-      if (allChildren[0] && allChildren[0].guardian?.main) {
-        if (childId === allChildren[0].id) {
+      const eldest = allChildren[0];
+      // @TODO: what is this complex ass shit - should be simplified
+      if (eldest && eldest.guardian?.main) {
+        if (childId === eldest.id) {
           setIsGuardianSameAsEldest(false);
+        } else if (selectedGuardian.main) {
+          // guardian for this child already exists
+          if (
+            selectedGuardian.main === eldest.guardian?.main &&
+            selectedGuardian.alternative === eldest.guardian?.alternative
+          ) {
+            setIsGuardianSameAsEldest(true);
+          } else {
+            setIsGuardianSameAsEldest(false);
+          }
         } else {
           // guardian is set for eldest
           // appoint the same for all
@@ -44,7 +62,7 @@ export const GuardianForChild = memo(
         }
       }
       setIsLoading(false);
-    }, [getWillCategory]);
+    }, []);
 
     useEffect(() => {
       setIsLoading(true);
@@ -104,42 +122,54 @@ export const GuardianForChild = memo(
           id={`guardian-form-wrapper-${childId}`}
         >
           <Typography variant="subtitle">{child.childName}</Typography>
-          {isGuardianSameAsEldest
-            ? "show check box"
-            : !isLoading && (
-                <>
-                  <EditableSelectInput
-                    id={`${childId}-main`}
-                    options={options}
-                    defaultValue={selectedGuardian[`main`]}
-                    filterOption={(option) =>
-                      option.value !== selectedGuardian[`alternative`]
-                    }
-                    onChange={(_, value) => handleAddNewGuardian("main", value)}
-                    placeholder={`Main Guardian`}
-                    isEditable
-                    onEdit={() => {
-                      setEditGuardianOpen("main");
-                      setIsLoading(true);
-                    }}
-                    required
-                  />
-                  <EditableSelectInput
-                    id={`${childId}-alternative`}
-                    options={options}
-                    filterOption={(option, _) =>
-                      option.value !== selectedGuardian[`main`]
-                    }
-                    defaultValue={selectedGuardian[`alternative`]}
-                    onChange={(_, value) =>
-                      handleAddNewGuardian("alternative", value)
-                    }
-                    placeholder={`Alternative Guardian`}
-                    isEditable
-                    onEdit={() => setEditGuardianOpen("alternative")}
-                  />
-                </>
-              )}
+          {isGuardianSameAsEldest ? (
+            <Checkbox
+              checked={isGuardianSameAsEldest}
+              label={"Appoint the same as first child"}
+              onChange={() => {
+                setIsGuardianSameAsEldest(false);
+                setSelectedGuardian({
+                  main: undefined,
+                  alternative: undefined,
+                });
+              }}
+            />
+          ) : (
+            !isLoading && (
+              <>
+                <EditableSelectInput
+                  id={`${childId}-main`}
+                  options={options}
+                  defaultValue={selectedGuardian[`main`]}
+                  filterOption={(option) =>
+                    option.value !== selectedGuardian[`alternative`]
+                  }
+                  onChange={(_, value) => handleAddNewGuardian("main", value)}
+                  placeholder={`Main Guardian`}
+                  isEditable
+                  onEdit={() => {
+                    setEditGuardianOpen("main");
+                    setIsLoading(true);
+                  }}
+                  required
+                />
+                <EditableSelectInput
+                  id={`${childId}-alternative`}
+                  options={options}
+                  filterOption={(option, _) =>
+                    option.value !== selectedGuardian[`main`]
+                  }
+                  defaultValue={selectedGuardian[`alternative`]}
+                  onChange={(_, value) =>
+                    handleAddNewGuardian("alternative", value)
+                  }
+                  placeholder={`Alternative Guardian`}
+                  isEditable
+                  onEdit={() => setEditGuardianOpen("alternative")}
+                />
+              </>
+            )
+          )}
         </div>
         <Button
           variant="text"
@@ -172,4 +202,5 @@ export const GuardianForChild = memo(
     );
   }
 );
+
 GuardianForChild.displayName = "GuardianForChild";

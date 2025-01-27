@@ -2,6 +2,7 @@ import Badge from "./ui/Badge/Badge";
 import Button from "./ui/Button/Button";
 import Card from "./ui/Card/Card";
 import CarouselIndicator from "./ui/CarouselIndicator/CarouselIndicator";
+import Checkbox from "./ui/Checkbox";
 import EditableSelectInput from "./ui/SelectInput/EditableSelectInput";
 import Icon from "./ui/Icons/Icon";
 import LinkButton from "./ui/Button/LinkButton";
@@ -19,6 +20,7 @@ export {
   Button,
   Card,
   CarouselIndicator,
+  Checkbox,
   Logo,
   Modal,
   Nav,
