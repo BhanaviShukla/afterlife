@@ -53,8 +53,11 @@ export const useChildrenList = (count) => {
 };
 
 export const sortObjectByDob = (a, b) => {
-  console.log({ a, b }, !a.dob);
   // no sorting if DOB not provided to avoid confusion for the user
   if (!a.dob || !b.dob) return 0; //
   else return new Date(a.dob) - new Date(b.dob);
 };
+
+// const useGuardiansForChildren = () => {
+//   const { will, patchWillEntry } = useWill()
+// }

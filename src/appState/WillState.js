@@ -88,13 +88,20 @@ export function WillProvider({ children }) {
 
   const patchWillEntry = useCallback(
     (category, id, modifiedEntry) => {
-      setWill((prevWillData) => ({
-        ...prevWillData,
-        [category]: [
-          ...prevWillData[category].filter((item) => item.id != id),
-          { id, ...modifiedEntry },
-        ],
-      }));
+      if (will.hasOwnProperty(category)) {
+        const valueForId = will[category].find((item) => item.id === id);
+        if (valueForId) {
+          setWill((prevWillData) => ({
+            ...prevWillData,
+            [category]: [
+              ...prevWillData[category].filter((item) => item.id != id),
+              { id, ...valueForId, ...modifiedEntry },
+            ],
+          }));
+          return true;
+        }
+      }
+      return false;
     },
     [setWill]
   );
