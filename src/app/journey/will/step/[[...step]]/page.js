@@ -28,8 +28,8 @@ export default function Journey({ params }) {
   console.log({ slug });
 
   return (
-    <div className="flex justify-between gap-6">
-      <div className="max-w-[65%] align-middle grow">
+    <div className="flex justify-between lg:gap-6">
+      <div className="lg:max-w-[65%] align-middle grow">
         <Typography variant="title-small">{stepData.title}</Typography>
         <Typography className="my-10 leading-8">
           {stepData.description}
@@ -38,8 +38,8 @@ export default function Journey({ params }) {
         <StepView slug={slug} data={stepData} {...params} />
       </div>
       <div
-        style={{ width: 474, height: 474, position: "relative" }}
-        className="max-w-[30%] h-[474px] relative"
+        // style={{ width: 474, height: 474, position: "relative" }}
+        className="max-w-[30%] h-[474px] lg:w-[474px] relative md:w-0 relative"
       >
         <Image
           src={`/images/${imageName}.png`}

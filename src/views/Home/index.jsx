@@ -7,16 +7,18 @@ import { STEPS } from "@/appState/stepData";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import { useRouter } from "next/navigation";
+import { useWill } from "@/appState/WillState";
 
 const JourneySelectionView = ({ data }) => {
-  const { selectedSteps, toggleSelectedSteps, clearSelectedSteps } = useSteps();
+  const { selectedSteps, toggleSelectedSteps } = useSteps();
+  const { will } = useWill();
   const router = useRouter();
 
   const nextSlug = STEPS[selectedSteps[0] || 0].slug || "";
 
-  useEffect(() => {
-    clearSelectedSteps();
-  }, [clearSelectedSteps]);
+  // useEffect(() => {
+  //   clearSelectedSteps();
+  // }, [clearSelectedSteps]);
 
   const handleCardClick = (id) => {
     toggleSelectedSteps(id);
@@ -36,6 +38,7 @@ const JourneySelectionView = ({ data }) => {
               handleSelect={() => handleCardClick(step.id)}
               subLabel={step.subLabel}
               label={step.label}
+              isCompleted={will.completed[step.slug]}
             >
               {step.label}
             </Card.SelectItem>

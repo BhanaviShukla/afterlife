@@ -93,8 +93,7 @@ const DetailsView = ({
               quality={90}
               className={`filter hue-rotate-${index * 15} -scale-x-100`}
             />
-            <div className="w-full max-w-[480px]" id={child.id}>
-              {child.id}
+            <div className="w-full max-w-[480px]">
               <TextInput
                 id={`${child.id}-${formData.childName.name}`}
                 {...formData.childName}

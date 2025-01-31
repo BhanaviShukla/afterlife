@@ -4,6 +4,7 @@ import {
   EditableSelectInput,
   TextInput,
   Typography,
+  UserProfileVariants,
 } from "@/components";
 import CrossIcon from "@/components/ui/Icons/Controls/cancel.svg";
 import { useWill } from "@/appState/WillState";
@@ -121,7 +122,10 @@ export const GuardianForChild = memo(
           className="w-full max-w-[480px]"
           id={`guardian-form-wrapper-${childId}`}
         >
-          <Typography variant="subtitle">{child.childName}</Typography>
+          <UserProfileVariants.UserProfileWithDob
+            name={child.childName}
+            dob={child.dob}
+          />
           {isGuardianSameAsEldest ? (
             <Checkbox
               checked={isGuardianSameAsEldest}

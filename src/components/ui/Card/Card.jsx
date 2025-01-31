@@ -25,6 +25,7 @@ const CardSelectItem = ({
   label,
   subLabel,
   isSelected,
+  isCompleted,
   handleSelect,
   children,
 }) => {
@@ -47,6 +48,7 @@ const CardSelectItem = ({
           id={`selector-${id}`}
           width={32}
           height={32}
+          disabled={isCompleted}
         />
       </div>
     </CardBase>

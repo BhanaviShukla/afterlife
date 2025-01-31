@@ -16,6 +16,13 @@ export const initialWillState = {
   rites: [],
   executor: [],
   people: [],
+  completed: {
+    children: false,
+    pets: false,
+    assets: false,
+    rites: false,
+    executor: false,
+  },
 };
 
 export const WillContext = createContext({
@@ -83,7 +90,7 @@ export function WillProvider({ children }) {
         }));
       else return undefined;
     },
-    [will]
+    [setWill]
   );
 
   const patchWillEntry = useCallback(
@@ -105,6 +112,25 @@ export function WillProvider({ children }) {
     },
     [setWill]
   );
+
+  const handleCompleted = useCallback(
+    (category, value) => {
+      console.log("Setting completed for", category);
+      if (
+        will[category]?.length &&
+        typeof will.completed[category] !== "undefined"
+      ) {
+        setWill((prevWillData) => ({
+          ...prevWillData,
+          completed: {
+            ...prevWillData.completed,
+            ["category"]: value,
+          },
+        }));
+      } else console.error("NOOP");
+    },
+    [setWill]
+  );
   console.log("WILL PROVIDER", { will });
 
   const memoizedWillProviderValue = useMemo(
@@ -116,6 +142,7 @@ export function WillProvider({ children }) {
       getWillCategory,
       UNSAFE_replaceWillCategoryByValue,
       patchWillEntry,
+      handleCompleted,
     }),
     [
       will,
@@ -125,6 +152,7 @@ export function WillProvider({ children }) {
       getWillEntry,
       UNSAFE_replaceWillCategoryByValue,
       patchWillEntry,
+      handleCompleted,
     ]
   );
   return (
