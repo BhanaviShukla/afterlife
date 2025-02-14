@@ -51,7 +51,16 @@ const ConfirmView = ({
               <UserProfileVariants.ChildProfileWithGuardian
                 name={child.childName}
                 dob={child.dob}
-                guardian={child.guardian}
+                guardian={{
+                  main:
+                    will.people.find(
+                      (person) => person.id === child.guardian.main
+                    ).name || undefined,
+                  alternative:
+                    will.people.find(
+                      (person) => person.id === child.guardian.alternative
+                    ).name || undefined,
+                }}
               />
             </div>
           </div>

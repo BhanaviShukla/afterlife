@@ -4,9 +4,16 @@ import Image from "next/image";
 import { Badge, Button, Selector, Typography } from "../..";
 import Cancel from "../Icons/Controls/cancel.svg";
 
-const CardBase = ({ imageName = "pet_bowl", style, children }) => {
+const CardBase = ({ imageName = "pet_bowl", style, onClick, children }) => {
   return (
-    <div className={`${styles.base}`} style={style}>
+    // TODO: add a proper onClick handler here
+    <div
+      className={`${styles.base}`}
+      style={style}
+      onClick={onClick}
+      role="navigation"
+      tabIndex={0}
+    >
       <Image
         src={`/images/${imageName}.png`}
         alt={imageName}
@@ -24,14 +31,20 @@ const CardSelectItem = ({
   backgroundColor,
   label,
   subLabel,
-  isSelected,
   isCompleted,
-  handleSelect,
+  handleClick,
   children,
 }) => {
   return (
     <CardBase
-      {...{ imageName, style: { backgroundColor: `var(${backgroundColor})` } }}
+      {...{
+        imageName,
+        style: {
+          backgroundColor: `var(${backgroundColor})`,
+          cursor: "pointer",
+        },
+      }}
+      onClick={handleClick}
     >
       <div className={`${styles.labelWrapper}`}>
         <div>
@@ -40,16 +53,19 @@ const CardSelectItem = ({
             {label || children}
           </Typography>
         </div>
+        {isCompleted ? (
+          <Selector
+            isSelected={isCompleted}
+            id={`selector-${id}`}
+            width={32}
+            height={32}
+            readOnly
+          />
+        ) : (
+          <></>
+        )}
 
         {/* {icon here} */}
-        <Selector
-          onToggleSelect={handleSelect}
-          isSelected={isSelected}
-          id={`selector-${id}`}
-          width={32}
-          height={32}
-          disabled={isCompleted}
-        />
       </div>
     </CardBase>
   );

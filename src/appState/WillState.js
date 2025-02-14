@@ -124,12 +124,12 @@ export function WillProvider({ children }) {
           ...prevWillData,
           completed: {
             ...prevWillData.completed,
-            ["category"]: value,
+            [category]: value,
           },
         }));
       } else console.error("NOOP");
     },
-    [setWill]
+    [setWill, will]
   );
   console.log("WILL PROVIDER", { will });
 

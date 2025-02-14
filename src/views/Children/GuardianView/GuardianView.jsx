@@ -60,6 +60,7 @@ const GuardianView = ({
             index={index}
             onChangeGuardian={handleChangeGuardian}
             onRemoveAChild={handleRemoveAChild}
+            isEldest={index === 0} // since children are sorted by eldest to youngest
           />
         ))}
         <div className="flex mt-14 gap-4">

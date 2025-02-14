@@ -2,17 +2,16 @@ import {
   Button,
   Checkbox,
   EditableSelectInput,
-  TextInput,
-  Typography,
   UserProfileVariants,
 } from "@/components";
 import CrossIcon from "@/components/ui/Icons/Controls/cancel.svg";
 import { useWill } from "@/appState/WillState";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { sortObjectByDob } from "../useCountHook";
 import Image from "next/image";
 import EditPersonModal from "@/components/EditPersonModal/EditPersonModal";
 import { useDebouncedCallback } from "@/utils/hooks";
+import { areObjectsEqual } from "@/utils/object";
 
 const ADD_ANOTHER_GUARDIAN_OPTION = "Add Another Guardian";
 
@@ -20,56 +19,39 @@ const EDIT_GUARDIAN_MODAL = "edit-guardian-details-modal";
 const ADD_GUARDIAN_MODAL = "add-another-guardian-modal";
 
 export const GuardianForChild = memo(
-  ({ childId, index, onChangeGuardian, onRemoveAChild }) => {
+  ({ childId, index, onChangeGuardian, onRemoveAChild, isEldest }) => {
     const debouncedOnChangeGuardian = useDebouncedCallback(
       onChangeGuardian,
       500
     );
 
     const { getWillEntry, getWillCategory } = useWill();
-    const child = useMemo(() => getWillEntry("children", childId), [childId]);
+    const child = useMemo(
+      () => getWillEntry("children", childId),
+      [childId, getWillEntry]
+    );
     const people = useMemo(() => getWillCategory("people"), [getWillCategory]);
+    const allChildren = getWillCategory("children").sort(sortObjectByDob);
+    const eldestGuardians = allChildren[0].guardian;
 
-    const [selectedGuardian, setSelectedGuardian] = useState({
+    const defaultGuardians = {
       main: child.guardian?.main || undefined,
       alternative: child.guardian?.alternative || undefined,
+    };
+    const [selectedGuardian, setSelectedGuardian] = useState({
+      ...defaultGuardians,
     });
-    const [isGuardianSameAsEldest, setIsGuardianSameAsEldest] = useState(false);
+    const [isGuardianSameAsEldest, setIsGuardianSameAsEldest] = useState(
+      !isEldest && areObjectsEqual(selectedGuardian, eldestGuardians)
+    );
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
       setIsLoading(true);
-      const allChildren = getWillCategory("children").sort(sortObjectByDob);
-      const eldest = allChildren[0];
-      // @TODO: what is this complex ass shit - should be simplified
-      if (eldest && eldest.guardian?.main) {
-        if (childId === eldest.id) {
-          setIsGuardianSameAsEldest(false);
-        } else if (selectedGuardian.main) {
-          // guardian for this child already exists
-          if (
-            selectedGuardian.main === eldest.guardian?.main &&
-            selectedGuardian.alternative === eldest.guardian?.alternative
-          ) {
-            setIsGuardianSameAsEldest(true);
-          } else {
-            setIsGuardianSameAsEldest(false);
-          }
-        } else {
-          // guardian is set for eldest
-          // appoint the same for all
-          setIsGuardianSameAsEldest(true);
-          setSelectedGuardian(allChildren[0].guardian);
-        }
-      }
+      if (!areObjectsEqual(selectedGuardian, child.guardian))
+        debouncedOnChangeGuardian(childId, selectedGuardian);
       setIsLoading(false);
-    }, []);
-
-    useEffect(() => {
-      setIsLoading(true);
-      debouncedOnChangeGuardian(childId, selectedGuardian);
-      setIsLoading(false);
-    }, [selectedGuardian]);
+    }, [selectedGuardian, childId, debouncedOnChangeGuardian, child.guardian]);
 
     const [editGuardianOpen, setEditGuardianOpen] = useState(undefined);
     const [addGuardianOpen, setAddGuardianOpen] = useState(undefined);
@@ -108,6 +90,8 @@ export const GuardianForChild = memo(
       },
     ];
 
+    console.log({ isGuardianSameAsEldest, isEldest });
+
     return (
       <div key={childId} className="flex items-center gap-3">
         <Image
@@ -126,7 +110,7 @@ export const GuardianForChild = memo(
             name={child.childName}
             dob={child.dob}
           />
-          {isGuardianSameAsEldest ? (
+          {!isEldest && isGuardianSameAsEldest ? (
             <Checkbox
               checked={isGuardianSameAsEldest}
               label={"Appoint the same as first child"}
