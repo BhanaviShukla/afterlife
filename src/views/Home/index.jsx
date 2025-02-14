@@ -15,6 +15,11 @@ const JourneySelectionView = ({ data }) => {
     console.log("handleCardClick", slug);
     router.push(`/journey/will/step/${slug}`);
   };
+
+  const isAnyStepCompleted = Object.values(will.completed).some(
+    (value) => value === true
+  );
+
   return (
     <>
       <div className={styles.carouselWrapper}>
@@ -49,9 +54,8 @@ const JourneySelectionView = ({ data }) => {
           variant="filled"
           className="self-start"
           rightIcon={<ArrowRightIcon />}
-          // disabled={!selectedSteps.length}
-          // Add finalize will here
-          // onClick={() => router.push(`/journey/will/step/${nextSlug}`)}
+          disabled={!isAnyStepCompleted}
+          onClick={() => router.push(`/journey/will/step/dashboard`)}
         >
           {data.primaryCta}
         </Button>

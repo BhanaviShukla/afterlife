@@ -17,6 +17,6 @@ const data = {
   title: "What would you like to plan for?",
   description:
     "You may finalise and review your will once you have filled out all the items.",
-  primaryCta: "Next",
+  primaryCta: "Finalise will",
   secondaryCta: "Back",
 };
