@@ -47,6 +47,7 @@ export const GuardianForChild = memo(
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+      console.log("updating will");
       setIsLoading(true);
       if (!areObjectsEqual(selectedGuardian, child.guardian))
         debouncedOnChangeGuardian(childId, selectedGuardian);
@@ -110,53 +111,61 @@ export const GuardianForChild = memo(
             name={child.childName}
             dob={child.dob}
           />
-          {!isEldest && isGuardianSameAsEldest ? (
+          {!isLoading && (isEldest || !isGuardianSameAsEldest) && (
+            <>
+              <EditableSelectInput
+                id={`${childId}-main`}
+                options={options}
+                defaultValue={selectedGuardian[`main`]}
+                filterOption={(option) =>
+                  option.value !== selectedGuardian[`alternative`]
+                }
+                onChange={(_, value) => handleAddNewGuardian("main", value)}
+                placeholder={`Main Guardian`}
+                isEditable
+                onEdit={() => {
+                  setEditGuardianOpen("main");
+                  setIsLoading(true);
+                }}
+                required
+              />
+              <EditableSelectInput
+                id={`${childId}-alternative`}
+                options={options}
+                filterOption={(option, _) =>
+                  option.value !== selectedGuardian[`main`]
+                }
+                defaultValue={selectedGuardian[`alternative`]}
+                onChange={(_, value) =>
+                  handleAddNewGuardian("alternative", value)
+                }
+                placeholder={`Alternative Guardian`}
+                isEditable
+                onEdit={() => setEditGuardianOpen("alternative")}
+              />
+            </>
+          )}
+          {!isEldest ? (
             <Checkbox
               checked={isGuardianSameAsEldest}
               label={"Appoint the same as first child"}
-              onChange={() => {
-                setIsGuardianSameAsEldest(false);
-                setSelectedGuardian({
-                  main: undefined,
-                  alternative: undefined,
-                });
+              onChange={(event) => {
+                const newValue = event.target.checked;
+                setIsGuardianSameAsEldest(newValue);
+                if (newValue)
+                  setSelectedGuardian({
+                    main: eldestGuardians.main,
+                    alternative: eldestGuardians.alternative,
+                  });
+                else
+                  setSelectedGuardian({
+                    main: undefined,
+                    alternative: undefined,
+                  });
               }}
             />
           ) : (
-            !isLoading && (
-              <>
-                <EditableSelectInput
-                  id={`${childId}-main`}
-                  options={options}
-                  defaultValue={selectedGuardian[`main`]}
-                  filterOption={(option) =>
-                    option.value !== selectedGuardian[`alternative`]
-                  }
-                  onChange={(_, value) => handleAddNewGuardian("main", value)}
-                  placeholder={`Main Guardian`}
-                  isEditable
-                  onEdit={() => {
-                    setEditGuardianOpen("main");
-                    setIsLoading(true);
-                  }}
-                  required
-                />
-                <EditableSelectInput
-                  id={`${childId}-alternative`}
-                  options={options}
-                  filterOption={(option, _) =>
-                    option.value !== selectedGuardian[`main`]
-                  }
-                  defaultValue={selectedGuardian[`alternative`]}
-                  onChange={(_, value) =>
-                    handleAddNewGuardian("alternative", value)
-                  }
-                  placeholder={`Alternative Guardian`}
-                  isEditable
-                  onEdit={() => setEditGuardianOpen("alternative")}
-                />
-              </>
-            )
+            <></>
           )}
         </div>
         <Button

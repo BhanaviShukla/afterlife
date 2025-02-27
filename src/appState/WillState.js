@@ -96,7 +96,9 @@ export function WillProvider({ children }) {
   const patchWillEntry = useCallback(
     (category, id, modifiedEntry) => {
       if (will.hasOwnProperty(category)) {
-        const valueForId = will[category].find((item) => item.id === id);
+        const valueForId = will[category].find(
+          (item) => String(item.id) === String(id)
+        );
         if (valueForId) {
           setWill((prevWillData) => ({
             ...prevWillData,
@@ -110,7 +112,7 @@ export function WillProvider({ children }) {
       }
       return false;
     },
-    [setWill]
+    [setWill, will]
   );
 
   const handleCompleted = useCallback(

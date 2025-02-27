@@ -30,7 +30,7 @@ export const CaretakerForPet = memo(
       [petId, getWillEntry]
     );
     const people = useMemo(() => getWillCategory("people"), [getWillCategory]);
-    const allPets = getWillCategory("pets");
+    const allPets = getWillCategory("pets").sort((a, b) => a.id - b.id);
     const firstCaretakers = allPets[0].caretaker;
 
     const defaultCaretakers = {
@@ -109,53 +109,61 @@ export const CaretakerForPet = memo(
             name={pet.petName}
             microchip={pet.microchip}
           />
+          {!isLoading && (isFirst || !isCaretakerSameAsFirst) && (
+            <>
+              <EditableSelectInput
+                id={`${petId}-main`}
+                options={options}
+                defaultValue={selectedCaretaker[`main`]}
+                filterOption={(option) =>
+                  option.value !== selectedCaretaker[`alternative`]
+                }
+                onChange={(_, value) => handleAddNewCaretaker("main", value)}
+                placeholder={`Add caretaker`}
+                isEditable
+                onEdit={() => {
+                  setEditCaretakerOpen("main");
+                  setIsLoading(true);
+                }}
+                required
+              />
+              <EditableSelectInput
+                id={`${petId}-alternative`}
+                options={options}
+                filterOption={(option, _) =>
+                  option.value !== selectedCaretaker[`main`]
+                }
+                defaultValue={selectedCaretaker[`alternative`]}
+                onChange={(_, value) =>
+                  handleAddNewCaretaker("alternative", value)
+                }
+                placeholder={`Add alternatve caretaker (optional)`}
+                isEditable
+                onEdit={() => setEditCaretakerOpen("alternative")}
+              />
+            </>
+          )}
           {!isFirst ? (
             <Checkbox
               checked={isCaretakerSameAsFirst}
               label={"Appoint the same as first pet"}
-              onChange={() => {
-                setIsCaretakerSameAsFirst(false);
-                setSelectedCaretaker({
-                  main: undefined,
-                  alternative: undefined,
-                });
+              onChange={(event) => {
+                const newValue = event.target.checked;
+                setIsCaretakerSameAsFirst(newValue);
+                if (newValue)
+                  setSelectedCaretaker({
+                    main: firstCaretakers.main,
+                    alternative: firstCaretakers.alternative,
+                  });
+                else
+                  setSelectedCaretaker({
+                    main: undefined,
+                    alternative: undefined,
+                  });
               }}
             />
           ) : (
-            !isLoading && (
-              <>
-                <EditableSelectInput
-                  id={`${petId}-main`}
-                  options={options}
-                  defaultValue={selectedCaretaker[`main`]}
-                  filterOption={(option) =>
-                    option.value !== selectedCaretaker[`alternative`]
-                  }
-                  onChange={(_, value) => handleAddNewCaretaker("main", value)}
-                  placeholder={`Add caretaker`}
-                  isEditable
-                  onEdit={() => {
-                    setEditCaretakerOpen("main");
-                    setIsLoading(true);
-                  }}
-                  required
-                />
-                <EditableSelectInput
-                  id={`${petId}-alternative`}
-                  options={options}
-                  filterOption={(option, _) =>
-                    option.value !== selectedCaretaker[`main`]
-                  }
-                  defaultValue={selectedCaretaker[`alternative`]}
-                  onChange={(_, value) =>
-                    handleAddNewCaretaker("alternative", value)
-                  }
-                  placeholder={`Add alternatve caretaker (optional)`}
-                  isEditable
-                  onEdit={() => setEditCaretakerOpen("alternative")}
-                />
-              </>
-            )
+            <></>
           )}
         </div>
         <Button

@@ -49,16 +49,18 @@ const CaretakerView = ({
       <Typography variant="title-small">{title}</Typography>
       <Typography className="my-10 leading-8">{description}</Typography>
       <form id="pets-caretaker-form" action={handleNext}>
-        {will.pets.map((pet, index) => (
-          <CaretakerForPet
-            key={`caretaker-for-child-forminputs-${pet.id}`}
-            petId={pet.id}
-            index={index}
-            onChangeCaretaker={handleChangeCaretaker}
-            onRemoveAPet={handleRemoveAPet}
-            isFirst={index === 0} // since pets are sorted by eldest to youngest
-          />
-        ))}
+        {will.pets
+          .sort((a, b) => a.id - b.id)
+          .map((pet, index) => (
+            <CaretakerForPet
+              key={`caretaker-for-child-forminputs-${pet.id}`}
+              petId={pet.id}
+              index={index}
+              onChangeCaretaker={handleChangeCaretaker}
+              onRemoveAPet={handleRemoveAPet}
+              isFirst={index === 0} // since pets are sorted simply by id
+            />
+          ))}
         <div className="flex mt-14 gap-4">
           <Button
             variant="outlined"
