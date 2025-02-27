@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getImageFromSlug } from "@/utils/step";
 import { ChildrenView, PetsView, RitesView } from "@/views";
 import { childrenCountData } from "@/appState/childrenData";
-import { petsData } from "@/appState/petsData";
+import { petsCountData, petsData } from "@/appState/petsData";
 import { aboutYouData } from "@/appState/aboutYouData";
 
 const StepView = ({ ...props }) => {
@@ -39,7 +39,7 @@ export default function Journey({ params }) {
       </div>
       <div
         // style={{ width: 474, height: 474, position: "relative" }}
-        className="max-w-[30%] h-[474px] lg:w-[474px] relative md:w-0 relative"
+        className="max-w-[30%] h-[474px] lg:w-[474px] md:w-0 relative"
       >
         <Image
           src={`/images/${imageName}.png`}
@@ -55,7 +55,7 @@ export default function Journey({ params }) {
 const data = {
   "about-you": aboutYouData,
   children: childrenCountData,
-  pets: petsData,
+  pets: petsCountData,
   assets: {
     title: "assets and belongings",
   },

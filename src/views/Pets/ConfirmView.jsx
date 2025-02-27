@@ -3,9 +3,7 @@ import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-rig
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import { useRouter } from "next/navigation";
 import { useWill } from "@/appState/WillState";
-import { sortObjectByDob } from "./useCountHook";
 import Image from "next/image";
-import { useSteps } from "@/appState/StepsState";
 
 const ConfirmView = ({
   // searchParams,
@@ -18,14 +16,13 @@ const ConfirmView = ({
   primaryCta,
   secondaryCta,
 }) => {
-  console.log("children -> CONFIRM VIEW");
+  console.log("pets -> CONFIRM VIEW");
   const router = useRouter();
 
   const { will, addToWill, handleCompleted } = useWill();
-  const { setCompletedSteps } = useSteps();
 
   const handleNext = () => {
-    handleCompleted("children", true); // 0 is step id for childreb
+    handleCompleted("pets", true); // 0 is step id for petreb
     router.push(`${nextLink}`);
   };
   const handleBack = () => {
@@ -36,29 +33,29 @@ const ConfirmView = ({
     <div>
       <Typography variant="title-small">{title}</Typography>
       <Typography className="my-4 leading-8">{description}</Typography>
-      <form id="children-confirm-form" action={handleNext}>
-        {will.children.sort(sortObjectByDob).map((child, index) => (
-          <div key={child?.id} className="flex items-center gap-3 mt-6">
+      <form id="pets-confirm-form" action={handleNext}>
+        {will.pets.map((pet, index) => (
+          <div key={pet?.id} className="flex items-center gap-3 mt-6">
             <Image
               src={`/images/backpack.png`}
-              alt={`child ${child.childName} backpack`}
+              alt={`pet ${pet.petName} backpack`}
               width={100}
               height={100}
               quality={90}
               className={`filter hue-rotate-${index * 15} -scale-x-100`}
             />
             <div className="w-full max-w-[480px]">
-              <UserProfileVariants.ChildProfileWithGuardian
-                name={child.childName}
-                dob={child.dob}
-                guardian={{
+              <UserProfileVariants.PetProfileWithCaretaker
+                name={pet.petName}
+                microchip={pet.microchip}
+                caretaker={{
                   main:
                     will.people.find(
-                      (person) => person.id === child.guardian.main
+                      (person) => person.id === pet.caretaker.main
                     )?.name || undefined,
                   alternative:
                     will.people.find(
-                      (person) => person.id === child.guardian.alternative
+                      (person) => person.id === pet.caretaker.alternative
                     )?.name || undefined,
                 }}
               />
@@ -81,7 +78,7 @@ const ConfirmView = ({
             rightIcon={<ArrowRightIcon />}
             type="submit"
             value="submit"
-            id={`children-confirm-submit-button`}
+            id={`pets-confirm-submit-button`}
             title={`${nextLink}`}
           >
             {primaryCta}

@@ -8,10 +8,10 @@ import { useRouter } from "next/navigation";
 import { useWill } from "@/appState/WillState";
 import Image from "next/image";
 import {
+  useCategoryList,
   useCountFromWillOrSearchParams,
   useDebouncedCallback,
 } from "@/utils/hooks";
-import { sortObjectByDob, useChildrenList } from "./useCountHook";
 
 const DetailsView = ({
   searchParams,
@@ -30,52 +30,56 @@ const DetailsView = ({
 
   const [count, setCount] = useCountFromWillOrSearchParams(
     searchParams,
-    "children"
+    "pets"
   );
-  const [children, setChildren] = useChildrenList(count);
+  const [pets, setPets] = useCategoryList(count, "pets");
 
   useEffect(() => {
     setCount(Number(searchParams.get("count")) || 1);
   }, [searchParams]);
 
   const handleNext = () => {
-    UNSAFE_replaceWillCategoryByValue("children", [...children]);
+    UNSAFE_replaceWillCategoryByValue("pets", [...pets]);
     router.push(`${nextLink}`);
   };
   const handleBack = () => {
     router.replace(`${backLink}${count}`);
   };
 
-  const onAddAChild = () => {
+  const onAddAPet = () => {
     setCount((prevCount) => prevCount + 1);
-    setChildren((prevChildren) => [
-      ...prevChildren,
+    setPets((prevPets) => [
+      ...prevPets,
       {
-        id: Date.now() + children.length,
+        id: Date.now() + pets.length,
         dob: "",
-        childName: "",
+        petName: "",
       },
     ]);
   };
 
-  const onRemoveAChild = (id) => {
+  const onRemoveAPet = (id) => {
     setCount((prevCount) => prevCount - 1);
-    setChildren((prevChildren) => [
-      ...prevChildren.filter((child) => child.id !== id),
-    ]);
+    setPets((prevPets) => [...prevPets.filter((pet) => pet.id !== id)]);
 
-    if (will.children.find((child) => child.id === id)) {
+    if (will.pets.find((pet) => pet.id === id)) {
       console.warn("Removing from will", id);
-      removeFromWill("children", id);
+      removeFromWill("pets", id);
     }
   };
   const onChangeInput = (id, name, value) => {
-    const editedChild = children.find((child) => child.id === id);
+    const editedChild = pets.find((pet) => pet.id === id);
 
-    setChildren((prevChildren) => [
-      // unrelated children remain as i
-      ...prevChildren.filter((child) => child.id !== id),
-      { ...editedChild, [name]: value },
+    setPets((prevPets) => [
+      // unrelated pets remain as i
+      ...prevPets.map((pet) => {
+        if (pet.id !== id) return pet;
+        else
+          return {
+            ...editedChild,
+            [name]: value,
+          };
+      }),
     ]);
   };
   const debouncedOnChange = useDebouncedCallback(onChangeInput, 500);
@@ -84,12 +88,12 @@ const DetailsView = ({
     <div className="w-full">
       <Typography variant="title-small">{title}</Typography>
       <Typography className="my-10 leading-8">{description}</Typography>
-      <form id="children-details-form" action={handleNext}>
-        {children.sort(sortObjectByDob).map((child, index) => (
-          <div key={child?.id} className="flex items-center gap-3">
+      <form id="pets-details-form" action={handleNext}>
+        {pets.map((pet, index) => (
+          <div key={pet?.id} className="flex items-center gap-3">
             <Image
               src={`/images/backpack.png`}
-              alt={`child ${child.childName} backpack`}
+              alt={`pet ${pet.petName} backpack`}
               width={100}
               height={100}
               quality={90}
@@ -97,31 +101,48 @@ const DetailsView = ({
             />
             <div className="w-full max-w-[480px]">
               <TextInput
-                id={`${child.id}-${formData.childName.name}`}
-                {...formData.childName}
-                defaultValue={child ? child.childName : undefined}
+                id={`${pet.id}-${formData.petName.name}`}
+                {...formData.petName}
+                defaultValue={pet ? pet.petName : undefined}
                 onChange={(e) =>
                   debouncedOnChange(
-                    child.id,
-                    formData.childName.name,
+                    pet.id,
+                    formData.petName.name,
                     e.target.value
                   )
                 }
               />
-              {/* dob */}
+              {/* microchip */}
               <TextInput
-                id={`${child.id}-${formData.dob.name}`}
-                {...formData.dob}
-                defaultValue={child ? child.dob : undefined}
+                id={`${pet.id}-${formData.microchip.name}`}
+                {...formData.microchip}
+                defaultValue={pet ? pet.microchip : undefined}
                 onChange={(e) =>
-                  debouncedOnChange(child.id, formData.dob.name, e.target.value)
+                  debouncedOnChange(
+                    pet.id,
+                    formData.microchip.name,
+                    e.target.value
+                  )
+                }
+              />
+              {/* instructions */}
+              <TextInput
+                id={`${pet.id}-${formData.instructions.name}`}
+                {...formData.instructions}
+                defaultValue={pet ? pet.instructions : undefined}
+                onChange={(e) =>
+                  debouncedOnChange(
+                    pet.id,
+                    formData.instructions.name,
+                    e.target.value
+                  )
                 }
               />
             </div>
             <Button
               variant="text"
               onClick={() => {
-                onRemoveAChild(child.id);
+                onRemoveAPet(pet.id);
               }}
               className="min-w-0 text-center align-middle ml-12 p-2 hover:bg-slate-100 rounded-lg"
             >
@@ -134,9 +155,9 @@ const DetailsView = ({
           variant="text"
           leftIcon={<AddChildIcon />}
           className="mt-12"
-          onClick={onAddAChild}
+          onClick={onAddAPet}
         >
-          Add another child
+          Add another pet
         </Button>
 
         <div className="flex mt-14 gap-4">
@@ -155,7 +176,7 @@ const DetailsView = ({
             rightIcon={<ArrowRightIcon />}
             type="submit"
             value="submit"
-            id={`children-details-submit-button`}
+            id={`pets-details-submit-button`}
             title={`${nextLink}`}
           >
             {primaryCta}

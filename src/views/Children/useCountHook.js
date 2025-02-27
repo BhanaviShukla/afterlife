@@ -1,20 +1,6 @@
 import { useWill } from "@/appState/WillState";
 import { useEffect, useState } from "react";
 
-export const useCountFromWillOrSearchParams = (searchParams) => {
-  const { will } = useWill();
-  const [count, setCount] = useState(1);
-
-  useEffect(() => {
-    if (will.children.length) setCount(will.children.length);
-    else if (searchParams && Number(searchParams.get("count")))
-      setCount(Number(searchParams.get("count")));
-  }, [searchParams, will.children]);
-
-  console.log({ count });
-  return [count, setCount];
-};
-
 export const useChildrenList = (count) => {
   const { will } = useWill();
   const [children, setChildren] = useState([]);
