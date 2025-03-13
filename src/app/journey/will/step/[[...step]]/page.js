@@ -6,7 +6,6 @@ import { childrenCountData } from "@/appState/childrenData";
 import { petsCountData } from "@/appState/petsData";
 import { aboutYouData } from "@/appState/aboutYouData";
 import { ritesData } from "@/appState/ritesData";
-import { Show } from "@/components/Show";
 
 const StepView = ({ ...props }) => {
   console.log({ props });
