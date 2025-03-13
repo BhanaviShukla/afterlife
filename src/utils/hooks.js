@@ -40,6 +40,20 @@ export const useCountFromWillOrSearchParams = (searchParams, category) => {
   return [count, setCount];
 };
 
+export const useReligionFromWillOrSearchParams = (searchParams) => {
+  const { will } = useWill();
+  const [religion, setReligion] = useState("none");
+
+  useEffect(() => {
+    if (will.rites.religion) setReligion(will.rites.religion);
+    else if (searchParams && searchParams.get("religion"))
+      setReligion(String(searchParams.get("religion")));
+    else setReligion("none");
+  }, [searchParams, will]);
+
+  return [religion, setReligion];
+};
+
 export const useCategoryList = (count, category) => {
   const { will } = useWill();
   const [list, setList] = useState([]);

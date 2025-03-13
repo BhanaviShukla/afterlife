@@ -1,20 +1,12 @@
 "use client";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { useWill } from "@/appState/WillState";
-import { Button } from "@/components";
-import PlusIcon from "@/components/ui/Icons/Controls/Buttons/plus-button-white.svg";
-import { ManagedUI } from "@/appState/UIState";
-import { petsData, petsNestedViews } from "@/appState/petsData";
-import AddPetModal from "./AddPet";
-import NextStepButton from "@/components/NextStepButton";
 import DetailsView from "./DetailsView";
 import CountView from "./CountView";
 import CaretakerView from "./CaretakerView";
 import ConfirmView from "./ConfirmView";
 
-const ADD_PET_MODAL = "add_pet_modal";
 const NestedPetsView = ({
   nestedSlug,
   nestedProps,

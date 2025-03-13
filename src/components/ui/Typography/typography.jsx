@@ -18,6 +18,8 @@ const Typography = ({ variant = "paragraph", className, children }) => {
         return <h6 className={`heading ${customClassname}`}>{children}</h6>;
       case "caption":
         return <span className={`caption ${customClassname}`}>{children}</span>;
+      case "span":
+        return <span className={`${customClassname}`}>{children}</span>;
       case "paragraph":
       default:
         return <p className={`${customClassname}`}>{children}</p>;

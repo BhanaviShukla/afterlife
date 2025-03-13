@@ -103,4 +103,50 @@ export const PetProfileWithCaretaker = ({ name, microchip, caretaker }) => {
   );
 };
 
+export const RitesDetailsWithInstructions = ({
+  religion,
+  arrangements,
+  instructions,
+}) => {
+  return (
+    <>
+      {/* RITES */}
+      <div className="my-6">
+        <Typography variant="heading" className="text-xl">
+          Rites
+        </Typography>
+        <div className="flex justify-between mt-5">
+          <div className="flex justify-between">
+            <Typography variant="span" className="text-accent-secondary mr-4">
+              Religion
+            </Typography>
+            <Typography variant="span" className="font-semibold text-secondary">
+              {religion}
+            </Typography>
+          </div>
+          <div className="flex justify-between">
+            <Typography variant="span" className="text-accent-secondary mr-4">
+              Arrangements
+            </Typography>
+            <Typography variant="span" className="font-semibold text-secondary">
+              {arrangements}
+            </Typography>
+          </div>
+        </div>
+      </div>
+      {/* Instructions */}
+      <div className="my-6">
+        <Typography variant="heading" className="text-xl">
+          Additional Instructions
+        </Typography>
+        <div className="mt-5">
+          <Typography variant="span" className="font-400 text-secondary">
+            {instructions}
+          </Typography>
+        </div>
+      </div>
+    </>
+  );
+};
+
 export default UserProfileWithDob;

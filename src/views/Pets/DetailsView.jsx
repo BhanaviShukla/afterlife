@@ -68,7 +68,7 @@ const DetailsView = ({
     }
   };
   const onChangeInput = (id, name, value) => {
-    const editedChild = pets.find((pet) => pet.id === id);
+    const editedPet = pets.find((pet) => pet.id === id);
 
     setPets((prevPets) => [
       // unrelated pets remain as i
@@ -76,7 +76,7 @@ const DetailsView = ({
         if (pet.id !== id) return pet;
         else
           return {
-            ...editedChild,
+            ...editedPet,
             [name]: value,
           };
       }),

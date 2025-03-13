@@ -1,0 +1,72 @@
+{
+  "user": [
+    {
+      "id": 1740636748211,
+      "userName": "Bhanvi Shukla",
+      "email": "shukla.bhanvi@gmail.com",
+      "dob": "1996-02-17",
+      "citizenship": "IN",
+      "idNumber": "1231313"
+    }
+  ],
+  "children": [
+    {
+      "id": 1740636754855,
+      "dob": "2001-01-12",
+      "childName": "Manavi Shukla",
+      "guardian": { "main": 1740636784160, "alternative": 1740636795891 }
+    },
+    {
+      "id": 1740636993626,
+      "dob": "2002-01-01",
+      "childName": "Test Child",
+      "guardian": { "main": 1740636795891, "alternative": 1740636784160 }
+    }
+  ],
+  "pets": [
+    {
+      "id": 1740637404803,
+      "petName": "bubba",
+      "microchip": "23o2424324",
+      "instructions": "larjqrqr",
+      "caretaker": { "main": 1740636784160, "alternative": 1740636795891 }
+    },
+    {
+      "id": 1740637404804,
+      "petName": "dolce",
+      "microchip": "13213123123",
+      "instructions": "aklqj ;ajrth. perfwjo",
+      "caretaker": { "main": 1740636784160, "alternative": 1740636795891 }
+    }
+  ],
+  "assets": [],
+  "rites": [],
+  "executor": [],
+  "people": [
+    {
+      "id": 1740636784160,
+      "name": "BP SHUKLA",
+      "dob": "1962-01-01",
+      "relationship": "sibling"
+    },
+    {
+      "id": 1740636795891,
+      "name": "Test Parent",
+      "dob": "1962-01-01",
+      "relationship": "sibling"
+    },
+    {
+      "id": 1740637567574,
+      "name": "test caretaker",
+      "dob": "1996-01-01",
+      "relationship": "friend"
+    }
+  ],
+  "completed": {
+    "children": true,
+    "pets": true,
+    "assets": false,
+    "rites": false,
+    "executor": false
+  }
+}
