@@ -1,0 +1,18 @@
+name: Create Project Card for New Branch
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+
+jobs:
+  create_card:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create card
+        uses: alex-page/github-project-automation-plus@v0.8.1
+        with:
+          project: Afterlife
+          column: Todo
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
