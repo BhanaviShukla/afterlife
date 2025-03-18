@@ -27,8 +27,6 @@ export default function Journey({ params }) {
   const imageName = getImageFromSlug(slug);
   const stepData = data[slug];
 
-  console.log("stepData.heading", stepData.heading)
-
   return (
     <div className="container mx-auto p-4">
       <div className="flex lg:justify-between lg:items-center lg:flex-row flex-col">
@@ -40,28 +38,14 @@ export default function Journey({ params }) {
           <Typography variant="heading">{stepData.heading}</Typography>
           <StepView slug={slug} data={stepData} {...params} />
         </div>
-        <Show when={slug === 'children'}>
-          <Show when={slug2 === 'count'}>
-            <div className="lg:w-1/2 lg:order-2 order-1 relative w-full h-[400px] lg:h-[400px]">
-              <Image
-                src={`/images/${imageName}.png`}
-                alt={imageName}
-                fill
-                className="object-contain"
-              />
-            </div>
-          </Show>
-        </Show>
-        <Show when={slug !== 'children'}>
-          <div className="lg:w-1/2 lg:order-2 order-1 relative w-full h-[400px] lg:h-[400px]">
-            <Image
-              src={`/images/${imageName}.png`}
-              alt={imageName}
-              fill
-              className="object-contain"
-            />
-          </div>
-        </Show>
+        <div className="lg:w-1/2 lg:order-2 order-1 relative w-full h-[400px] lg:h-[400px]">
+          <Image
+            src={`/images/${imageName}.png`}
+            alt={imageName}
+            fill
+            className="object-contain"
+          />
+        </div>
       </div>
     </div>
   );
