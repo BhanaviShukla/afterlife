@@ -15,7 +15,6 @@ import { sortObjectByDob, useChildrenList } from "./useCountHook";
 
 const DetailsView = ({
   searchParams,
-  // pathname,
   title,
   description,
   formData,
@@ -42,6 +41,7 @@ const DetailsView = ({
     UNSAFE_replaceWillCategoryByValue("children", [...children]);
     router.push(`${nextLink}`);
   };
+
   const handleBack = () => {
     router.replace(`${backLink}${count}`);
   };
@@ -69,15 +69,16 @@ const DetailsView = ({
       removeFromWill("children", id);
     }
   };
+
   const onChangeInput = (id, name, value) => {
     const editedChild = children.find((child) => child.id === id);
 
     setChildren((prevChildren) => [
-      // unrelated children remain as i
       ...prevChildren.filter((child) => child.id !== id),
       { ...editedChild, [name]: value },
     ]);
   };
+
   const debouncedOnChange = useDebouncedCallback(onChangeInput, 500);
 
   return (
@@ -86,16 +87,33 @@ const DetailsView = ({
       <Typography className="my-10 leading-8">{description}</Typography>
       <form id="children-details-form" action={handleNext}>
         {children.sort(sortObjectByDob).map((child, index) => (
-          <div key={child?.id} className="flex items-center gap-3">
-            <Image
-              src={`/images/backpack.png`}
-              alt={`child ${child.childName} backpack`}
-              width={100}
-              height={100}
-              quality={90}
-              className={`filter hue-rotate-${index * 15} -scale-x-100`}
-            />
-            <div className="w-full max-w-[480px]">
+          <div
+            key={child?.id}
+            className="relative grid grid-cols-1 lg:grid-cols-2 gap-4 p-6 bg-white rounded-lg mb-6"
+          >
+            {/* Image on the left for large screens */}
+            <div className="flex justify-center items-center lg:order-first">
+              <Image
+                src={`/images/backpack.png`}
+                alt={`child ${child.childName} backpack`}
+                width={200}
+                height={200}
+                quality={50}
+                className={`filter hue-rotate-${index * 15}`}
+              />
+            </div>
+
+            {/* Form Section */}
+            <div className="w-full flex flex-col gap-4 lg:px-6">
+              <Button
+                variant="text"
+                onClick={() => onRemoveAChild(child.id)}
+                className="absolute top-2 right-2 p-2 hover:bg-slate-100 rounded-lg"
+              >
+                <CrossIcon width={16} height={17} />
+              </Button>
+
+              {/* Form Fields */}
               <TextInput
                 id={`${child.id}-${formData.childName.name}`}
                 {...formData.childName}
@@ -108,7 +126,6 @@ const DetailsView = ({
                   )
                 }
               />
-              {/* dob */}
               <TextInput
                 id={`${child.id}-${formData.dob.name}`}
                 {...formData.dob}
@@ -118,18 +135,10 @@ const DetailsView = ({
                 }
               />
             </div>
-            <Button
-              variant="text"
-              onClick={() => {
-                onRemoveAChild(child.id);
-              }}
-              className="min-w-0 text-center align-middle ml-12 p-2 hover:bg-slate-100 rounded-lg"
-            >
-              <CrossIcon width={16} height={17} />
-            </Button>
           </div>
         ))}
 
+        {/* Add Child Button */}
         <Button
           variant="text"
           leftIcon={<AddChildIcon />}
@@ -139,6 +148,7 @@ const DetailsView = ({
           Add another child
         </Button>
 
+        {/* Navigation Buttons */}
         <div className="flex mt-14 gap-4">
           <Button
             variant="outlined"
@@ -146,6 +156,7 @@ const DetailsView = ({
             leftIcon={<ArrowLeftIcon />}
             onClick={handleBack}
             title={`${backLink}${count}`}
+            isRound
           >
             {secondaryCta}
           </Button>

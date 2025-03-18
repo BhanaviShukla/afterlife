@@ -70,6 +70,7 @@ const GuardianView = ({
             leftIcon={<ArrowLeftIcon />}
             onClick={handleBack}
             title={`${backLink}${count}`}
+            isRound
           >
             {secondaryCta}
           </Button>

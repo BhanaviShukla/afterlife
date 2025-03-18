@@ -1,25 +1,43 @@
 .modalBackground {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(217, 217, 217, 0.4);
-    backdrop-filter: blur(9px);
-    z-index: 99;
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    top: 0;
-    left: 0;
+  position: fixed;
+  width: 100vw; 
+  height: 100vh;
+  background-color: rgba(217, 217, 217, 0.4); 
+  backdrop-filter: blur(9px); 
+  z-index: 999; 
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  top: 0;
+  left: 0;
 }
+
 .modalCard {
-    max-width: 720px;
-    min-width: 50vw;
-    flex-grow: 1;
-    padding: 80px 120px;
-    height: fit-content;
-    background-color: var(--colour-white);
-    border-radius: 16px;
-    display: grid;
-    place-items: center stretch;
-    position: relative;
+  max-width: 90%; 
+  min-width: 50vw;
+  padding: 20px; 
+  background-color: var(--colour-white); 
+  border-radius: 16px; 
+  display: grid;
+  place-items: center stretch;
+  position: relative;
+
+  transition: transform 0.3s ease-in-out;
+}
+
+@media (min-width: 768px) {
+  .modalCard {
+    height: 95vh;
+    max-width: 720px; 
+    min-width: 50vw; 
+    padding: 40px 60px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .modalCard {
+    max-width: 720px; 
+    min-width: 50vw; /*
+        padding: 16px; /* Adjust padding for very small screens */
+  }
 }

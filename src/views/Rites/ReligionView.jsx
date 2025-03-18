@@ -82,6 +82,7 @@ const ReligionView = memo(
               className="self-start"
               leftIcon={<ArrowLeftIcon />}
               onClick={handleBack}
+              isRound
             >
               {secondaryCta}
             </Button>

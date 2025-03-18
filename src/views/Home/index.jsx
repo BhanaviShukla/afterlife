@@ -1,4 +1,6 @@
-"use client";
+"use client"
+
+import React, { useState } from "react";
 import { Button, Card } from "@/components";
 import styles from "./homeViewStyles.module.css";
 import { STEPS } from "@/appState/stepData";
@@ -11,14 +13,26 @@ const JourneySelectionView = ({ data }) => {
   const { will } = useWill();
   const router = useRouter();
 
+  // Track selected card
+  const [selectedStep, setSelectedStep] = useState(null);
+
   const handleCardClick = (slug) => {
-    console.log("handleCardClick", slug);
-    router.push(`/journey/will/step/${slug}`);
+    if (selectedStep === slug) {
+      setSelectedStep(null); // Deselect if clicked again
+    } else {
+      setSelectedStep(slug); // Select the card
+    }
   };
 
   const isAnyStepCompleted = Object.values(will.completed).some(
     (value) => value === true
   );
+
+  const handleFinalizeClick = () => {
+    if (selectedStep) {
+      router.push(`/journey/will/step/${selectedStep}`);
+    }
+  };
 
   return (
     <>
@@ -35,27 +49,31 @@ const JourneySelectionView = ({ data }) => {
               handleClick={() => handleCardClick(step.slug)}
               subLabel={step.subLabel}
               label={step.label}
+              isSelected={selectedStep === step.slug}
             >
               {step.label}
             </Card.SelectItem>
           );
         })}
       </div>
+
       <div className={styles.ctaWrapper}>
         <Button
           variant="outlined"
           className="self-start"
           leftIcon={<ArrowLeftIcon />}
           onClick={() => router.back()}
+          isRound
         >
           {data.secondaryCta}
         </Button>
+
         <Button
           variant="filled"
           className="self-start"
           rightIcon={<ArrowRightIcon />}
-          disabled={!isAnyStepCompleted}
-          onClick={() => router.push(`/journey/will/step/dashboard`)}
+          disabled={!selectedStep}
+          onClick={handleFinalizeClick}
         >
           {data.primaryCta}
         </Button>
@@ -63,4 +81,5 @@ const JourneySelectionView = ({ data }) => {
     </>
   );
 };
+
 export default JourneySelectionView;

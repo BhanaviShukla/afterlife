@@ -21,9 +21,8 @@ const CountView = memo(
   }) => {
     const router = useRouter();
 
-    const altNextLink = `/journey/will/step/${
-      STEPS[getNextStepIndex(CURRENT_SLUG)].slug
-    }`;
+    const altNextLink = `/journey/will/step/${STEPS[getNextStepIndex(CURRENT_SLUG)].slug
+      }`;
 
     const [count, setCount] = useCountFromWillOrSearchParams(
       searchParams,
@@ -73,6 +72,7 @@ const CountView = memo(
               className="self-start"
               leftIcon={<ArrowLeftIcon />}
               onClick={handleBack}
+              isRound
             >
               {secondaryCta}
             </Button>

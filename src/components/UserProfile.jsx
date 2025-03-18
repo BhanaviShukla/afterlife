@@ -14,16 +14,16 @@ const formatDate = (dateString) => {
 export const UserProfileWithDob = ({ name, dob }) => {
   return (
     <div
-      className="flex items-baseline space-x-3 text-gray-800"
+      className="flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-4 text-gray-800"
       id={`user-profile-with-dob-${name}`}
     >
       {/* Name */}
       <Typography variant="h4" className="font-sans">
         {name}
       </Typography>
-      <div className="flex space-x-1">
+      <div className="flex items-center space-x-2">
         {/* Crown Icon */}
-        <BirthdayCake />
+        <BirthdayCake className="h-5 w-5 text-gray-500" />
         {/* Date of Birth */}
         <span className="text-gray-500">{formatDate(dob)}</span>
       </div>
@@ -53,27 +53,28 @@ export const PetProfileWithMicrochip = ({ name, microchip }) => {
 
 export const ChildProfileWithGuardian = ({ name, dob, guardian }) => {
   return (
-    <div className="">
+    <div className="p-2">
+      {/* Name and Date of Birth */}
       <UserProfileWithDob name={name} dob={dob} />
 
       {/* Guardians Section */}
-      <div className="grid grid-cols-2 gap-4 mt-2">
-        <div>
-          <p className="text-accent-secondary text-sm">Main guardian</p>
-          <p className="font-400 text-secondary">{guardian.main}</p>
-        </div>
-        <div>
+      <div className="mt-4">
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+          <div className="flex items-center space-x-2">
+            <p className="text-accent-secondary text-xl">Main guardian:</p>
+            <p className="font-medium text-secondary text-xl">{guardian.main}</p>
+          </div>
           {guardian.alternative && (
-            <>
-              <p className="text-accent-secondary text-sm">
-                Alternative guardian
-              </p>
-              <p className="font-400 text-secondary">{guardian.alternative}</p>
-            </>
+            <div className="flex items-center space-x-2">
+              <p className="text-accent-secondary text-xl">Alternative guardian:</p>
+              <p className="font-medium text-secondary text-xl">{guardian.alternative}</p>
+            </div>
           )}
         </div>
       </div>
     </div>
+
+
   );
 };
 

@@ -60,6 +60,7 @@ const ConfirmView = ({
             leftIcon={<ArrowLeftIcon />}
             onClick={handleBack}
             title={`${backLink}`}
+            isRound
           >
             {secondaryCta}
           </Button>

@@ -3,27 +3,43 @@ import styles from "./cardStyles.module.css";
 import Image from "next/image";
 import { Badge, Button, Selector, Typography } from "../..";
 import Cancel from "../Icons/Controls/cancel.svg";
+import { FiCheckCircle } from "react-icons/fi"; 
 
-const CardBase = ({ imageName = "pet_bowl", style, onClick, children }) => {
+const CardBase = ({ imageName = "pet_bowl", style, onClick, isSelected, children }) => {
   return (
-    // TODO: add a proper onClick handler here
     <div
-      className={`${styles.base}`}
+      className={`${styles.base} flex flex-row justify-between items-center relative`} 
       style={style}
       onClick={onClick}
       role="navigation"
       tabIndex={0}
     >
-      <Image
-        src={`/images/${imageName}.png`}
-        alt={imageName}
-        fill
-        quality={90}
-      />
-      <div className={`${styles.contentWrapper}`}> {children}</div>
+      {/* Text Section */}
+      <div className="flex flex-col justify-between w-7/12 pr-4">
+        {children}
+      </div>
+
+      {/* Image Section */}
+      <div className="w-5/12 flex justify-center items-center">
+        <Image
+          src={`/images/${imageName}.png`}
+          alt={imageName}
+          width={80} // Resize the image width
+          height={80} // Resize the image height
+          className="object-contain w-full"
+        />
+      </div>
+
+      {/* Selected Circle Indicator */}
+      {isSelected && (
+        <div className="absolute top-4 right-4 w-6 h-6 flex justify-center items-center">
+          <FiCheckCircle className="w-6 h-6 text-green-500" />
+        </div>
+      )}
     </div>
   );
 };
+
 
 const CardSelectItem = ({
   id,
@@ -33,18 +49,15 @@ const CardSelectItem = ({
   subLabel,
   isCompleted,
   handleClick,
+  isSelected,
   children,
 }) => {
   return (
     <CardBase
-      {...{
-        imageName,
-        style: {
-          backgroundColor: `var(${backgroundColor})`,
-          cursor: "pointer",
-        },
-      }}
+      imageName={imageName}
+      style={{ backgroundColor: `var(${backgroundColor})`, cursor: "pointer" }}
       onClick={handleClick}
+      isSelected={isSelected}
     >
       <div className={`${styles.labelWrapper}`}>
         <div>
@@ -53,7 +66,7 @@ const CardSelectItem = ({
             {label || children}
           </Typography>
         </div>
-        {isCompleted ? (
+        {isCompleted && (
           <Selector
             isSelected={isCompleted}
             id={`selector-${id}`}
@@ -61,15 +74,12 @@ const CardSelectItem = ({
             height={32}
             readOnly
           />
-        ) : (
-          <></>
         )}
-
-        {/* {icon here} */}
       </div>
     </CardBase>
   );
 };
+
 
 const CardEditItem = ({
   imageName = "pet_bowl",
