@@ -6,6 +6,7 @@ import { childrenCountData } from "@/appState/childrenData";
 import { petsCountData } from "@/appState/petsData";
 import { aboutYouData } from "@/appState/aboutYouData";
 import { ritesData } from "@/appState/ritesData";
+import { Show } from "@/components/Show";
 
 const StepView = ({ ...props }) => {
   console.log({ props });
@@ -23,9 +24,11 @@ const StepView = ({ ...props }) => {
 
 export default function Journey({ params }) {
   console.log({ params });
-  const slug = params.step[0];
+  const [slug, slug2] = params.step;
   const imageName = getImageFromSlug(slug);
   const stepData = data[slug];
+
+  console.log("stepData.heading", stepData.heading)
 
   return (
     <div className="container mx-auto p-4">
@@ -38,14 +41,28 @@ export default function Journey({ params }) {
           <Typography variant="heading">{stepData.heading}</Typography>
           <StepView slug={slug} data={stepData} {...params} />
         </div>
-        <div className="lg:w-1/2 lg:order-2 order-1 relative w-full h-[400px] lg:h-[400px]">
-          <Image
-            src={`/images/${imageName}.png`}
-            alt={imageName}
-            fill
-            className="object-contain"
-          />
-        </div>
+        <Show when={slug === 'children'}>
+          <Show when={slug2 === 'count'}>
+            <div className="lg:w-1/2 lg:order-2 order-1 relative w-full h-[400px] lg:h-[400px]">
+              <Image
+                src={`/images/${imageName}.png`}
+                alt={imageName}
+                fill
+                className="object-contain"
+              />
+            </div>
+          </Show>
+        </Show>
+        <Show when={slug !== 'children'}>
+          <div className="lg:w-1/2 lg:order-2 order-1 relative w-full h-[400px] lg:h-[400px]">
+            <Image
+              src={`/images/${imageName}.png`}
+              alt={imageName}
+              fill
+              className="object-contain"
+            />
+          </div>
+        </Show>
       </div>
     </div>
   );

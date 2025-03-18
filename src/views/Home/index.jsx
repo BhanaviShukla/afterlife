@@ -63,7 +63,6 @@ const JourneySelectionView = ({ data }) => {
           className="self-start"
           leftIcon={<ArrowLeftIcon />}
           onClick={() => router.back()}
-          isRound
         >
           {data.secondaryCta}
         </Button>

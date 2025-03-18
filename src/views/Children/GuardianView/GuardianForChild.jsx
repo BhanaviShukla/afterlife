@@ -96,14 +96,14 @@ export const GuardianForChild = memo(
         </Button> */}
 
         {/* Image */}
-        <Image
+        {/* <Image
           src={`/images/backpack.png`}
           alt={`child ${child.childName} backpack`}
           width={200}
           height={200}
           quality={90}
           className={`filter hue-rotate-${index * 15} -scale-x-100`}
-        />
+        /> */}
 
         {/* Name and Date of Birth */}
         <div className="flex justify-between items-center">
