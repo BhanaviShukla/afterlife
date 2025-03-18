@@ -112,14 +112,13 @@ export const GuardianForChild = memo(
             <UserProfileVariants.UserProfileWithDob name={child.childName} dob={child.dob} />
           </div>
 
-          <div
-            className="flex items-center justify-center w-8 h-8 bg-white rounded-full border cursor-pointer"
+          <Button
+            variant="text"
             onClick={() => onRemoveAChild(child.id)}
-
+            className="flex items-center justify-center w-8 h-8 bg-white rounded-full border cursor-pointer"
           >
-            <p>X</p>
-          </div>
-
+            <CrossIcon width={16} height={17} />
+          </Button>
           {/* Cancel Button */}
           {/* <Button
             variant="text"
