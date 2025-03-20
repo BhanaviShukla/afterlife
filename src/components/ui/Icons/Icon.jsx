@@ -14,7 +14,6 @@ import Heart from './Informational/Landing/heart.svg'
 import Scale from './Informational/Landing/scale.svg'
 import Brain from './Informational/Landing/brain.svg'
 
-
 const landingIcons = {
   "design-nib": DesignNib,
   user: User,
@@ -31,8 +30,8 @@ const landingIcons = {
 
 const Icon = ({ name, size, color, className }) => {
   const IconComponent = landingIcons[name]
-  if(IconComponent)
-    return <IconComponent {...{size, color, className}} />
+  if (IconComponent)
+    return <IconComponent {...{ size, color, className }} />
   return (
     <Image
       key={`icon-${name}`}
@@ -40,7 +39,7 @@ const Icon = ({ name, size, color, className }) => {
       alt="afterlife logo"
       width={24}
       height={24}
-      //   className={className}
+    //   className={className}
     />
   );
 };
