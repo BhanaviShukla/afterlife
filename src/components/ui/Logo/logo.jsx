@@ -1,8 +1,6 @@
 import Image from "next/image";
 const Logo = ({ className, width = 81, height = 20 }) => {
   return (
-
-
     <Image
       id="logo"
       src="/afterlife.svg"

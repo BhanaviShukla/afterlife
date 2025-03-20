@@ -1,10 +1,10 @@
 .modalBackground {
-  position: fixed;
-  width: 100vw; 
+  position: absolute;
+  width: 100vw;
   height: 100vh;
   background-color: rgba(217, 217, 217, 0.4); 
   backdrop-filter: blur(9px); 
-  z-index: 999; 
+  z-index: 99;
   display: flex;
   justify-content: center; 
   align-items: center; 

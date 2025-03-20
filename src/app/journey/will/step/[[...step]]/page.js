@@ -23,7 +23,7 @@ const StepView = ({ ...props }) => {
 
 export default function Journey({ params }) {
   console.log({ params });
-  const [slug, slug2] = params.step;
+  const slug = params.step[0];
   const imageName = getImageFromSlug(slug);
   const stepData = data[slug];
 

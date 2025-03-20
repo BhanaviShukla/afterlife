@@ -56,7 +56,7 @@ function Modal({
           }
         }}
       >
-        <div className={[styles.modalCard, "gap-16 "].join(" ")}>
+        <div className={[styles.modalCard, "gap-16"].join(" ")}>
           {children}
           <div className="flex gap-4">
             <Button
