@@ -134,6 +134,7 @@ const AboutYouForm = ({ ...props }) => {
       </div>
       <div className="flex mt-14 gap-4">
         <Button
+          isRound
           variant="outlined"
           className="self-start"
           leftIcon={<ArrowLeftIcon />}
