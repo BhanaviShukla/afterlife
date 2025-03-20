@@ -136,6 +136,7 @@ const AboutYouForm = ({ ...props }) => {
         <Button
           variant="outlined"
           className="self-start"
+          isRound
           leftIcon={<ArrowLeftIcon />}
           onClick={() => {
             console.log("back clicked");

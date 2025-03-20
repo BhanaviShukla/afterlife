@@ -5,20 +5,27 @@ export function DisclaimerContent() {
   return (
     <>
       <Typography variant="subtitle">{data.requirementsModal.title}</Typography>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6 md:gap-8">
         {data.requirementsModal.description.listItems.map((item, index) => {
           if (item === "divider") {
-            return <hr key={index} className="border-n100" />;
+            return <hr key={index} className="border-n100 my-4" />;
           }
           return (
-            <div key={index} className="flex items-start gap-3">
-              <Icon name={item.icon} className="w-5 h-5 text-g300 mt-1" />
-              <Typography>{item.text}</Typography>
+            <div key={index} className="grid grid-cols-12 gap-4 items-center">
+              <div className="col-span-2 flex justify-center">
+                <Icon name={item.icon} className="w-6 h-6 md:w-8 md:h-8 text-g300" />
+              </div>
+              <div className="col-span-10">
+                <Typography className="text-base md:text-lg leading-6 md:leading-8">
+                  {item.text}
+                </Typography>
+              </div>
             </div>
           );
         })}
       </div>
-      <Typography className="text-n300">
+
+      <Typography className="text-n300 mt-6 text-sm md:text-base text-n300 leading-6 md:leading-7">
         {data.requirementsModal.description.disclaimer.text
           .split("Terms of Service")
           .map((part, i) => (

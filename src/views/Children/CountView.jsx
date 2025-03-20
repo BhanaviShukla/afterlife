@@ -24,9 +24,8 @@ const CountView = memo(
   }) => {
     const router = useRouter();
 
-    const altNextLink = `/journey/will/step/${
-      STEPS[getNextStepIndex(CURRENT_SLUG)].slug
-    }`;
+    const altNextLink = `/journey/will/step/${STEPS[getNextStepIndex(CURRENT_SLUG)].slug
+      }`;
 
     const [hasChildren, setHasChildren] = useState("yes");
     const [count, setCount] = useCountFromWillOrSearchParams(
@@ -60,7 +59,7 @@ const CountView = memo(
         <Typography variant="title-small">{title}</Typography>
         <Typography className="my-10 leading-8">{description}</Typography>
         <form id="children-count-form" action={handleNext}>
-          <div className="flex items-baseline gap-3">
+          <div className="flex items-baseline">
             <EditableSelectInput
               {...formData.answer}
               defaultValue={formData.answer.options.find(
@@ -72,7 +71,7 @@ const CountView = memo(
                 console.log({ newValue });
               }}
             />
-            <div className="flex items-baseline gap-3">
+            <div className="flex items-baseline">
               <ChildrenCountSentenceWithInput
                 key={`children-with-count-${count}`}
                 formData={formData}
@@ -90,6 +89,7 @@ const CountView = memo(
               className="self-start"
               leftIcon={<ArrowLeftIcon />}
               onClick={handleBack}
+              isRound
             >
               {secondaryCta}
             </Button>
