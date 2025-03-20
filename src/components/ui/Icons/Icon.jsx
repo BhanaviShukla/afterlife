@@ -10,6 +10,9 @@ import Group from './Informational/Landing/group.svg'
 import MoneySquare from './Informational/Landing/money-square.svg'
 import TextSize from './Informational/Landing/text-size.svg'
 import Timer from './Informational/Landing/timer.svg'
+import Heart from './Informational/Landing/heart.svg'
+import Scale from './Informational/Landing/scale.svg'
+import Brain from './Informational/Landing/brain.svg'
 
 const landingIcons = {
   'design-nib': DesignNib,
@@ -19,13 +22,16 @@ const landingIcons = {
   'group': Group,
   'money-square': MoneySquare,
   'text-size': TextSize,
-  timer: Timer
+  timer: Timer,
+  brain: Brain,
+  scale: Scale,
+  heart: Heart,
 }
 
-const Icon = ({ name, size, color }) => {
+const Icon = ({ name, size, color, className }) => {
   const IconComponent = landingIcons[name]
   if(IconComponent)
-    return <IconComponent {...{size, color}} />
+    return <IconComponent {...{size, color, className}} />
   return (
     <Image
       key={`icon-${name}`}
