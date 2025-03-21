@@ -7,7 +7,8 @@ import ReligionView from "../Rites/ReligionView";
 
 import { assetsNestedView } from "@/appState/assetsData";
 import { SelectionView } from "./SelectionView";
-import { PropertyView } from "./PropertyView";
+import { AssetTypeView } from "./AssetTypeView";
+import { AssetBeneficiaryView } from "./AssetBeneficiaryView";
 
 const NestedAssetView = ({
   nestedSlug,
@@ -26,13 +27,24 @@ const NestedAssetView = ({
         />
       );
     case assetsNestedView.PROPERTY:
+    case assetsNestedView.GIFT:
+    case assetsNestedView.VEHICLE:
+    case assetsNestedView.CASH:
         return (
-            <PropertyView
+            <AssetTypeView
               pathname={pathname}
               searchParams={searchParams}
               {...nestedProps}
             />
           );
+    case assetsNestedView.BENEFICIARY:
+        return (
+            <AssetBeneficiaryView
+                pathname={pathname}
+                searchParams={searchParams}
+                {...nestedProps}
+            />
+            );
     case assetsNestedView.CONFIRM:
       return (
         <ConfirmView
