@@ -1,14 +1,15 @@
 "use client";
+
 import { useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import ConfirmView from "../Rites/ConfirmView";
+import ReligionView from "../Rites/ReligionView";
 
-import DetailsView from "./DetailsView";
-import CountView from "./CountView";
-import CaretakerView from "./CaretakerView";
-import ConfirmView from "./ConfirmView";
-import { petsNestedViews } from "@/appState/petsData";
+import { assetsNestedView } from "@/appState/assetsData";
+import { SelectionView } from "./SelectionView";
+import { PropertyView } from "./PropertyView";
 
-const NestedPetsView = ({
+const NestedAssetView = ({
   nestedSlug,
   nestedProps,
   searchParams,
@@ -16,23 +17,23 @@ const NestedPetsView = ({
 }) => {
   console.log({ nestedSlug, nestedProps });
   switch (nestedSlug) {
-    case petsNestedViews.DETAILS:
+    case assetsNestedView.SELECTION:
       return (
-        <DetailsView
+        <SelectionView
           pathname={pathname}
           searchParams={searchParams}
           {...nestedProps}
         />
       );
-    case petsNestedViews.CARETAKER:
-      return (
-        <CaretakerView
-          pathname={pathname}
-          searchParams={searchParams}
-          {...nestedProps}
-        />
-      );
-    case petsNestedViews.CONFIRM:
+    case assetsNestedView.PROPERTY:
+        return (
+            <PropertyView
+              pathname={pathname}
+              searchParams={searchParams}
+              {...nestedProps}
+            />
+          );
+    case assetsNestedView.CONFIRM:
       return (
         <ConfirmView
           pathname={pathname}
@@ -40,10 +41,10 @@ const NestedPetsView = ({
           {...nestedProps}
         />
       );
-    case petsNestedViews.COUNT:
+    case assetsNestedView.RELIGION:
     default:
       return (
-        <CountView
+        <ReligionView
           pathname={pathname}
           searchParams={searchParams}
           {...nestedProps}
@@ -52,7 +53,7 @@ const NestedPetsView = ({
   }
 };
 
-const PetsView = ({ slug, step, data, ...props }) => {
+const AssetView = ({ slug, step, data, ...props }) => {
   console.log({ props, slug, step, data });
   const router = useRouter();
   const pathname = usePathname();
@@ -61,16 +62,16 @@ const PetsView = ({ slug, step, data, ...props }) => {
   const nestedSlug = step[step.length - 1];
   console.log({ nestedSlug });
 
-  const isNotRedirected = step?.length && step[step.length - 1] === "pets";
+  const isNotRedirected = step?.length && step[step.length - 1] === "assets";
 
   useEffect(() => {
-    if (isNotRedirected) router.replace(`${pathname}/count`);
+    if (isNotRedirected) router.replace(`${pathname}/selection`);
   }, [isNotRedirected, pathname, router]);
 
   if (isNotRedirected) return <></>;
   return (
     <div className="flex gap-6">
-      <NestedPetsView
+      <NestedAssetView
         nestedSlug={nestedSlug}
         nestedProps={data[nestedSlug]}
         searchParams={searchParams}
@@ -79,4 +80,5 @@ const PetsView = ({ slug, step, data, ...props }) => {
     </div>
   );
 };
-export default PetsView;
+
+export default AssetView;

@@ -13,6 +13,11 @@ import Timer from './Informational/Landing/timer.svg'
 import Heart from './Informational/Landing/heart.svg'
 import Scale from './Informational/Landing/scale.svg'
 import Brain from './Informational/Landing/brain.svg'
+import Home from "./Informational/home.svg";
+import Car from "./Informational/car.svg"
+import Cash from "./Informational/money.svg";
+import Gift from "./Informational/gift.svg";
+
 
 const landingIcons = {
   'design-nib': DesignNib,
@@ -26,6 +31,10 @@ const landingIcons = {
   brain: Brain,
   scale: Scale,
   heart: Heart,
+  home: Home,
+  car: Car,
+  gift: Gift,
+  cash: Cash,
 }
 
 const Icon = ({ name, size, color, className }) => {
