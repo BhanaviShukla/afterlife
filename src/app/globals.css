@@ -198,3 +198,10 @@ label.form__label,
   background-repeat: no-repeat;
   background-position: bottom center;
 }
+
+@media (max-width: 1024px) {
+  .container {
+    max-width: 100%;
+    padding: 10px 20px;
+  }
+}

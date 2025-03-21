@@ -15,3 +15,46 @@
 .ctaWrapper > *:not(:last-child) {
     margin-right: var(--dimensions-3);
 }
+
+.cardWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--dimensions-3);
+  }
+  
+  /* Add media queries for smaller screens */
+  @media (max-width: 1024px) { /* tablet screen size */
+    .cardWrapper {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .cardWrapper > * {
+      width: calc(50% - 12px);
+    }
+  }
+  
+  @media (max-width: 768px) { /* mobile screen size */
+    .cardWrapper {
+      flex-direction: column;
+    }
+    .cardWrapper > * {
+      width: 100%;
+    }
+    .cardWrapper > div {
+        height: 119px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+    }
+    .cardWrapper > div > img {
+       object-fit: contain;
+       width: 30% !important;
+       position: unset !important;
+    }
+    .cardWrapper > div > div {
+        align-content: center;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+  }
