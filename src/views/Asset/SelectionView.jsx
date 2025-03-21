@@ -1,7 +1,5 @@
 import { Button, Icon, Typography } from '@/components'
 import { useRouter } from 'next/navigation';
-import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
-import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import { BackSubmitBtn } from '@/components/ui/Button/BackSubmitBtn';
 
 
@@ -9,7 +7,6 @@ export const SelectionView = ({ primaryCta, buttons, secondaryCta, backLink, tit
     const router = useRouter();
 
     const handleOnAssetAddClick = (nextLink) =>  () => router.push(nextLink)
-    const handleBack = (backLink) =>  () => router.push(backLink)
     
     return (
         <section>
