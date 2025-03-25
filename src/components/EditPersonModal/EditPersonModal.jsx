@@ -29,7 +29,7 @@ const EditPersonModal = ({
           onBack={handleClose}
           // if no personId, then the form adds a new person.
           personId={personId}
-        />
+        />  
       </ErrorBoundary>
     </Modal>
   );
