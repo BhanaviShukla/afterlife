@@ -2,7 +2,7 @@ import { useWill } from "@/appState/WillState";
 import { Button, EditableSelectInput, Typography } from "@/components";
 import AddPersonForm from "@/components/AddPersonForm/AddPersonForm";
 import EditPersonModal from "@/components/EditPersonModal/EditPersonModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const ADD_PERSON_FORM_VIEW = "add-person-form-view";
 const SELECT_PERSON_FORM_VIEW = "select-person-form-view";
@@ -66,7 +66,6 @@ const GuardianModalView = ({
     handleNewPersonSave("main-guardian", personId);
     setFormView(SELECT_PERSON_FORM_VIEW);
   };
-  console.log({ selectedPerson });
 
   return (
     <>
