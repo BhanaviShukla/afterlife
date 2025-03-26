@@ -3,6 +3,7 @@ import ChildrenView from "./Children";
 import PetsView from "./Pets";
 import RitesView from "./Rites";
 import AboutYouForm from "./AboutYou/ index";
+import AssetsView from './Asset'
 
 export {
   AboutYouForm,
@@ -10,4 +11,5 @@ export {
   ChildrenView,
   PetsView,
   RitesView,
+  AssetsView
 };

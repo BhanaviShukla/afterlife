@@ -18,7 +18,7 @@ export const STEPS = [
     id: 2,
     label: "Assets & Belongings",
     subLabel: "Distribute",
-    imageName: "pot",
+    imageName: "car",
     slug: "assets",
   },
   {
