@@ -4,6 +4,7 @@ const Selector = ({
   onToggleSelect,
   width = 16,
   height = 16,
+  disabled = false,
 }) => {
   return (
     <label htmlFor={id} className={`selector`} style={{ width, height }}>
@@ -14,6 +15,7 @@ const Selector = ({
         className="selector__input"
         checked={isSelected}
         onChange={onToggleSelect}
+        disabled={disabled}
       />
       {""}
       <span style={{ width, height }} className="selector__checkmark" />

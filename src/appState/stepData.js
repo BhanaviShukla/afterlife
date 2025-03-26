@@ -55,7 +55,7 @@ export const getNextStepIndex = (currentSlug) => {
   }
   if (indexOfCurrentSlug === STEPS.length - 1) {
     console.error("No more steps available");
-    return -1;
+    return -2;
   }
   return indexOfCurrentSlug + 1;
 };

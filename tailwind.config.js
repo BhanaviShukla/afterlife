@@ -19,8 +19,12 @@ module.exports = {
       textColor: {
         secondary: "#474949",
         accent: "#285857",
+        "accent-secondary": "#379B99",
       },
       backgroundColor: {
+        secondary: "#285857", // Added this line - matches --colour-g300
+      },
+      borderColor: {
         secondary: "#285857", // Added this line - matches --colour-g300
       },
     },

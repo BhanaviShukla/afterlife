@@ -12,15 +12,18 @@ const EditPersonModal = ({
   onPersonSave,
   handleClose,
 }) => {
-  console.log({ personId });
   return (
-    <Modal id={id} isOpen={isOpen} handleClose={handleClose}>
+    <Modal
+      id={`${id}-${personId || "new"}`}
+      isOpen={Boolean(isOpen)}
+      handleClose={handleClose}
+    >
       {title && <Typography variant="title-small">{title}</Typography>}
       {subtitle && <Typography>{subtitle}</Typography>}
       <ErrorBoundary fallback={<>...</>}>
         <AddPersonForm
-          onPersonSave={(personId) => {
-            onPersonSave && onPersonSave(personId);
+          onPersonSave={(personIdFromForm) => {
+            onPersonSave && onPersonSave(personIdFromForm);
             handleClose();
           }}
           onBack={handleClose}

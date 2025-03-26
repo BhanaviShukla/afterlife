@@ -12,6 +12,7 @@ function Modal({
   closeLabel = "Back",
   secondaryCta,
   currentPath = undefined,
+  isOpen = undefined,
 }) {
   const router = useRouter();
 
@@ -36,6 +37,10 @@ function Modal({
       document.body.removeEventListener("keydown", closeOnEscapeKey);
     };
   }, [handleCloseModal]);
+
+  if (typeof isOpen !== "undefined" && isOpen === false) {
+    return null;
+  }
 
   return (
     <ReactPortal wrapperId={id || "modal-container"}>

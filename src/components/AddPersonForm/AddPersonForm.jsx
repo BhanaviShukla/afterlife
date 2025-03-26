@@ -32,8 +32,8 @@ const AddPersonForm = ({
       dob: formData.get("person-dob"),
       relationship: formData.get("person-relationship-user"),
     };
-    console.log("PERSON -> TO WILL", person);
     const personId = addToWill("people", person);
+    console.log("PERSON -> TO WILL", person, personId);
     onPersonSave(personId);
   };
 

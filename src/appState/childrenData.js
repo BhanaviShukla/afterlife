@@ -78,9 +78,10 @@ export const childrenCountData = {
   },
   [childrenNestedViews.CONFIRM]: {
     title: "Confirm your details",
-    description: "Make sure all the information here is correct.",
+    description:
+      "You will still be able to review and edit your information later.",
     formData: {},
-    nextLink: `/journey/will/step/pets`,
+    nextLink: `/journey/will`,
     backLink: `/journey/will/step/children/${childrenNestedViews.GUARDIAN}`,
     primaryCta: "Next",
     secondaryCta: "",

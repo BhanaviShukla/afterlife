@@ -1,39 +1,38 @@
 "use client";
-import { useSteps } from "@/appState/StepsState";
 import { Button, Card } from "@/components";
 import styles from "./homeViewStyles.module.css";
-import { useEffect } from "react";
 import { STEPS } from "@/appState/stepData";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import { useRouter } from "next/navigation";
+import { useWill } from "@/appState/WillState";
 
 const JourneySelectionView = ({ data }) => {
-  const { selectedSteps, toggleSelectedSteps, clearSelectedSteps } = useSteps();
+  const { will } = useWill();
   const router = useRouter();
 
-  const nextSlug = STEPS[selectedSteps[0] || 0].slug || "";
-
-  useEffect(() => {
-    clearSelectedSteps();
-  }, [clearSelectedSteps]);
-
-  const handleCardClick = (id) => {
-    toggleSelectedSteps(id);
+  const handleCardClick = (slug) => {
+    console.log("handleCardClick", slug);
+    router.push(`/journey/will/step/${slug}`);
   };
+
+  const isAnyStepCompleted = Object.values(will.completed).some(
+    (value) => value === true
+  );
+
   return (
     <>
       <div className={styles.carouselWrapper}>
         {STEPS.map((step) => {
-          if (step.id > 4) return <></>;
+          if (step.id > 3) return <></>;
           return (
             <Card.SelectItem
               key={step.id}
               id={step.id}
               backgroundColor={step.backgroundColor || "--colour-n50"}
               imageName={step.imageName}
-              isSelected={selectedSteps.includes(step.id)}
-              handleSelect={() => handleCardClick(step.id)}
+              isCompleted={will.completed[step.slug]}
+              handleClick={() => handleCardClick(step.slug)}
               subLabel={step.subLabel}
               label={step.label}
             >
@@ -55,8 +54,8 @@ const JourneySelectionView = ({ data }) => {
           variant="filled"
           className="self-start"
           rightIcon={<ArrowRightIcon />}
-          disabled={!selectedSteps.length}
-          onClick={() => router.push(`/journey/will/step/${nextSlug}`)}
+          disabled={!isAnyStepCompleted}
+          onClick={() => router.push(`/journey/will/step/dashboard`)}
         >
           {data.primaryCta}
         </Button>

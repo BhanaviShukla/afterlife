@@ -5,15 +5,12 @@ import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-rig
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import { useRouter } from "next/navigation";
 import { getNextStepIndex, STEPS } from "@/appState/stepData";
-import { useWill } from "@/appState/WillState";
 import { useCountFromWillOrSearchParams } from "@/utils/hooks";
 
-// @TODO: add logic to delete children when in edit flow, if the user changes the count
-const CURRENT_SLUG = "children";
+const CURRENT_SLUG = "pets";
 const CountView = memo(
   ({
     searchParams,
-    // pathname,
     title,
     description,
     formData,
@@ -28,7 +25,6 @@ const CountView = memo(
       STEPS[getNextStepIndex(CURRENT_SLUG)].slug
     }`;
 
-    const [hasChildren, setHasChildren] = useState("yes");
     const [count, setCount] = useCountFromWillOrSearchParams(
       searchParams,
       CURRENT_SLUG
@@ -37,15 +33,12 @@ const CountView = memo(
     console.log({ count });
 
     useEffect(() => {
-      if (hasChildren === "yes") {
-        setCount((prevCount) => prevCount || 1);
+      if (count) {
         setNextLink(`${defaultNextLink}${count}`);
       } else {
-        setCount(0);
         setNextLink(altNextLink);
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [hasChildren, defaultNextLink, altNextLink, count]);
+    }, [defaultNextLink, altNextLink, count]);
 
     const handleNext = () => {
       router.push(`${nextLink}`);
@@ -61,28 +54,18 @@ const CountView = memo(
         <Typography className="my-10 leading-8">{description}</Typography>
         <form id="children-count-form" action={handleNext}>
           <div className="flex items-baseline gap-3">
-            <EditableSelectInput
-              {...formData.answer}
-              defaultValue={formData.answer.options.find(
-                (option) => option.value === hasChildren
-              )}
-              wrapperClassName="min-w-16"
-              onChange={(_, newValue) => {
-                setHasChildren(newValue);
-                console.log({ newValue });
-              }}
-            />
-            <div className="flex items-baseline gap-3">
-              <ChildrenCountSentenceWithInput
+            {formData ? (
+              <PetCountSentenceWithInput
                 key={`children-with-count-${count}`}
                 formData={formData}
                 count={count}
-                hasChildren={hasChildren}
                 onChange={(id, newValue) => {
                   setCount(Number(newValue));
                 }}
               />
-            </div>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="flex mt-14 gap-4">
             <Button
@@ -113,10 +96,10 @@ const CountView = memo(
 
 CountView.displayName = "CountView";
 
-export const ChildrenCountSentenceWithInput = memo(
-  ({ count, formData, hasChildren, onChange }) => {
+export const PetCountSentenceWithInput = memo(
+  ({ count, formData, onChange }) => {
     const [preCountSentence, postCountSentence] = String(
-      formData.sentence[hasChildren]
+      formData.sentence
     ).split("{{count}}");
 
     const countOptions = useMemo(
@@ -131,25 +114,21 @@ export const ChildrenCountSentenceWithInput = memo(
     console.log({ count, option: countOptions[count - 1] });
     return [
       <Typography key="preCount">{preCountSentence}</Typography>,
-      hasChildren === "yes" && count > 0 ? (
-        <EditableSelectInput
-          key={"number"}
-          {...formData.count}
-          defaultValue={countOptions[count - 1]}
-          wrapperClassName="min-w-16"
-          onChange={onChange}
-          options={countOptions}
-        />
-      ) : (
-        ""
-      ),
+      <EditableSelectInput
+        key={"number"}
+        {...formData.count}
+        defaultValue={countOptions[count - 1]}
+        wrapperClassName="min-w-16"
+        onChange={onChange}
+        options={countOptions}
+      />,
       <Typography key="postCount">
-        {postCountSentence?.replace(`{{child}}`, pluralize("child", count))}
+        {postCountSentence?.replace(`{{pet}}`, pluralize("pet", count))}
       </Typography>,
     ];
   }
 );
 
-ChildrenCountSentenceWithInput.displayName = "ChildrenCountSentenceWithInput";
+PetCountSentenceWithInput.displayName = "PetCountSentenceWithInput";
 
 export default CountView;

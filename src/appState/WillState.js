@@ -16,6 +16,13 @@ export const initialWillState = {
   rites: [],
   executor: [],
   people: [],
+  completed: {
+    children: false,
+    pets: false,
+    assets: false,
+    rites: false,
+    executor: false,
+  },
 };
 
 export const WillContext = createContext({
@@ -83,20 +90,48 @@ export function WillProvider({ children }) {
         }));
       else return undefined;
     },
-    [will]
+    [setWill]
   );
 
   const patchWillEntry = useCallback(
     (category, id, modifiedEntry) => {
-      setWill((prevWillData) => ({
-        ...prevWillData,
-        [category]: [
-          ...prevWillData[category].filter((item) => item.id != id),
-          { id, ...modifiedEntry },
-        ],
-      }));
+      if (will.hasOwnProperty(category)) {
+        const valueForId = will[category].find(
+          (item) => String(item.id) === String(id)
+        );
+        if (valueForId) {
+          setWill((prevWillData) => ({
+            ...prevWillData,
+            [category]: [
+              ...prevWillData[category].filter((item) => item.id != id),
+              { id, ...valueForId, ...modifiedEntry },
+            ],
+          }));
+          return true;
+        }
+      }
+      return false;
     },
-    [setWill]
+    [setWill, will]
+  );
+
+  const handleCompleted = useCallback(
+    (category, value) => {
+      console.log("Setting completed for", category);
+      if (
+        will[category]?.length &&
+        typeof will.completed[category] !== "undefined"
+      ) {
+        setWill((prevWillData) => ({
+          ...prevWillData,
+          completed: {
+            ...prevWillData.completed,
+            [category]: value,
+          },
+        }));
+      } else console.error("NOOP");
+    },
+    [setWill, will]
   );
   console.log("WILL PROVIDER", { will });
 
@@ -109,6 +144,7 @@ export function WillProvider({ children }) {
       getWillCategory,
       UNSAFE_replaceWillCategoryByValue,
       patchWillEntry,
+      handleCompleted,
     }),
     [
       will,
@@ -118,6 +154,7 @@ export function WillProvider({ children }) {
       getWillEntry,
       UNSAFE_replaceWillCategoryByValue,
       patchWillEntry,
+      handleCompleted,
     ]
   );
   return (

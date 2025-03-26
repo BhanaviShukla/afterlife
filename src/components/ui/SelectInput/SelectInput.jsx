@@ -9,6 +9,7 @@ const SelectInput = ({
   const selectedIndex = inputProps.value
     ? options.findIndex((option) => option.value === inputProps.value)
     : -1;
+  const keyString = (value) => value.replace(" ", "_");
   return (
     <div className={`form__group ${wrapperClassName}`}>
       <select
@@ -22,7 +23,7 @@ const SelectInput = ({
         <option value={""}>{""}</option>
         {options.map((option, index) => (
           <option
-            key={`key-${option.value.join("_")}`}
+            key={`key-${keyString(option.value)}`}
             value={option.value}
             selected={index === selectedIndex}
           >

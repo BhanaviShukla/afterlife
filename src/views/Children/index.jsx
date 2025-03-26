@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { childrenNestedViews } from "@/appState/childrenData";
 import CountView from "./CountView";
 import DetailsView from "./DetailsView";
-import GuardianView from "./GuardianView";
+import GuardianView from "./GuardianView/GuardianView";
 import ConfirmView from "./ConfirmView";
 
 const NestedChildrenView = ({
