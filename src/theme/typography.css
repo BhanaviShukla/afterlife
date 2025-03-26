@@ -1,7 +1,11 @@
+:root {
+    --font-size-large: 3.75rem;
+    --font-size-medium: 2rem;
+}
+
 h1, .title {
     font-family: var(--font-corben);
-    font-size: x-large;
-    font-size: 3.75rem;
+    font-size: var(--font-size-large);
     font-weight: 400;
     line-height: 1.25;
 }
@@ -47,3 +51,11 @@ p, body, input {
 }
 
 
+@media (max-width: 768px) {
+    :root {
+      --font-size-large: 3rem;
+    }
+    .title.medium {
+        font-size: var(--font-size-medium);
+    }
+  }

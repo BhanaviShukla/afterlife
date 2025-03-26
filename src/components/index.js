@@ -13,6 +13,7 @@ import Selector from "./ui/Selector/Selector";
 import TextInput from "./ui/TextInput/TextInput";
 import Typography from "./ui/Typography/typography";
 import * as UserProfileVariants from "./UserProfile";
+import { Show } from './Show'
 
 import Nav from "./Nav/Nav";
 
@@ -33,4 +34,5 @@ export {
   TextInput,
   Typography,
   UserProfileVariants,
+  Show,
 };

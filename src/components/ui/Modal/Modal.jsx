@@ -3,7 +3,7 @@ import React, { useEffect, useCallback } from "react";
 import styles from "./modalStyles.module.css";
 import { useRouter } from "next/navigation";
 import ReactPortal from "@/components/ReactPortal";
-import { Button } from "@/components";
+import { Button, Show } from "@/components";
 
 function Modal({
   id,
@@ -13,6 +13,7 @@ function Modal({
   secondaryCta,
   currentPath = undefined,
   isOpen = undefined,
+  showCloseBtn = false
 }) {
   const router = useRouter();
 
@@ -58,16 +59,18 @@ function Modal({
       >
         <div className={[styles.modalCard, "gap-16"].join(" ")}>
           {children}
-          <div className="flex gap-4">
-            <Button
-              variant={"outlined"}
-              id={"close-modal"}
-              onClick={handleCloseModal}
-            >
-              {closeLabel}
-            </Button>
-            {secondaryCta}
-          </div>
+          <Show when={showCloseBtn}>
+            <div className="flex gap-4">
+              <Button
+                variant={"outlined"}
+                id={"close-modal"}
+                onClick={handleCloseModal}
+              >
+                {closeLabel}
+              </Button>
+              {secondaryCta}
+            </div>
+          </Show>
         </div>
       </dialog>
     </ReactPortal>

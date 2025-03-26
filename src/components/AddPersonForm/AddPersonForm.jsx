@@ -54,7 +54,6 @@ const AddPersonForm = ({
     onPersonSave(personId);
   };
 
-  console.log({ person });
   return (
     <form
       id={personId ? `edit-${personId}` : "add-new-person"}

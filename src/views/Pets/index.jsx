@@ -6,6 +6,7 @@ import DetailsView from "./DetailsView";
 import CountView from "./CountView";
 import CaretakerView from "./CaretakerView";
 import ConfirmView from "./ConfirmView";
+import { petsNestedViews } from "@/appState/petsData";
 
 const NestedPetsView = ({
   nestedSlug,
