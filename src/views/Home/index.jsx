@@ -23,7 +23,7 @@ const JourneySelectionView = ({ data }) => {
 
   return (
     <>
-      <div className={styles.carouselWrapper}>
+      <div className={styles.cardWrapper}>
         {STEPS.map((step) => {
           if (step.id > 3) return <Fragment key={step.id} />;
           return (

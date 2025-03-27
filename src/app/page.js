@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Logo, Typography } from "@/components";
+import { Button, Icon, Logo, Typography } from "@/components";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,37 +14,35 @@ export default function Home() {
         </a>
 
         <section
-          className="flex flex-col grow justify-center"
+          className="flex flex-col grow justify-center md:flex-row"
           id="main-content"
         >
-          <div className="flex flex-row justify-between gap-6">
-            <div className="flex flex-col justify-center max-w-[75%]">
-              <Typography variant="title">{data.title}</Typography>
-              <Typography className="my-10 leading-8">
-                {data.description}
-              </Typography>
-              <Typography variant="heading" className="text-accent">
-                {data.heading}
-              </Typography>
-              <Button
-                variant="filled"
-                className="self-start mt-8"
-                rightIcon={<ArrowRightIcon />}
-              >
-                <Link href={`/disclaimer`} scroll={false}>
-                  {data.primaryCta}
-                </Link>
-              </Button>
-            </div>
-            <div className="flex-1 relative min-w-[40%] h-fit">
-              <Image
-                src={`/images/${data.imageName}.png`}
-                alt={data.imageName}
-                className="relative object-cover"
-                width={646}
-                height={646}
-              />
-            </div>
+          <div className="md:flex-1 relative min-w-[40%] h-fit md:order-2">
+            <Image
+              src={`/images/${data.imageName}.png`}
+              alt={data.imageName}
+              className="relative object-cover"
+              width={646}
+              height={646}
+            />
+          </div>
+          <div className="flex flex-col justify-center max-w-[75%] md:order-1">
+            <Typography variant="title">{data.title}</Typography>
+            <Typography className="my-10 leading-8">
+              {data.description}
+            </Typography>
+            <Typography variant="heading" className="text-accent">
+              {data.heading}
+            </Typography>
+            <Button
+              variant="filled"
+              className="self-start mt-8"
+              rightIcon={<ArrowRightIcon />}
+            >
+              <Link href={`/disclaimer`} scroll={false}>
+                {data.primaryCta}
+              </Link>
+            </Button>
           </div>
         </section>
 
@@ -59,16 +57,10 @@ export default function Home() {
           <Typography variant="title-small">
             {data.aboutSection.title}
           </Typography>
-          <div className="grid grid-cols-3 gap-8 mt-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-10">
             {data.aboutSection.cards.map((card, index) => (
               <div key={index}>
-                <Image
-                  src={`/icons/${card.icon}.svg`}
-                  alt={`${card.icon} icon`}
-                  width={48}
-                  height={48}
-                  className="mb-4"
-                />
+                <Icon name={card.icon} className={"mb-4"}/>
                 <Typography>{card.text}</Typography>
               </div>
             ))}
@@ -78,14 +70,14 @@ export default function Home() {
 
       {/* Mission section */}
       <div className="bg-secondary text-white py-20">
-        <section className="container flex justify-between items-center">
-          <div className="min-w-[40%]">
+        <section className="container flex flex-col md:flex-row justify-between items-center">
+          <div className="md:min-w-[40%] w-full">
             {" "}
             <Typography variant="title-small">
               {data.missionSection.title}
             </Typography>
           </div>
-          <div>
+          <div className="md:w-full w-full mt-6 md:mt-0">
             {data.missionSection.paragraphs.map((text, index) => (
               <Typography
                 key={index}
@@ -101,8 +93,8 @@ export default function Home() {
       <div className="container">
         {/* Services section */}
         <section className="py-20">
-          <div className="flex gap-12">
-            <div className="flex-1">
+          <div className="flex flex-col md:flex-row gap-12">
+            <div className="md:flex-1 order-2">
               <Typography variant="title-small">
                 {data.servicesSection.title}
               </Typography>
@@ -119,7 +111,7 @@ export default function Home() {
                 {data.servicesSection.buttonText}
               </Button>
             </div>
-            <div className="flex-1">
+            <div className="md:flex-1 order-1">
               <Image
                 src={data.servicesSection.imagePath}
                 alt={data.servicesSection.imageAlt}
@@ -156,7 +148,7 @@ export default function Home() {
               alt=""
               width={200}
               height={200}
-              className={image.className}
+              className={`${image.className} lg:block hidden`}
             />
           ))}
         </section>
@@ -265,7 +257,7 @@ const data = {
     ],
     callToAction: "We might have the answers to your questions here.",
     buttonText: "Learn more",
-    imagePath: "/images/services-illustration.png",
+    imagePath: "/images/service-group.png",
     imageAlt: "Services illustration",
   },
   ctaSection: {
