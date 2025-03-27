@@ -60,7 +60,7 @@ const EditableSelectInput = ({
         })}
         {...(onChange && {
           onChange: handleChange,
-          value: selectedIndex ? options[selectedIndex] : undefined,
+          value: selectedIndex !== -1 ? options[selectedIndex] : undefined,
         })}
       />
     </div>

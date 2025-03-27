@@ -1,4 +1,5 @@
 "use client";
+import { ErrorMessage } from "@/components";
 import { useDebouncedCallback } from "@/utils/hooks";
 import React, { useEffect, useState, useRef } from "react";
 import Select from "react-select";
@@ -9,6 +10,7 @@ const PercentageInput = ({
   label = "Allocation",
   minValue = 10,
   error = false,
+  errorMessage = undefined,
 }) => {
   const [selectedValue, setSelectedValue] = useState(value);
   const debouncedOnChange = useDebouncedCallback(onChange, 1000);
@@ -73,7 +75,7 @@ const PercentageInput = ({
       )}
       <div
         ref={containerRef}
-        className={`flex items-center border-b ${
+        className={`relative flex items-center border-b ${
           error ? "border-status-d300" : "border-n300"
         } hover:${
           error ? "border-status-d100" : "border-n300"
@@ -129,6 +131,9 @@ const PercentageInput = ({
             }),
           }}
         />
+        <div className="absolute top-full py-1">
+          {error && errorMessage ? <ErrorMessage message={errorMessage} /> : ""}
+        </div>
       </div>
     </div>
   );

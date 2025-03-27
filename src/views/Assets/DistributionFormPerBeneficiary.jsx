@@ -1,6 +1,8 @@
+"use client";
 import {
   Button,
   EditableSelectInput,
+  ErrorMessage,
   PercentageInput,
   Typography,
 } from "@/components";
@@ -9,22 +11,47 @@ import EditPersonModal from "@/components/EditPersonModal/EditPersonModal";
 import { useDebouncedCallback } from "@/utils/hooks";
 import { areObjectsEqual } from "@/utils/object";
 import { memo, useEffect, useState } from "react";
+import { beneficiaryIdsFromOtherAssets } from "./useAssetsHook";
 
 const ADD_NEW_BENEFICIARY_OPTION = "Add a new beneficiary";
 
 const EDIT_BENEFICIARY_MODAL = "edit-beneficiary-details-modal";
 const ADD_BENEFICIARY_MODAL = "add-another-beneficiary-modal";
 
+const FormSkeleton = () => {
+  return (
+    <div role="status" className="flex flex-wrap items-end gap-x-2">
+      <div className="flex items-center justify-between form__group ">
+        <div>
+          <div className="h-2.5 bg-gray-300 rounded-full  w-24 mb-2.5"></div>
+          <div className="w-32 h-2 bg-gray-200 rounded-full "></div>
+        </div>
+        <div className="h-2.5 bg-gray-300 rounded-full  w-12"></div>
+      </div>
+      <div className="flex items-center justify-between pt-4">
+        <div>
+          <div className="h-2.5 bg-gray-300 rounded-full  w-24 mb-2.5"></div>
+          <div className="w-32 h-2 bg-gray-200 rounded-full "></div>
+        </div>
+        <div className="h-2.5 bg-gray-300 rounded-full  w-12"></div>
+      </div>
+
+      <span className="sr-only">Loading...</span>
+    </div>
+  );
+};
+
 const DistributionForm = memo(
   ({
+    isLast,
     totalAssetPercentage,
     availableBeneficiaries,
+    optionFilter,
     onChangeDistribution,
     onRemoveDistribution,
     id = "empty",
     distribution = undefined,
   }) => {
-    console.log({ distribution });
     const [currentDistribution, setCurrentDistribution] = useState(
       distribution ?? {
         beneficiary: undefined,
@@ -47,13 +74,15 @@ const DistributionForm = memo(
     ];
 
     const handleOptionSelection = (value) => {
+      setIsLoading(true);
       if (value === ADD_NEW_BENEFICIARY_OPTION) {
         // the new person added will be selected as the person
         setCurrentDistribution((prevValue) => ({
           ...prevValue,
           beneficiary: undefined,
         }));
-        setAddBeneficiaryOpen(name);
+
+        setOpenModal(ADD_BENEFICIARY_MODAL);
       } else
         setCurrentDistribution((prevValue) => ({
           ...prevValue,
@@ -62,6 +91,7 @@ const DistributionForm = memo(
     };
 
     const handleNewPersonSave = (personId) => {
+      console.log("new person save");
       setIsLoading(true);
       setCurrentDistribution((prevValue) => ({
         ...prevValue,
@@ -72,12 +102,10 @@ const DistributionForm = memo(
     const debouncedOnChange = useDebouncedCallback(onChangeDistribution, 500);
 
     useEffect(() => {
-      setIsLoading(true);
       if (!areObjectsEqual(distribution, currentDistribution)) {
-        console.log("debounced on change called");
         debouncedOnChange(id, currentDistribution);
       }
-      setIsLoading(false);
+      isLoading && setIsLoading(false);
     }, [distribution, id, debouncedOnChange, currentDistribution]);
 
     const handleAllocationChange = (value) => {
@@ -86,16 +114,18 @@ const DistributionForm = memo(
         allocationPercentage: value,
       }));
     };
+    const hasError = totalAssetPercentage > 100;
 
     return (
       <>
         <div className="flex" id={id}>
-          {!isLoading && options.length ? (
+          {!isLoading ? (
             <div className="flex flex-wrap items-end gap-x-2">
               <EditableSelectInput
                 id={`${id}-beneficiary`}
                 options={options}
-                defaultValue={currentDistribution.beneficiary}
+                filterOption={(option) => optionFilter(option, id)}
+                value={currentDistribution.beneficiary}
                 onChange={(_, value) => handleOptionSelection(value)}
                 placeholder={`Add Beneficiary`}
                 isEditable
@@ -110,16 +140,20 @@ const DistributionForm = memo(
               <PercentageInput
                 value={currentDistribution.allocationPercentage}
                 onChange={handleAllocationChange}
+                error={hasError}
+                errorMessage={isLast ? "Over 100%" : undefined}
               />
+              {}
             </div>
           ) : (
-            <></>
+            <FormSkeleton />
           )}
 
           <Button
             id={`${id}-button-to-remove`}
             variant="text"
             onClick={() => {
+              setIsLoading(true);
               onRemoveDistribution(id);
             }}
             className="min-w-0 text-center align-middle ml-12 p-2 hover:bg-slate-100 rounded-lg"

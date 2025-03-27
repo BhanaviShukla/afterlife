@@ -11,18 +11,42 @@ assets: [
   }
 ]
 */
+export const getTotalAllocationFromAssets = (assets) =>
+  assets.reduce(
+    (currentTotal, distribution) =>
+      currentTotal + distribution.allocationPercentage,
+    0
+  );
 
 export const canShowAddNewCta = (assets) =>
-  assets.length && assets.findIndex((value) => value.beneficiary === "") === -1;
+  assets.length &&
+  assets.findIndex((value) => value.beneficiary === "") === -1 &&
+  getTotalAllocationFromAssets(assets) < 100;
+
 export const canAddNewEmpty = (assets) =>
   !assets.length || canShowAddNewCta(assets);
+
+export const beneficiaryIdsFromOtherAssets = (
+  assets,
+  currentAssetId = "empty"
+) =>
+  assets
+    .filter((a) => a.id !== currentAssetId)
+    .map((asset) => asset.beneficiary);
+
+export const getAvailableBeneficiaries = (assets, people) =>
+  people.filter(
+    (person) => !beneficiaryIdsFromAssets(assets).includes(person.id)
+  );
 
 export const useAssetDistribution = () => {
   const { will, addToWill, patchWillEntry, getWillCategory } = useWill();
   const getAssets = () => getWillCategory("assets");
 
   const [assets, setAssets] = useState([...getAssets()]);
-  const [totalAssetPercentage, setTotalAssetPercentage] = useState(0);
+  const [totalAssetPercentage, setTotalAssetPercentage] = useState(
+    getTotalAllocationFromAssets(assets)
+  );
   const [availableBeneficiaries, setAvailableBeneficiaries] = useState([
     ...will.people,
   ]);
@@ -31,7 +55,7 @@ export const useAssetDistribution = () => {
     (isLoading = false) => {
       console.log("onAddEmptyAssetDistribution called");
       if (isLoading) {
-        console.log("LOADING");
+        console.warn("LOADING");
         return;
       }
 
@@ -46,7 +70,7 @@ export const useAssetDistribution = () => {
       const id = addToWill("assets", {
         ...newDistribution,
       });
-      console.log({ id });
+      console.log({ id }, "added to assets");
       if (!id) {
         console.error("Oops! Couldn't add asset for some reason");
         return;

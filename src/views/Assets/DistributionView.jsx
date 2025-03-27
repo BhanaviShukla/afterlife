@@ -1,9 +1,11 @@
 import { Button, InfoMessage, Typography } from "@/components";
 import AddPersonIcon from "@/components/ui/Icons/Controls/add-user.svg";
+import WarningIcon from "@/components/ui/Icons/Informational/warning-circle.svg";
 import { memo, useCallback, useEffect, useState } from "react";
 import DistributionForm from "./DistributionFormPerBeneficiary";
 import { useWill } from "@/appState/WillState";
 import {
+  beneficiaryIdsFromOtherAssets,
   canAddNewEmpty,
   canShowAddNewCta,
   useAssetDistribution,
@@ -22,12 +24,9 @@ const DistributionView = memo(
     tooltip,
   }) => {
     const [isLoading, setIsLoading] = useState(true);
-    const {
-      will: { people },
-      getWillCategory,
-    } = useWill();
+    const { will, getWillCategory, removeFromWill } = useWill();
     const [availableBeneficiaries, setAvailableBeneficiaries] = useState([
-      ...people,
+      ...getWillCategory("people"),
     ]);
 
     const [
@@ -38,13 +37,14 @@ const DistributionView = memo(
     ] = useAssetDistribution();
     const assets = getAssets();
 
-    console.log({ totalAssetPercentage });
-
     const handleAddEmptyDistribution = (isLoading) => {
       setIsLoading(true);
       onAddEmptyAssetDistribution(isLoading);
       setIsLoading(false);
     };
+
+    const optionFilter = (option, assetId) =>
+      !beneficiaryIdsFromOtherAssets(assets, assetId).includes(option.value);
 
     useEffect(() => {
       // set initial loading as false only after component mount is complete
@@ -59,20 +59,25 @@ const DistributionView = memo(
       }
     }, [canAddNewEmpty, assets, isLoading, handleAddEmptyDistribution]);
 
-    const onRemoveDistribution = () => {};
+    const onRemoveDistribution = (id) => {
+      removeFromWill("assets", id);
+    };
     return (
       <div className="w-full md:min-h-96">
         <div>
           <Typography variant="title-small">{title}</Typography>
           <Typography className="my-10 leading-8">{description}</Typography>
-          {assets.map((asset) => (
+          {assets.map((asset, index) => (
             <DistributionForm
               key={asset.id}
+              isLast={index === assets.length - 1}
               {...{
                 totalAssetPercentage,
                 availableBeneficiaries,
+                optionFilter,
                 onRemoveDistribution,
               }}
+              availableBeneficiaries={getWillCategory("people")}
               id={asset.id}
               distribution={asset}
               onChangeDistribution={onChangeAssetDistribution}

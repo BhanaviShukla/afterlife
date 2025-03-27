@@ -1,14 +1,22 @@
 import React from "react";
 import InfoIcon from "../Icons/Informational/info-empty.svg";
+import WarningIcon from "../Icons/Informational/warning-circle.svg";
 import Typography from "../Typography/typography";
 
-const InfoMessage = ({ message }) => {
+const InfoMessage = ({
+  message,
+  Icon = InfoIcon,
+  colorClassName = "text-n300",
+}) => {
   return (
     <div className="flex items-center gap-x-1.5 text-n400 mt-auto max-w-md">
       <div className="flex-shrink-0">
-        <InfoIcon className=" text-n300" /> {/* Adjust size and color */}
+        <Icon className={colorClassName} />
       </div>
-      <Typography className="text-secondary text-pretty" variant="caption">
+      <Typography
+        className={`text-secondary text-pretty ${colorClassName}`}
+        variant="caption"
+      >
         {message}
       </Typography>
     </div>
@@ -16,3 +24,9 @@ const InfoMessage = ({ message }) => {
 };
 
 export default InfoMessage;
+
+export const ErrorMessage = ({
+  message,
+  Icon = WarningIcon,
+  colorClassName = "text-status-d300",
+}) => <InfoMessage {...{ message, Icon, colorClassName }} />;
