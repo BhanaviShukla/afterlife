@@ -19,11 +19,12 @@ const DistributionForm = memo(
   ({
     totalAssetPercentage,
     availableBeneficiaries,
-    onAssetDistributionChange,
+    onChangeDistribution,
     onRemoveDistribution,
     id = "empty",
     distribution = undefined,
   }) => {
+    console.log({ distribution });
     const [currentDistribution, setCurrentDistribution] = useState(
       distribution ?? {
         beneficiary: undefined,
@@ -68,10 +69,7 @@ const DistributionForm = memo(
       }));
     };
 
-    const debouncedOnChange = useDebouncedCallback(
-      onAssetDistributionChange,
-      500
-    );
+    const debouncedOnChange = useDebouncedCallback(onChangeDistribution, 500);
 
     useEffect(() => {
       setIsLoading(true);
@@ -93,10 +91,11 @@ const DistributionForm = memo(
       <>
         <div className="flex" id={id}>
           {!isLoading && options.length ? (
-            <div className="flex items-end gap-2">
+            <div className="flex flex-wrap items-end gap-x-2">
               <EditableSelectInput
                 id={`${id}-beneficiary`}
                 options={options}
+                defaultValue={currentDistribution.beneficiary}
                 onChange={(_, value) => handleOptionSelection(value)}
                 placeholder={`Add Beneficiary`}
                 isEditable
@@ -106,6 +105,7 @@ const DistributionForm = memo(
                 }}
                 required
                 loading={isLoading}
+                wrapperClassName={"flex-1 min-w-56"}
               />
               <PercentageInput
                 value={currentDistribution.allocationPercentage}

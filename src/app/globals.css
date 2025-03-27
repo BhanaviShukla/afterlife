@@ -86,7 +86,7 @@ nav a.disabled {
   outline: 0;
   font-size: 1rem;
   line-height: 2;
-  color: var(--colour-n300);
+  color: var(--colour-n400);
   padding: 0;
   background: transparent;
   transition: border-color 0.2s;

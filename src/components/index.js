@@ -5,6 +5,7 @@ import CarouselIndicator from "./ui/CarouselIndicator/CarouselIndicator";
 import Checkbox from "./ui/Checkbox";
 import EditableSelectInput from "./ui/SelectInput/EditableSelectInput";
 import Icon from "./ui/Icons/Icon";
+import InfoMessage from "./ui/InfoMessage/InfoMessage";
 import LinkButton from "./ui/Button/LinkButton";
 import Logo from "./ui/Logo/logo";
 import Modal from "./ui/Modal/Modal";
@@ -23,6 +24,7 @@ export {
   Card,
   CarouselIndicator,
   Checkbox,
+  InfoMessage,
   Logo,
   Modal,
   Nav,

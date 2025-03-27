@@ -1,4 +1,4 @@
-import { Button, Typography } from "@/components";
+import { Button, InfoMessage, Typography } from "@/components";
 import AddPersonIcon from "@/components/ui/Icons/Controls/add-user.svg";
 import { memo, useCallback, useEffect, useState } from "react";
 import DistributionForm from "./DistributionFormPerBeneficiary";
@@ -8,6 +8,7 @@ import {
   canShowAddNewCta,
   useAssetDistribution,
 } from "./useAssetsHook";
+let renderCount = 0;
 
 const DistributionView = memo(
   ({
@@ -18,69 +19,81 @@ const DistributionView = memo(
     backLink,
     primaryCta,
     secondaryCta,
+    tooltip,
   }) => {
     const [isLoading, setIsLoading] = useState(true);
     const {
       will: { people },
-      addToWill,
       getWillCategory,
     } = useWill();
-    const [totalAssetPercentage, setTotalAssetPercentage] = useState(0);
     const [availableBeneficiaries, setAvailableBeneficiaries] = useState([
       ...people,
     ]);
-    const assets = getWillCategory("assets");
-    const [onAddEmptyAssetDistribution, onChangeAssetDistribution] =
-      useAssetDistribution();
+
+    const [
+      getAssets,
+      onAddEmptyAssetDistribution,
+      onChangeAssetDistribution,
+      totalAssetPercentage,
+    ] = useAssetDistribution();
+    const assets = getAssets();
+
+    console.log({ totalAssetPercentage });
 
     const handleAddEmptyDistribution = (isLoading) => {
       setIsLoading(true);
       onAddEmptyAssetDistribution(isLoading);
-      setIsLoading;
+      setIsLoading(false);
     };
 
     useEffect(() => {
       // set initial loading as false only after component mount is complete
       setIsLoading(false);
+      renderCount++;
     }, []);
 
     useEffect(() => {
-      if (canAddNewEmpty(assets) && !isLoading) {
-        handleAddEmptyDistribution(isLoading);
+      // show the 1st empty beneficiary only on first render
+      if (!assets.length && renderCount === 1) {
+        handleAddEmptyDistribution();
       }
     }, [canAddNewEmpty, assets, isLoading, handleAddEmptyDistribution]);
 
     const onRemoveDistribution = () => {};
-    const onAssetDistributionChange = () => {};
     return (
-      <div className="w-full">
-        <Typography variant="title-small">{title}</Typography>
-        <Typography className="my-10 leading-8">{description}</Typography>
-        {assets.map((asset) => (
-          <DistributionForm
-            key={asset.id}
-            {...{
-              totalAssetPercentage,
-              availableBeneficiaries,
-              onAssetDistributionChange,
-              onRemoveDistribution,
-              id: asset.id,
-              distribution: asset,
-            }}
-          />
-        ))}
-        {canShowAddNewCta(assets) ? (
-          <Button
-            variant="text"
-            leftIcon={<AddPersonIcon />}
-            className="mt-12"
-            onClick={() => handleAddEmptyDistribution(isLoading)}
-          >
-            Add another beneficiary
-          </Button>
-        ) : (
-          <></>
-        )}
+      <div className="w-full md:min-h-96">
+        <div>
+          <Typography variant="title-small">{title}</Typography>
+          <Typography className="my-10 leading-8">{description}</Typography>
+          {assets.map((asset) => (
+            <DistributionForm
+              key={asset.id}
+              {...{
+                totalAssetPercentage,
+                availableBeneficiaries,
+                onRemoveDistribution,
+              }}
+              id={asset.id}
+              distribution={asset}
+              onChangeDistribution={onChangeAssetDistribution}
+            />
+          ))}
+          {canShowAddNewCta(getAssets()) ? (
+            <Button
+              variant="text"
+              leftIcon={<AddPersonIcon />}
+              className="mt-12"
+              onClick={() => handleAddEmptyDistribution(isLoading)}
+            >
+              Add another beneficiary
+            </Button>
+          ) : (
+            <></>
+          )}
+        </div>
+        <div className="md:mt-12">
+          {tooltip ? <InfoMessage message={tooltip.description} /> : <></>}
+        </div>
       </div>
     );
   }

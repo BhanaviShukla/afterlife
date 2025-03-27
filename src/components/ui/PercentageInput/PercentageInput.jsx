@@ -103,7 +103,7 @@ const PercentageInput = ({
             }),
             singleValue: (base) => ({
               ...base,
-              color: "var(--colour-g300)",
+              color: "var(--colour-n400)",
             }),
             dropdownIndicator: (base) => ({
               ...base,
