@@ -40,7 +40,13 @@ export const getAvailableBeneficiaries = (assets, people) =>
   );
 
 export const useAssetDistribution = () => {
-  const { will, addToWill, patchWillEntry, getWillCategory } = useWill();
+  const {
+    will,
+    addToWill,
+    patchWillEntry,
+    getWillCategory,
+    UNSAFE_replaceWillCategoryByValue,
+  } = useWill();
   const getAssets = () => getWillCategory("assets");
 
   const [assets, setAssets] = useState([...getAssets()]);
@@ -89,6 +95,12 @@ export const useAssetDistribution = () => {
     if (!isUpdated) {
       console.error("Couldn't update asset distribution for some reason");
     }
+  };
+
+  const allocateEvenly = () => {
+    // select currently only supports multiples of 10.
+    //  what happens if we have 6 beneficiaries, so the equal percentage comes out to be: 16.667?
+    // can't support allocateEvenly until this is clear
   };
 
   useEffect(() => {

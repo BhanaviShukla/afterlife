@@ -16,7 +16,7 @@ export const assetsData = {
         "If any beneficiaries is unable to receive their share, it will be split among other beneficiaries proportionately according to their share. ",
     },
     nextLink: `/journey/will/step/assets/${assetsNestedViews.CONFIRM}`,
-    backLink: `/journey/will`, // insert count here
+    backLink: `/journey/will`,
     primaryCta: "Next",
     secondaryCta: "",
   },
