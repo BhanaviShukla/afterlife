@@ -7,7 +7,7 @@ const SelectLabel = ({ children, ...props }) => {
   return (
     <components.Control {...props}>
       <span
-        style={{ display: "inline-flex" }}
+        style={{ display: "inline-flex", border: "none" }}
         onMouseDown={onEdit}
         role="button"
         tabIndex={1}

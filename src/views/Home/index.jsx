@@ -6,6 +6,7 @@ import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-rig
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import { useRouter } from "next/navigation";
 import { useWill } from "@/appState/WillState";
+import { Fragment } from "react";
 
 const JourneySelectionView = ({ data }) => {
   const { will } = useWill();
@@ -24,7 +25,7 @@ const JourneySelectionView = ({ data }) => {
     <>
       <div className={styles.carouselWrapper}>
         {STEPS.map((step) => {
-          if (step.id > 3) return <></>;
+          if (step.id > 3) return <Fragment key={step.id} />;
           return (
             <Card.SelectItem
               key={step.id}

@@ -1,0 +1,59 @@
+{
+  "user": [
+    {
+      "id": 1742972998374,
+      "userName": "Bhanvi Shukla",
+      "email": "shukla.bhanvi@gmail.com",
+      "dob": "1996-12-02",
+      "citizenship": "AF",
+      "idNumber": "238o76"
+    }
+  ],
+  "children": [
+    {
+      "id": 1742973002975,
+      "dob": "2001-12-12",
+      "childName": "test1",
+      "guardian": {
+        "main": 1742973035426,
+        "alternative": 1742973047262
+      }
+    }
+  ],
+  "pets": [
+    {
+      "id": 1742973143402,
+      "petName": "lody",
+      "microchip": "1313",
+      "instructions": "pet is wonky",
+      "caretaker": {
+        "main": 1742973047262,
+        "alternative": 1742973035426
+      }
+    }
+  ],
+  "assets": [],
+  "rites": [],
+  "executor": [],
+  "people": [
+    {
+      "id": 1742973035426,
+      "name": "Test person 1",
+      "dob": "1966-01-01",
+      "relationship": "parent"
+    },
+    {
+      "id": 1742973047262,
+      "name": "CJ Heng",
+      "dob": "1968-01-01",
+      "relationship": "parent"
+    }
+  ],
+  "completed": {
+    "children": true,
+    "pets": true,
+    "assets": false,
+    "rites": false,
+    "executor": false
+  }
+}

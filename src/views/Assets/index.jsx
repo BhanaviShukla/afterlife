@@ -3,7 +3,7 @@ import { assetsNestedViews } from "@/appState/assetsData";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import ConfirmView from "./ConfirmView";
-import DistributionView from "./DistributionViiew";
+import DistributionView from "./DistributionView";
 
 const NestedAssetsView = ({
   nestedSlug,

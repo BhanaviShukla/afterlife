@@ -83,14 +83,17 @@ nav a.disabled {
   font-family: inherit;
   width: 100%;
   border: 0;
-  border-bottom: 1px solid var(--colour-n300);
   outline: 0;
   font-size: 1rem;
   line-height: 2;
-  color: var(--colour-n400);
+  color: var(--colour-n300);
   padding: 0;
   background: transparent;
   transition: border-color 0.2s;
+}
+
+.form__field_select__control {
+  border-bottom: 1px solid var(--colour-n300);
 }
 
 .form__field::placeholder {
