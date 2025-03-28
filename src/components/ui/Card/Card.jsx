@@ -6,7 +6,6 @@ import Cancel from "../Icons/Controls/cancel.svg";
 
 const CardBase = ({ imageName = "pet_bowl", style, onClick, children }) => {
   return (
-    // TODO: add a proper onClick handler here
     <div
       className={`${styles.base}`}
       style={style}

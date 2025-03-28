@@ -1,67 +1,67 @@
 .base {
-    width: 269px;
-    height: 360px;
-    flex-shrink: 0;
-    border-radius: 1rem;
-    mix-blend-mode: hard-light;
-    position: relative;
-    scroll-snap-align: center;
+  width: 100%;
+  height: 13rem;
+  flex-shrink: 0;
+  border-radius: 1rem;
+  mix-blend-mode: hard-light;
+  position: relative;
+  scroll-snap-align: center;
 }
 .contentWrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    padding: var(--dimensions-3) 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: var(--dimensions-3) 0;
 }
 .labelWrapper {
-    width: 100%;
-    margin-top: auto;
-    padding: 0 var(--dimensions-3);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: var(--dimensions-unit)
+  width: 100%;
+  margin-top: auto;
+  padding: 0 var(--dimensions-3);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--dimensions-unit);
 }
 .labelWrapper p {
-    line-height: 1.5;
+  line-height: 1.5;
 }
 .label {
-    font-size: 1.3125rem;
-    line-height: 1;
+  font-size: 1.3125rem;
+  line-height: 1;
 }
 .iconWrapper {
-    cursor: pointer;
-    border-radius: 100%;
-    padding: 4px;
+  cursor: pointer;
+  border-radius: 100%;
+  padding: 4px;
 }
 .iconDefault {
-    background-color: var(--colour-white);
+  background-color: var(--colour-white);
 }
 .iconSelected {
-    background-color: var(--colour-g200);
-    color: var(--colour-white);
+  background-color: var(--colour-g200);
+  color: var(--colour-white);
 }
 .cancelCta {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    padding: 0;
-    min-width: unset;
-    width: 1rem;
-    height: 1rem;
-    background-color: var(--colour-white);
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  padding: 0;
+  min-width: unset;
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--colour-white);
 }
 
 .primaryCta {
-    cursor: pointer;
-    min-width: unset;
-    padding: 0.5rem 1rem;
-    background-color: var(--colour-white);
-    color: var(--colour-black)
+  cursor: pointer;
+  min-width: unset;
+  padding: 0.5rem 1rem;
+  background-color: var(--colour-white);
+  color: var(--colour-black);
 }
-.primaryCta:hover, .primaryCta:focus, .primaryCta:active {
-    background-color: var(--colour-g100);
+.primaryCta:hover,
+.primaryCta:focus,
+.primaryCta:active {
+  background-color: var(--colour-g100);
 }
-
-

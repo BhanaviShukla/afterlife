@@ -8,27 +8,36 @@ import { serif } from "@/theme/fonts";
 export default function Home() {
   return (
     <>
-      <div className="container min-h-screen flex flex-col justify-between gap-6 py-20">
-        <a className="flex" href="/">
+      <div className="container min-h-screen flex flex-col justify-between gap-6 py-8 md:py-20 px-4 md:px-0">
+        <a className="flex justify-start" href="/">
           <Logo width={125} height={31} />
         </a>
 
         <section
-          className="flex flex-col grow justify-center"
+          className="flex flex-col justify-center mb-10 md:mb-20"
           id="main-content"
         >
-          <div className="flex flex-row justify-between gap-6">
-            <div className="flex flex-col justify-center max-w-[75%]">
-              <Typography variant="title">{data.title}</Typography>
-              <Typography className="my-10 leading-8">
+          <div className="flex flex-col md:flex-row justify-between mt-10 md:2rem gap-8">
+            <div className="flex flex-col gap-3 justify-center max-w-full md:max-w-[60%]">
+              <Typography
+                variant="title"
+                className="text-[2.8rem] leading-[3rem] md:text-[4rem] md:leading-[4.5rem]"
+              >
+                {data.title}
+              </Typography>
+
+              <Typography className="my-4 md:my-8 text-lg md:text-xl leading-7">
                 {data.description}
               </Typography>
-              <Typography variant="heading" className="text-accent">
+              <Typography
+                variant="heading"
+                className="text-accent text-xl md:text-2xl"
+              >
                 {data.heading}
               </Typography>
               <Button
                 variant="filled"
-                className="self-start mt-8"
+                className="self-start mt-6 md:mt-8"
                 rightIcon={<ArrowRightIcon />}
               >
                 <Link href={`/disclaimer`} scroll={false}>
@@ -36,11 +45,11 @@ export default function Home() {
                 </Link>
               </Button>
             </div>
-            <div className="flex-1 relative min-w-[40%] h-fit">
+            <div className="flex-1 relative min-w-[40%] md:min-w-[30%] h-auto">
               <Image
                 src={`/images/${data.imageName}.png`}
                 alt={data.imageName}
-                className="relative object-cover"
+                className="relative object-cover w-full h-auto"
                 width={646}
                 height={646}
               />
@@ -48,28 +57,30 @@ export default function Home() {
           </div>
         </section>
 
-        <Button className="self-start mt-16" variant="text" italic>
+        <Button className="self-start mt-6 md:mt-16" variant="text" italic>
           {data.secondaryCta}
         </Button>
       </div>
 
-      <div className="container">
+      <div className="container px-4 md:px-0">
         {/* About wills section */}
-        <section className="py-20">
-          <Typography variant="title-small">
+        <section className="py-8 md:py-20">
+          <Typography variant="title-small" className="text-2xl md:text-3xl">
             {data.aboutSection.title}
           </Typography>
-          <div className="grid grid-cols-3 gap-8 mt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6 md:mt-12">
             {data.aboutSection.cards.map((card, index) => (
-              <div key={index}>
+              <div key={index} className="text-center">
                 <Image
                   src={`/icons/${card.icon}.svg`}
                   alt={`${card.icon} icon`}
                   width={48}
                   height={48}
-                  className="mb-4"
+                  className="mb-4 mx-auto"
                 />
-                <Typography>{card.text}</Typography>
+                <Typography className="text-base md:text-lg">
+                  {card.text}
+                </Typography>
               </div>
             ))}
           </div>
@@ -77,11 +88,10 @@ export default function Home() {
       </div>
 
       {/* Mission section */}
-      <div className="bg-secondary text-white py-20">
-        <section className="container flex justify-between items-center">
-          <div className="min-w-[40%]">
-            {" "}
-            <Typography variant="title-small">
+      <div className="bg-secondary text-white py-8 md:py-20 ">
+        <section className="container flex flex-col md:flex-row justify-between items-center px-4 md:px-0">
+          <div className="min-w-full md:min-w-[40%] mb-6 md:mb-0">
+            <Typography variant="title-small" className="text-2xl md:text-3xl">
               {data.missionSection.title}
             </Typography>
           </div>
@@ -89,7 +99,7 @@ export default function Home() {
             {data.missionSection.paragraphs.map((text, index) => (
               <Typography
                 key={index}
-                className={`mt-6 text-2xl ${serif.className}`}
+                className={`mt-4 md:mt-6 text-lg md:text-xl ${serif.className}`}
               >
                 {text}
               </Typography>
@@ -98,21 +108,24 @@ export default function Home() {
         </section>
       </div>
 
-      <div className="container">
+      <div className="container px-4 md:px-0">
         {/* Services section */}
-        <section className="py-20">
-          <div className="flex gap-12">
+        <section className="py-8 md:py-20">
+          <div className="flex flex-col lg:flex-row gap-8">
             <div className="flex-1">
-              <Typography variant="title-small">
+              <Typography
+                variant="title-small"
+                className="text-2xl md:text-3xl"
+              >
                 {data.servicesSection.title}
               </Typography>
-              <Typography className="mt-6">
+              <Typography className="mt-6 text-lg md:text-xl">
                 {data.servicesSection.description}
               </Typography>
-              <Typography className="mt-6">
+              <Typography className="mt-6 text-lg md:text-xl">
                 {data.servicesSection.questions.join("\n")}
               </Typography>
-              <Typography className="mt-4">
+              <Typography className="mt-4 text-lg md:text-xl">
                 {data.servicesSection.callToAction}
               </Typography>
               <Button variant="outlined" className="mt-6">
@@ -125,15 +138,15 @@ export default function Home() {
                 alt={data.servicesSection.imageAlt}
                 width={500}
                 height={500}
-                className="object-contain"
+                className="object-contain w-full h-auto"
               />
             </div>
           </div>
         </section>
 
         {/* CTA section */}
-        <section className="py-20 text-center relative justify-center">
-          <Typography variant="title-small">
+        <section className="py-8 md:py-20 text-center relative">
+          <Typography variant="title-small" className="text-2xl md:text-3xl">
             {data.ctaSection.title.split("\n").map((line, index) => (
               <React.Fragment key={index}>
                 {line}
@@ -156,7 +169,7 @@ export default function Home() {
               alt=""
               width={200}
               height={200}
-              className={image.className}
+              className={`absolute ${image.className}`}
             />
           ))}
         </section>

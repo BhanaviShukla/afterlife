@@ -1,6 +1,6 @@
 "use client";
 import Select, { components } from "react-select";
-import IconPencil from "../Icons/Controls/edit-pencil.svg";
+// import IconPencil from "../Icons/Controls/edit-pencil.svg";
 
 const SelectLabel = ({ children, ...props }) => {
   const { onEdit } = props?.selectProps || {};
@@ -12,7 +12,7 @@ const SelectLabel = ({ children, ...props }) => {
         role="button"
         tabIndex={1}
       >
-        <IconPencil />
+        {/* <IconPencil /> */}
       </span>
       {children}
     </components.Control>
@@ -41,7 +41,7 @@ const EditableSelectInput = ({
     onChange(id, selectedOption.value);
   };
   return (
-    <div className={`form__group ${wrapperClassName}`}>
+    <div className={`form__group ${wrapperClassName} text-left`}>
       <Select
         id={id}
         name={id}
