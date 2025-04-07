@@ -116,7 +116,7 @@ export const useAssetDistribution = () => {
         0
       )
     );
-  }, [will.assets]);
+  }, [assets, will.assets, getAssets]);
 
   return [
     getAssets,

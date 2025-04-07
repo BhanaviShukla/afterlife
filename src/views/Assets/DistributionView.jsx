@@ -35,9 +35,7 @@ const DistributionView = memo(
     };
     const [isLoading, setIsLoading] = useState(true);
     const { will, getWillCategory, removeFromWill } = useWill();
-    const [availableBeneficiaries, setAvailableBeneficiaries] = useState([
-      ...getWillCategory("people"),
-    ]);
+    const [availableBeneficiaries] = useState([...getWillCategory("people")]);
 
     const [
       getAssets,
@@ -151,4 +149,6 @@ const DistributionView = memo(
     );
   }
 );
+DistributionView.displayName = "DistributionView";
+
 export default DistributionView;

@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useWill } from "@/appState/WillState";
 import { sortObjectByDob } from "./useCountHook";
 import Image from "next/image";
-import { useSteps } from "@/appState/StepsState";
 
 const ConfirmView = ({
   // searchParams,
@@ -21,11 +20,10 @@ const ConfirmView = ({
   console.log("children -> CONFIRM VIEW");
   const router = useRouter();
 
-  const { will, addToWill, handleCompleted } = useWill();
-  const { setCompletedSteps } = useSteps();
+  const { will, handleCompleted } = useWill();
 
   const handleNext = () => {
-    handleCompleted("children", true); // 0 is step id for childreb
+    handleCompleted("children", true); 
     router.push(`${nextLink}`);
   };
   const handleBack = () => {

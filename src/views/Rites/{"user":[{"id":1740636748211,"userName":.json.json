@@ -1,72 +1,84 @@
 {
   "user": [
     {
-      "id": 1740636748211,
+      "id": 1742972998374,
       "userName": "Bhanvi Shukla",
       "email": "shukla.bhanvi@gmail.com",
-      "dob": "1996-02-17",
-      "citizenship": "IN",
-      "idNumber": "1231313"
+      "dob": "1996-12-02",
+      "citizenship": "AF",
+      "idNumber": "238o76"
     }
   ],
   "children": [
     {
-      "id": 1740636754855,
-      "dob": "2001-01-12",
-      "childName": "Manavi Shukla",
-      "guardian": { "main": 1740636784160, "alternative": 1740636795891 }
-    },
-    {
-      "id": 1740636993626,
-      "dob": "2002-01-01",
-      "childName": "Test Child",
-      "guardian": { "main": 1740636795891, "alternative": 1740636784160 }
+      "id": 1742973002975,
+      "dob": "2001-12-12",
+      "childName": "test1",
+      "guardian": { "main": 1742973035426, "alternative": 1742973047262 }
     }
   ],
   "pets": [
     {
-      "id": 1740637404803,
-      "petName": "bubba",
-      "microchip": "23o2424324",
-      "instructions": "larjqrqr",
-      "caretaker": { "main": 1740636784160, "alternative": 1740636795891 }
-    },
-    {
-      "id": 1740637404804,
-      "petName": "dolce",
-      "microchip": "13213123123",
-      "instructions": "aklqj ;ajrth. perfwjo",
-      "caretaker": { "main": 1740636784160, "alternative": 1740636795891 }
+      "id": 1742973143402,
+      "petName": "lody",
+      "microchip": "1313",
+      "instructions": "pet is wonky",
+      "caretaker": { "main": 1742973047262, "alternative": 1742973035426 }
     }
   ],
-  "assets": [],
-  "rites": [],
-  "executor": [],
+  "assets": [
+    {
+      "id": 1743102269055,
+      "beneficiary": 1742973035426,
+      "allocationPercentage": 20
+    },
+    {
+      "id": 1743102258581,
+      "beneficiary": 1743101261119,
+      "allocationPercentage": 10
+    },
+    {
+      "id": 1743102282117,
+      "beneficiary": 1742973047262,
+      "allocationPercentage": 10
+    }
+  ],
+  "rites": [
+    {
+      "0": {
+        "religion": "none",
+        "instructions": "Bury me in yo ass",
+        "arrangements": "buried"
+      },
+      "religion": "buddhism"
+    }
+  ],
+  "executors": [],
   "people": [
     {
-      "id": 1740636784160,
-      "name": "BP SHUKLA",
-      "dob": "1962-01-01",
-      "relationship": "sibling"
+      "id": 1742973035426,
+      "name": "Test person 1",
+      "dob": "1966-01-01",
+      "relationship": "parent"
     },
     {
-      "id": 1740636795891,
-      "name": "Test Parent",
-      "dob": "1962-01-01",
-      "relationship": "sibling"
+      "id": 1742973047262,
+      "name": "CJ Heng",
+      "dob": "1968-01-01",
+      "relationship": "parent"
     },
     {
-      "id": 1740637567574,
-      "name": "test caretaker",
-      "dob": "1996-01-01",
-      "relationship": "friend"
+      "id": 1743101261119,
+      "name": "BP Shukla",
+      "dob": "1966-12-09",
+      "relationship": "parent"
     }
   ],
   "completed": {
     "children": true,
     "pets": true,
-    "assets": false,
-    "rites": false,
+    "assets": true,
+    "rites": true,
     "executor": false
   }
 }

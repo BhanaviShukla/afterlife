@@ -92,7 +92,7 @@ nav a.disabled {
   transition: border-color 0.2s;
 }
 
-.form__field_select__control {
+.form__field_select__control, input.form__field{
   border-bottom: 1px solid var(--colour-n300);
 }
 

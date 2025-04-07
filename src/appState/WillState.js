@@ -14,7 +14,7 @@ export const initialWillState = {
   pets: [],
   assets: [],
   rites: [],
-  executor: [],
+  executors: [],
   people: [],
   completed: {
     children: false,

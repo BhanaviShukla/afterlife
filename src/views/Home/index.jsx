@@ -56,7 +56,7 @@ const JourneySelectionView = ({ data }) => {
           className="self-start"
           rightIcon={<ArrowRightIcon />}
           disabled={!isAnyStepCompleted}
-          onClick={() => router.push(`/journey/will/step/dashboard`)}
+          onClick={() => router.push(`/journey/executor`)}
         >
           {data.primaryCta}
         </Button>
