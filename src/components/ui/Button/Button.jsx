@@ -15,6 +15,7 @@ const Button = ({
   italic,
   leftIcon,
   rightIcon,
+  isRound,
   type = "button",
   ...props
 }) => {
@@ -22,9 +23,8 @@ const Button = ({
     <button
       type={type}
       {...props}
-      className={`${styles.button} ${styles[variant]} ${
-        italic && styles.italic
-      } ${props.className}`}
+      className={`${styles.button} ${styles[variant]} ${italic && styles.italic
+        } ${props.className} ${isRound ? styles.roundBtn : ''}`}
     >
       {leftIcon && <div className="mr-1">{leftIcon}</div>}
       <label>{children}</label>

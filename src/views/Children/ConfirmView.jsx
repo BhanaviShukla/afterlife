@@ -36,12 +36,12 @@ const ConfirmView = ({
       <Typography className="my-4 leading-8">{description}</Typography>
       <form id="children-confirm-form" action={handleNext}>
         {will.children.sort(sortObjectByDob).map((child, index) => (
-          <div key={child?.id} className="flex items-center gap-3 mt-6">
+          <div key={child?.id} className="flex flex-col gap-3 mt-6">
             <Image
               src={`/images/backpack.png`}
               alt={`child ${child.childName} backpack`}
-              width={100}
-              height={100}
+              width={200}
+              height={200}
               quality={90}
               className={`filter hue-rotate-${index * 15} -scale-x-100`}
             />
@@ -70,6 +70,7 @@ const ConfirmView = ({
             leftIcon={<ArrowLeftIcon />}
             onClick={handleBack}
             title={`${backLink}`}
+            isRound
           >
             {secondaryCta}
           </Button>

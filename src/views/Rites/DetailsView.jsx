@@ -110,6 +110,7 @@ const DetailsView = ({
             leftIcon={<ArrowLeftIcon />}
             onClick={handleBack}
             title={`${backLink}${religion}`}
+            isRound
           >
             {secondaryCta}
           </Button>
