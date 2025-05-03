@@ -32,7 +32,7 @@ const Icon = ({ name, size, color }) => {
       alt="afterlife logo"
       width={24}
       height={24}
-      //   className={className}
+    //   className={className}
     />
   );
 };

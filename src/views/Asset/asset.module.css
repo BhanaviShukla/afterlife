@@ -1,0 +1,12 @@
+.beneficiaryForm {
+    display: flex;
+}
+
+.beneficiaryForm > form {
+    width: 70%;
+    margin-right: 10px;
+}
+
+.beneficiaryForm > div {
+    margin-top: 1.1rem;
+}

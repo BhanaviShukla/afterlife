@@ -1,7 +1,7 @@
 import { Typography } from "@/components";
 import Image from "next/image";
 import { getImageFromSlug } from "@/utils/step";
-import { AssetsView, ChildrenView, PetsView, RitesView } from "@/views";
+import { ChildrenView, PetsView, RitesView, AssetsView } from "@/views";
 import { childrenCountData } from "@/appState/childrenData";
 import { petsCountData } from "@/appState/petsData";
 import { aboutYouData } from "@/appState/aboutYouData";
