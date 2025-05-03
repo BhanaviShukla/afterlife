@@ -5,6 +5,7 @@ import Link from "next/link";
 export default function DisclaimerModal() {
   return (
     <Modal
+      showCloseBtn
       id="disclaimer-modal"
       secondaryCta={
         <Button>

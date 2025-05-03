@@ -1,7 +1,6 @@
 h1, .title {
     font-family: var(--font-corben);
-    font-size: x-large;
-    font-size: 3.75rem;
+    font-size: var(--font-size-large);
     font-weight: 400;
     line-height: 1.25;
 }
@@ -45,5 +44,3 @@ p, body, input {
     font-weight: 400;
     line-height: 1.5;
 }
-
-

@@ -36,4 +36,15 @@
 
     /* theme - rem root font size */
     font-size: 16px;
+    --font-size-large: 3.75rem;
+    --font-size-medium: 2rem;
 }
+
+@media (max-width: 768px) {
+    :root {
+      --font-size-large: 3rem;
+    }
+    .title.medium {
+        font-size: var(--font-size-medium);
+    }
+  }

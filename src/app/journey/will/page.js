@@ -3,9 +3,9 @@ import { JourneySelectionView } from "@/views";
 
 export default function Will() {
   return (
-    <div className="flex flex-col justify-center grow gap-6">
+    <div className="flex flex-col justify-center grow gap-6 container">
       <div className="max-w-[75%]">
-        <Typography variant="title">{data.title}</Typography>
+        <Typography variant="title" className='medium'>{data.title}</Typography>
         <Typography className="my-10 leading-8">{data.description}</Typography>
         <Typography variant="heading">{data.heading}</Typography>
       </div>

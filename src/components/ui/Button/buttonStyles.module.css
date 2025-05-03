@@ -56,3 +56,12 @@
     font-style: italic;
 }
 
+.roundBtn {
+    @media only screen and (max-width: 640px)  {
+        min-width: unset;
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        padding: 0; 
+    }
+}
