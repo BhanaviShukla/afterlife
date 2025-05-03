@@ -1,11 +1,12 @@
 import { Typography } from "@/components";
 import Image from "next/image";
 import { getImageFromSlug } from "@/utils/step";
-import { ChildrenView, PetsView, RitesView } from "@/views";
+import { AssetsView, ChildrenView, PetsView, RitesView } from "@/views";
 import { childrenCountData } from "@/appState/childrenData";
 import { petsCountData } from "@/appState/petsData";
 import { aboutYouData } from "@/appState/aboutYouData";
 import { ritesData } from "@/appState/ritesData";
+import { assetsData } from "@/appState/assetsData";
 
 const StepView = ({ ...props }) => {
   console.log({ props });
@@ -16,17 +17,17 @@ const StepView = ({ ...props }) => {
       return <PetsView {...props} />;
     case "rites":
       return <RitesView {...props} />;
+    case "assets":
+      return <AssetsView {...props} />;
     default:
       return <>Default</>;
   }
 };
 
 export default function Journey({ params }) {
-  console.log({ params });
   const slug = params.step[0];
   const imageName = getImageFromSlug(slug);
   const stepData = data[slug];
-  console.log({ slug });
 
   return (
     <div className="flex justify-between lg:gap-6">
@@ -57,9 +58,7 @@ const data = {
   "about-you": aboutYouData,
   children: childrenCountData,
   pets: petsCountData,
-  assets: {
-    title: "assets and belongings",
-  },
+  assets: assetsData,
   rites: ritesData,
   dashboard: {
     title: "Here are the people you have added in your will",

@@ -6,7 +6,7 @@ const TextInput = ({
   ...inputProps
 }) => {
   return (
-    <div className={`form__group ${wrapperClassName}`}>
+    <div className={`form__group date_input ${wrapperClassName}`}>
       <input
         type={type}
         id={id}

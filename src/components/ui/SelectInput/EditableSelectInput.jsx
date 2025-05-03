@@ -7,7 +7,7 @@ const SelectLabel = ({ children, ...props }) => {
   return (
     <components.Control {...props}>
       <span
-        style={{ display: "inline-flex" }}
+        style={{ display: "inline-flex", border: "none" }}
         onMouseDown={onEdit}
         role="button"
         tabIndex={1}
@@ -60,7 +60,7 @@ const EditableSelectInput = ({
         })}
         {...(onChange && {
           onChange: handleChange,
-          value: selectedIndex ? options[selectedIndex] : undefined,
+          value: selectedIndex !== -1 ? options[selectedIndex] : undefined,
         })}
       />
     </div>

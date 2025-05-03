@@ -14,7 +14,6 @@ const NestedPetsView = ({
   searchParams,
   pathname,
 }) => {
-  console.log({ nestedSlug, nestedProps });
   switch (nestedSlug) {
     case petsNestedViews.DETAILS:
       return (
@@ -59,7 +58,6 @@ const PetsView = ({ slug, step, data, ...props }) => {
   const searchParams = useSearchParams();
 
   const nestedSlug = step[step.length - 1];
-  console.log({ nestedSlug });
 
   const isNotRedirected = step?.length && step[step.length - 1] === "pets";
 

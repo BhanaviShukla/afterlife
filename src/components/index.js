@@ -5,9 +5,11 @@ import CarouselIndicator from "./ui/CarouselIndicator/CarouselIndicator";
 import Checkbox from "./ui/Checkbox";
 import EditableSelectInput from "./ui/SelectInput/EditableSelectInput";
 import Icon from "./ui/Icons/Icon";
+import InfoMessage, { ErrorMessage } from "./ui/InfoMessage/InfoMessage";
 import LinkButton from "./ui/Button/LinkButton";
 import Logo from "./ui/Logo/logo";
 import Modal from "./ui/Modal/Modal";
+import PercentageInput from "./ui/PercentageInput/PercentageInput";
 import SelectInput from "./ui/SelectInput/SelectInput";
 import Selector from "./ui/Selector/Selector";
 import TextInput from "./ui/TextInput/TextInput";
@@ -22,12 +24,15 @@ export {
   Card,
   CarouselIndicator,
   Checkbox,
+  ErrorMessage,
+  InfoMessage,
   Logo,
   Modal,
   Nav,
   EditableSelectInput,
   Icon,
   LinkButton,
+  PercentageInput,
   SelectInput,
   Selector,
   TextInput,

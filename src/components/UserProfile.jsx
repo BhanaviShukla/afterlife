@@ -11,17 +11,19 @@ const formatDate = (dateString) => {
   }).format(date);
 };
 
+const getHtmlIdFromName = (name = "") => name.split(" ").join("-");
+
 export const UserProfileWithDob = ({ name, dob }) => {
   return (
     <div
-      className="flex items-baseline space-x-3 text-gray-800"
-      id={`user-profile-with-dob-${name}`}
+      className="flex items-baseline gap-x-2 text-gray-800"
+      id={`user-profile-with-dob-${getHtmlIdFromName(name)}`}
     >
       {/* Name */}
       <Typography variant="h4" className="font-sans">
         {name}
       </Typography>
-      <div className="flex space-x-1">
+      <div className="flex gap-x-1">
         {/* Crown Icon */}
         <BirthdayCake />
         {/* Date of Birth */}
@@ -31,11 +33,32 @@ export const UserProfileWithDob = ({ name, dob }) => {
   );
 };
 
+export const UserProfileWithDobAndAssetAllocation = ({
+  name,
+  dob,
+  allocationPercentage,
+}) => {
+  return (
+    <div id={`user-profile-with-assets-${getHtmlIdFromName(name)}`}>
+      <UserProfileWithDob {...{ dob, name }} />
+      {/* Allocations Section Section */}
+      <div className="flex gap-1 mt-2">
+        <Typography variant="span" className="text-accent-secondary mr-4">
+          Allocation
+        </Typography>
+        <Typography variant="span" className="font-semibold text-secondary">
+          {allocationPercentage}%
+        </Typography>
+      </div>
+    </div>
+  );
+};
+
 export const PetProfileWithMicrochip = ({ name, microchip }) => {
   return (
     <div
       className="flex items-baseline space-x-3 text-gray-800"
-      id={`pet-profile-with-microchip-${name}`}
+      id={`pet-profile-with-microchip-${microchip}`}
     >
       {/* Name */}
       <Typography variant="h4" className="font-sans">
@@ -53,7 +76,10 @@ export const PetProfileWithMicrochip = ({ name, microchip }) => {
 
 export const ChildProfileWithGuardian = ({ name, dob, guardian }) => {
   return (
-    <div className="">
+    <div
+      className=""
+      id={`child-profile-with-guardian-${getHtmlIdFromName(name)}`}
+    >
       <UserProfileWithDob name={name} dob={dob} />
 
       {/* Guardians Section */}
@@ -79,7 +105,7 @@ export const ChildProfileWithGuardian = ({ name, dob, guardian }) => {
 
 export const PetProfileWithCaretaker = ({ name, microchip, caretaker }) => {
   return (
-    <div className="">
+    <div className="" id={`pet-profile-with-caretaker-${microchip}`}>
       <PetProfileWithMicrochip name={name} microchip={microchip} />
 
       {/* Guardians Section */}
@@ -111,7 +137,10 @@ export const RitesDetailsWithInstructions = ({
   return (
     <>
       {/* RITES */}
-      <div className="my-6">
+      <div
+        className="my-6"
+        id={`user-profile-rites-${getHtmlIdFromName(religion)}`}
+      >
         <Typography variant="heading" className="text-xl">
           Rites
         </Typography>
@@ -135,7 +164,10 @@ export const RitesDetailsWithInstructions = ({
         </div>
       </div>
       {/* Instructions */}
-      <div className="my-6">
+      <div
+        className="my-6"
+        id={`user-profile-rites-intructions-${getHtmlIdFromName(instructions)}`}
+      >
         <Typography variant="heading" className="text-xl">
           Additional Instructions
         </Typography>

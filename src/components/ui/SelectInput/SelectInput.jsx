@@ -11,7 +11,7 @@ const SelectInput = ({
     : -1;
   const keyString = (value) => value.replace(" ", "_");
   return (
-    <div className={`form__group ${wrapperClassName}`}>
+    <div className={`form__group select_input ${wrapperClassName}`}>
       <select
         key={stateKey || id}
         id={id}

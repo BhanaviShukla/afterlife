@@ -14,8 +14,9 @@ import Heart from './Informational/Landing/heart.svg'
 import Scale from './Informational/Landing/scale.svg'
 import Brain from './Informational/Landing/brain.svg'
 
+
 const landingIcons = {
-  'design-nib': DesignNib,
+  "design-nib": DesignNib,
   user: User,
   'doc-search-alt': DocSearch,
   'emoji-satisfied': EmojiSatisfied,
@@ -43,4 +44,5 @@ const Icon = ({ name, size, color, className }) => {
     />
   );
 };
+
 export default Icon;
