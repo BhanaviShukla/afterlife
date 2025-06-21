@@ -1,49 +1,49 @@
 "use client";
-import {
-  Button,
-  EditableSelectInput,
-  ErrorMessage,
-  PercentageInput,
-  Typography,
-} from "@/components";
+import { Button, EditableSelectInput, PercentageInput } from "@/components";
 import CrossIcon from "@/components/ui/Icons/Controls/cancel.svg";
 import EditPersonModal from "@/components/EditPersonModal/EditPersonModal";
 import { useDebouncedCallback } from "@/utils/hooks";
-import { areObjectsEqual } from "@/utils/object";
-import { memo, useEffect, useState } from "react";
-import { beneficiaryIdsFromOtherAssets } from "./useAssetsHook";
+import { memo, useState } from "react";
 
 const ADD_NEW_BENEFICIARY_OPTION = "Add a new beneficiary";
 
 const EDIT_BENEFICIARY_MODAL = "edit-beneficiary-details-modal";
 const ADD_BENEFICIARY_MODAL = "add-another-beneficiary-modal";
 
-const FormSkeleton = () => {
-  return (
-    <div role="status" className="flex flex-wrap items-end gap-x-2">
-      <div className="flex items-center justify-between form__group ">
-        <div>
-          <div className="h-2.5 bg-gray-300 rounded-full  w-24 mb-2.5"></div>
-          <div className="w-32 h-2 bg-gray-200 rounded-full "></div>
-        </div>
-        <div className="h-2.5 bg-gray-300 rounded-full  w-12"></div>
+const FormSkeleton = () => (
+  <div role="status" className="flex flex-wrap items-end gap-x-2">
+    <div className="flex items-center justify-between form__group">
+      <div>
+        <div className="h-2.5 bg-gray-300 rounded-full w-24 mb-2.5"></div>
+        <div className="w-32 h-2 bg-gray-200 rounded-full"></div>
       </div>
-      <div className="flex items-center justify-between pt-4">
-        <div>
-          <div className="h-2.5 bg-gray-300 rounded-full  w-24 mb-2.5"></div>
-          <div className="w-32 h-2 bg-gray-200 rounded-full "></div>
-        </div>
-        <div className="h-2.5 bg-gray-300 rounded-full  w-12"></div>
-      </div>
-
-      <span className="sr-only">Loading...</span>
+      <div className="h-2.5 bg-gray-300 rounded-full w-12"></div>
     </div>
-  );
-};
+    <div className="flex items-center justify-between pt-4">
+      <div>
+        <div className="h-2.5 bg-gray-300 rounded-full w-24 mb-2.5"></div>
+        <div className="w-32 h-2 bg-gray-200 rounded-full"></div>
+      </div>
+      <div className="h-2.5 bg-gray-300 rounded-full w-12"></div>
+    </div>
+    <span className="sr-only">Loading...</span>
+  </div>
+);
+
+const getDefaultDistribution = (
+  distribution = undefined,
+  totalAssetPercentage = 0
+) =>
+  distribution ?? {
+    beneficiary: undefined,
+    allocationPercentage: 100 - (totalAssetPercentage ?? 0),
+  };
 
 const DistributionForm = memo(
   ({
     isLast,
+    isLoading,
+    setIsLoading,
     totalAssetPercentage,
     availableBeneficiaries,
     optionFilter,
@@ -52,18 +52,11 @@ const DistributionForm = memo(
     id = "empty",
     distribution = undefined,
   }) => {
-    const [currentDistribution, setCurrentDistribution] = useState(
-      distribution ?? {
-        beneficiary: undefined,
-        allocationPercentage: 100 - totalAssetPercentage ?? 0,
-      }
-    );
-
+    const debouncedOnChange = useDebouncedCallback(onChangeDistribution, 500);
     const [openModal, setOpenModal] = useState(undefined);
-    const [isLoading, setIsLoading] = useState(true);
 
     const options = [
-      ...availableBeneficiaries?.map((person) => ({
+      ...availableBeneficiaries.map((person) => ({
         label: person.name,
         value: person.id,
       })),
@@ -73,47 +66,36 @@ const DistributionForm = memo(
       },
     ];
 
+    const handleAllocationChange = (allocationPercentage) => {
+      if (allocationPercentage === distribution.allocationPercentage) return;
+      onChangeDistribution(id, {
+        ...getDefaultDistribution(distribution),
+        allocationPercentage,
+      });
+    };
+
+    const handleBeneficiaryChange = (beneficiary) => {
+      if (beneficiary === distribution.beneficiary) return;
+      debouncedOnChange(id, {
+        ...getDefaultDistribution(distribution),
+        beneficiary,
+      });
+    };
+
     const handleOptionSelection = (value) => {
-      setIsLoading(true);
       if (value === ADD_NEW_BENEFICIARY_OPTION) {
-        // the new person added will be selected as the person
-        setCurrentDistribution((prevValue) => ({
-          ...prevValue,
-          beneficiary: undefined,
-        }));
-
+        handleBeneficiaryChange(undefined);
         setOpenModal(ADD_BENEFICIARY_MODAL);
-      } else
-        setCurrentDistribution((prevValue) => ({
-          ...prevValue,
-          beneficiary: value,
-        }));
-    };
-
-    const handleNewPersonSave = (personId) => {
-      console.log("new person save");
-      setIsLoading(true);
-      setCurrentDistribution((prevValue) => ({
-        ...prevValue,
-        beneficiary: personId,
-      }));
-    };
-
-    const debouncedOnChange = useDebouncedCallback(onChangeDistribution, 500);
-
-    useEffect(() => {
-      if (!areObjectsEqual(distribution, currentDistribution)) {
-        debouncedOnChange(id, currentDistribution);
+      } else {
+        handleBeneficiaryChange(value);
       }
-      isLoading && setIsLoading(false);
-    }, [distribution, id, debouncedOnChange, currentDistribution]);
-
-    const handleAllocationChange = (value) => {
-      setCurrentDistribution((prevValue) => ({
-        ...prevValue,
-        allocationPercentage: value,
-      }));
     };
+
+    const handleNewBeneficiaryUpdate = (newPersonId) => {
+      console.log("setting new person as beneficiary", newPersonId);
+      handleBeneficiaryChange(newPersonId);
+    };
+
     const hasError = totalAssetPercentage > 100;
 
     return (
@@ -125,9 +107,9 @@ const DistributionForm = memo(
                 id={`${id}-beneficiary`}
                 options={options}
                 filterOption={(option) => optionFilter(option, id)}
-                value={currentDistribution.beneficiary}
+                value={distribution.beneficiary}
                 onChange={(_, value) => handleOptionSelection(value)}
-                placeholder={`Add Beneficiary`}
+                placeholder="Add Beneficiary"
                 isEditable
                 onEdit={() => {
                   setOpenModal(EDIT_BENEFICIARY_MODAL);
@@ -135,15 +117,14 @@ const DistributionForm = memo(
                 }}
                 required
                 loading={isLoading}
-                wrapperClassName={"flex-1 min-w-56"}
+                wrapperClassName="flex-1 min-w-56"
               />
               <PercentageInput
-                value={currentDistribution.allocationPercentage}
+                value={distribution.allocationPercentage}
                 onChange={handleAllocationChange}
                 error={hasError}
                 errorMessage={isLast ? "Over 100%" : undefined}
               />
-              {}
             </div>
           ) : (
             <FormSkeleton />
@@ -153,7 +134,7 @@ const DistributionForm = memo(
             id={`${id}-button-to-remove`}
             variant="text"
             onClick={() => {
-              setIsLoading(true);
+              // setIsLoading(true);
               onRemoveDistribution(id);
             }}
             className="min-w-0 text-center align-middle ml-12 p-2 hover:bg-slate-100 rounded-lg"
@@ -168,22 +149,22 @@ const DistributionForm = memo(
           id={`${EDIT_BENEFICIARY_MODAL}-${id}`}
           isOpen={openModal === EDIT_BENEFICIARY_MODAL}
           handleClose={() => setOpenModal(undefined)}
-          title={"Beneficiary Details"}
-          personId={currentDistribution.beneficiary}
+          title="Beneficiary Details"
+          personId={distribution.beneficiary}
         />
         {/* Add a new person */}
         <EditPersonModal
           key={`${ADD_BENEFICIARY_MODAL}-${id}`}
           id={`${ADD_BENEFICIARY_MODAL}-${id}`}
           isOpen={openModal === ADD_BENEFICIARY_MODAL}
-          onPersonSave={(personId) => handleNewPersonSave(personId)}
+          onPersonSave={handleNewBeneficiaryUpdate}
           handleClose={() => setOpenModal(undefined)}
-          title={`Add a new person`}
+          title="Add a new person"
         />
       </>
     );
   }
 );
-DistributionForm.displayName = "DistributionForm";
 
+DistributionForm.displayName = "DistributionForm";
 export default DistributionForm;

@@ -3,21 +3,20 @@ import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-rig
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import AddPersonIcon from "@/components/ui/Icons/Controls/add-user.svg";
 import EvenIcon from "@/components/ui/Icons/Controls/percent-rotate.svg";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+
 import DistributionForm from "./DistributionFormPerBeneficiary";
-import { useWill } from "@/appState/WillState";
 import {
   beneficiaryIdsFromOtherAssets,
   canAddNewEmpty,
   canShowAddNewCta,
   useAssetDistribution,
 } from "./useAssetsHook";
-import { useRouter } from "next/navigation";
-let renderCount = 0;
 
 const DistributionView = memo(
   ({
-    searchParams,
+    // searchParams,
     title,
     description,
     nextLink,
@@ -27,110 +26,96 @@ const DistributionView = memo(
     tooltip,
   }) => {
     const router = useRouter();
-    const handleNext = () => {
-      router.push(`${nextLink}`);
-    };
-    const handleBack = () => {
-      router.replace(`${backLink}${count}`);
-    };
-    const [isLoading, setIsLoading] = useState(true);
-    const { will, getWillCategory, removeFromWill } = useWill();
-    const [availableBeneficiaries] = useState([...getWillCategory("people")]);
+    const isFirstRender = useRef(true);
 
-    const [
-      getAssets,
+    const {
+      assets,
       onAddEmptyAssetDistribution,
       onChangeAssetDistribution,
+      onRemoveAssetDistribution,
       totalAssetPercentage,
-    ] = useAssetDistribution();
-    const assets = getAssets();
+      availableBeneficiaries,
+      allocateEvenly,
+      isLoading,
+      setIsLoading,
+    } = useAssetDistribution();
 
-    const handleAddEmptyDistribution = (isLoading) => {
-      setIsLoading(true);
-      onAddEmptyAssetDistribution(isLoading);
-      setIsLoading(false);
-    };
-
-    const onRemoveDistribution = (id) => {
-      removeFromWill("assets", id);
-    };
+    const handleNext = () => router.push(nextLink);
+    const handleBack = () => router.replace(`${backLink}${assets.length}`);
 
     const optionFilter = (option, assetId) =>
       !beneficiaryIdsFromOtherAssets(assets, assetId).includes(option.value);
 
     useEffect(() => {
-      // set initial loading as false only after component mount is complete
-      setIsLoading(false);
-      renderCount++;
-    }, []);
-
-    useEffect(() => {
       // show the 1st empty beneficiary only on first render
       if (!assets.length && renderCount === 1) {
-        handleAddEmptyDistribution();
+        onAddEmptyAssetDistribution();
+        isFirstRender.current = false;
       }
-    }, [canAddNewEmpty, assets, isLoading, handleAddEmptyDistribution]);
+    }, [assets, isLoading, onAddEmptyAssetDistribution]);
+
+    const isAddNewCtaVisible = canShowAddNewCta(assets);
+
+    console.log("DistributionView", { isLoading });
 
     return (
       <div className="w-full md:min-h-96">
-        <div>
-          <Typography variant="title-small">{title}</Typography>
-          <Typography className="my-10 leading-8">{description}</Typography>
-          <form id="assets-distribution-form" action={handleNext}>
-            {assets.map((asset, index) => (
-              <DistributionForm
-                key={asset.id}
-                isLast={index === assets.length - 1}
-                {...{
-                  totalAssetPercentage,
-                  availableBeneficiaries,
-                  optionFilter,
-                  onRemoveDistribution,
-                }}
-                availableBeneficiaries={getWillCategory("people")}
-                id={asset.id}
-                distribution={asset}
-                onChangeDistribution={onChangeAssetDistribution}
-              />
-            ))}
-            <div className="flex justify-between md:max-w-md">
-              {canShowAddNewCta(getAssets()) ? (
-                <Button
-                  variant="text"
-                  leftIcon={<AddPersonIcon />}
-                  className="mt-12"
-                  onClick={() => handleAddEmptyDistribution(isLoading)}
-                >
-                  Add another beneficiary
-                </Button>
-              ) : (
-                <></>
-              )}
-              {assets.length > 1 ? (
-                <Button
-                  variant="text"
-                  leftIcon={<EvenIcon />}
-                  className="mt-12"
-                  // onClick={() => }
-                >
-                  Allocate Evenly
-                </Button>
-              ) : (
-                <></>
-              )}
-            </div>
-          </form>
-        </div>
-        <div className="md:mt-12">
-          {tooltip ? <InfoMessage message={tooltip.description} /> : <></>}
-        </div>
+        <Typography variant="title-small">{title}</Typography>
+        <Typography className="my-10 leading-8">{description}</Typography>
+
+        <form id="assets-distribution-form" action={handleNext}>
+          {assets.map((asset, index) => (
+            <DistributionForm
+              key={asset.id}
+              id={asset.id}
+              distribution={asset}
+              isLast={index === assets.length - 1}
+              totalAssetPercentage={totalAssetPercentage}
+              availableBeneficiaries={availableBeneficiaries}
+              optionFilter={optionFilter}
+              onChangeDistribution={onChangeAssetDistribution}
+              onRemoveDistribution={onRemoveAssetDistribution}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          ))}
+
+          <div className="flex justify-between md:max-w-md mt-12">
+            {isAddNewCtaVisible && (
+              <Button
+                variant="text"
+                leftIcon={<AddPersonIcon />}
+                onClick={onAddEmptyAssetDistribution}
+              >
+                Add another beneficiary
+              </Button>
+            )}
+
+            {assets.length > 1 && (
+              <Button
+                variant="text"
+                leftIcon={<EvenIcon />}
+                onClick={allocateEvenly}
+              >
+                Allocate Evenly
+              </Button>
+            )}
+          </div>
+        </form>
+
+        {tooltip && (
+          <div className="md:mt-12">
+            <InfoMessage message={tooltip.description} />
+          </div>
+        )}
+
         <div className="flex mt-14 gap-4">
           <Button
             variant="outlined"
             className="self-start"
             leftIcon={<ArrowLeftIcon />}
             onClick={handleBack}
-            title={`${backLink}`}
+            title={backLink}
           >
             {secondaryCta}
           </Button>
@@ -139,8 +124,8 @@ const DistributionView = memo(
             className="self-start"
             rightIcon={<ArrowRightIcon />}
             onClick={handleNext}
-            id={`children-guardian-submit-button`}
-            title={`${nextLink}`}
+            id="children-guardian-submit-button"
+            title={nextLink}
           >
             {primaryCta}
           </Button>
@@ -149,6 +134,6 @@ const DistributionView = memo(
     );
   }
 );
-DistributionView.displayName = "DistributionView";
 
+DistributionView.displayName = "DistributionView";
 export default DistributionView;

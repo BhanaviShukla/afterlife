@@ -40,14 +40,13 @@ export const getAvailableBeneficiaries = (assets, people) =>
   );
 
 export const useAssetDistribution = () => {
-  const {
-    will,
-    addToWill,
-    patchWillEntry,
-    getWillCategory,
-    UNSAFE_replaceWillCategoryByValue,
-  } = useWill();
-  const getAssets = () => getWillCategory("assets");
+  const [isLoading, setIsLoading] = useState(true);
+  const { will, addToWill, patchWillEntry, getWillCategory, removeFromWill } =
+    useWill();
+  const getAssets = useCallback(
+    () => getWillCategory("assets"),
+    [getWillCategory]
+  );
 
   const [assets, setAssets] = useState([...getAssets()]);
   const [totalAssetPercentage, setTotalAssetPercentage] = useState(
@@ -57,40 +56,46 @@ export const useAssetDistribution = () => {
     ...will.people,
   ]);
 
-  const onAddEmptyAssetDistribution = useCallback(
-    (isLoading = false) => {
-      console.log("onAddEmptyAssetDistribution called");
-      if (isLoading) {
-        console.warn("LOADING");
-        return;
-      }
+  const onAddEmptyAssetDistribution = useCallback(() => {
+    if (isLoading) {
+      console.warn("LOADING");
+      return;
+    }
 
-      if (!canAddNewEmpty(assets)) {
-        console.warn("can't add a new empty distribution");
-        return;
-      }
-      const newDistribution = {
-        beneficiary: "",
-        allocationPercentage: 100 - totalAssetPercentage ?? 0,
-      };
-      const id = addToWill("assets", {
-        ...newDistribution,
-      });
-      console.log({ id }, "added to assets");
-      if (!id) {
-        console.error("Oops! Couldn't add asset for some reason");
-        return;
-      }
-    },
-    [addToWill, totalAssetPercentage, assets, canAddNewEmpty]
-  );
+    if (!canAddNewEmpty(assets)) {
+      console.warn("can't add a new empty distribution");
+      return;
+    }
+
+    setIsLoading(true);
+    const newDistribution = {
+      beneficiary: "",
+      allocationPercentage: 100 - totalAssetPercentage ?? 0,
+    };
+    const id = addToWill("assets", {
+      ...newDistribution,
+    });
+    console.log({ id }, "added to assets");
+    if (!id) {
+      console.error("Oops! Couldn't add asset for some reason");
+      return;
+    }
+  }, [addToWill, totalAssetPercentage, assets, isLoading]);
+
   const onChangeAssetDistribution = (
     id,
     distribution = {
       beneficiary: "",
       allocationPercentage: 100,
-    }
+    },
+    shouldSetLoading = true
   ) => {
+    if (isLoading) {
+      console.warn("LOADING");
+      return;
+    }
+    console.log("onChangeAssetDistribution called", { id, distribution });
+    if (shouldSetLoading) setIsLoading(true);
     const isUpdated = patchWillEntry("assets", id, { ...distribution });
     if (!isUpdated) {
       console.error("Couldn't update asset distribution for some reason");
@@ -98,14 +103,41 @@ export const useAssetDistribution = () => {
   };
 
   const allocateEvenly = () => {
-    // select currently only supports multiples of 10.
-    //  what happens if we have 6 beneficiaries, so the equal percentage comes out to be: 16.667?
-    // can't support allocateEvenly until this is clear
+    if (isLoading) {
+      console.warn("LOADING");
+      return;
+    }
+    console.log("Allocating assets evenly");
+    const totalAssets = assets.length;
+    const equalPercentage = (100 / totalAssets).toFixed(2);
+
+    assets.forEach((asset, index) => {
+      console.log("Updating asset", {
+        id: asset.id,
+        beneficiary: asset.beneficiary,
+        allocationPercentage: Number(equalPercentage),
+      });
+      onChangeAssetDistribution(
+        asset.id,
+        {
+          beneficiary: asset.beneficiary,
+          allocationPercentage: Number(equalPercentage),
+        },
+        index === 0
+      ); // only first time sets is loading to true
+    });
+  };
+
+  const onRemoveAssetDistribution = (id) => {
+    setIsLoading(true);
+    removeFromWill("assets", id);
   };
 
   useEffect(() => {
     if (areObjectsEqual(assets, will.assets)) {
       // do nothin
+      console.log("Objects are equal");
+      setIsLoading(false);
       return;
     }
     setAssets([...getAssets()]);
@@ -116,13 +148,20 @@ export const useAssetDistribution = () => {
         0
       )
     );
-  }, [assets, will.assets, getAssets]);
+    setAvailableBeneficiaries([...getWillCategory("people")]);
+    setIsLoading(false);
+  }, [assets, will.assets, getAssets, getWillCategory]);
 
-  return [
+  return {
+    assets,
     getAssets,
     onAddEmptyAssetDistribution,
     onChangeAssetDistribution,
+    onRemoveAssetDistribution,
     totalAssetPercentage,
     availableBeneficiaries,
-  ];
+    allocateEvenly,
+    isLoading,
+    setIsLoading,
+  };
 };
