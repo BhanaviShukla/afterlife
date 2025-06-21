@@ -7,7 +7,7 @@ const TextInput = ({
   ...inputProps
 }) => {
   return (
-    <div className={`form__group text_input ${wrapperClassName}`}>
+    <div className={["form__group text_input", wrapperClassName].join(" ")}>
       <input
         key={stateKey}
         type={type}

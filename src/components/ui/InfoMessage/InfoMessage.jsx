@@ -10,7 +10,13 @@ const InfoMessage = ({
 }) => {
   return (
     <div className="flex items-center gap-x-1.5 text-n400 mt-auto max-w-md">
-      <div className="flex-shrink-0">
+      <div
+        className="flex-shrink-0"
+        style={{
+          width: 16,
+          height: 16,
+        }}
+      >
         <Icon className={colorClassName} />
       </div>
       <Typography

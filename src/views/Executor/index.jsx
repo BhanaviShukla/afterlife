@@ -1,6 +1,7 @@
 "use client";
 import {
   Button,
+  Checkbox,
   EditableSelectInput,
   InfoMessage,
   Typography,
@@ -11,8 +12,9 @@ import AddPersonIcon from "@/components/ui/Icons/Controls/add-user.svg";
 import ExecutorForm from "./ExecutorForm";
 import { useWill } from "@/appState/WillState";
 import { executorsData } from "@/appState/executorsData";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useExecutors } from "./useExecutorsHook";
+import { useRouter } from "next/navigation";
 
 const ADD_NEW_BENEFICIARY_OPTION = "Add a new executor";
 
@@ -20,7 +22,6 @@ const EDIT_BENEFICIARY_MODAL = "edit-executor-details-modal";
 const ADD_BENEFICIARY_MODAL = "add-another-executor-modal";
 
 const ExecutorView = ({ ...props }) => {
-  const { will, getWillCategory, removeFromWill } = useWill();
   const {
     title,
     description,
@@ -34,22 +35,81 @@ const ExecutorView = ({ ...props }) => {
 
   const handleNext = () => {};
   const handleBack = () => {};
-  const [executors, onChangeExecutor] = useExecutors();
-  console.log({ executors });
+  const {
+    executors,
+    isLoading,
+    setIsLoading,
+    onChangeExecutor,
+    onAddEmptyExecutor,
+    optionsFilterForAvailableExecutors,
+    setJointExecutors,
+    availableExecutors,
+  } = useExecutors();
+
+  const router = useRouter();
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (!executors.length && isFirstRender.current) {
+      onAddEmptyExecutor();
+      isFirstRender.current = false;
+    }
+  }, [executors.length, onAddEmptyExecutor]);
+
   return (
     <div className="w-full md:min-h-96">
       <div>
         <Typography variant="title-small">{title}</Typography>
         <Typography className="my-10 leading-8">{description}</Typography>
         <form id="executors-form" action={handleNext}>
-          {executors.map((executor) => (
-            <ExecutorForm key={executor.id} {...executor} />
+          {executors.map((executor, index) => (
+            <ExecutorForm
+              key={executor.id}
+              id={executor.id}
+              {...{
+                executor,
+                isLoading,
+                setIsLoading,
+                optionFilter: optionsFilterForAvailableExecutors,
+                onChangeExecutor,
+                availableExecutors,
+              }}
+            />
           ))}
+          {executors.length === 2 && (
+            <Checkbox
+              checked={executors.every((e) => e.isJoint)}
+              // TODO: move to text in executorsData
+              label={
+                "I want both executors to work together as joint executors."
+              }
+              onChange={(e) => {
+                setJointExecutors(e.target.checked);
+              }}
+              className={"text-accent"}
+            />
+          )}
         </form>
       </div>
-      <div className="md:mt-12">
-        {tooltip ? <InfoMessage message={tooltip.description} /> : <></>}
-      </div>
+      {executors.length < 2 && (
+        <div className="flex justify-between md:max-w-md mt-12">
+          <Button
+            variant="text"
+            leftIcon={<AddPersonIcon />}
+            onClick={onAddEmptyExecutor}
+          >
+            Add a second executor
+          </Button>
+        </div>
+      )}
+      {tooltip ? (
+        <div className="md:mt-12">
+          {<InfoMessage message={tooltip.description} />}
+        </div>
+      ) : (
+        <></>
+      )}
+
       <div className="flex mt-14 gap-4">
         <Button
           variant="outlined"

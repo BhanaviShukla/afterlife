@@ -34,11 +34,6 @@ export const beneficiaryIdsFromOtherAssets = (
     .filter((a) => a.id !== currentAssetId)
     .map((asset) => asset.beneficiary);
 
-export const getAvailableBeneficiaries = (assets, people) =>
-  people.filter(
-    (person) => !beneficiaryIdsFromAssets(assets).includes(person.id)
-  );
-
 export const useAssetDistribution = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { will, addToWill, patchWillEntry, getWillCategory, removeFromWill } =
@@ -78,7 +73,6 @@ export const useAssetDistribution = () => {
     console.log({ id }, "added to assets");
     if (!id) {
       console.error("Oops! Couldn't add asset for some reason");
-      return;
     }
   }, [addToWill, totalAssetPercentage, assets, isLoading]);
 
@@ -112,11 +106,6 @@ export const useAssetDistribution = () => {
     const equalPercentage = (100 / totalAssets).toFixed(2);
 
     assets.forEach((asset, index) => {
-      console.log("Updating asset", {
-        id: asset.id,
-        beneficiary: asset.beneficiary,
-        allocationPercentage: Number(equalPercentage),
-      });
       onChangeAssetDistribution(
         asset.id,
         {
@@ -154,7 +143,6 @@ export const useAssetDistribution = () => {
 
   return {
     assets,
-    getAssets,
     onAddEmptyAssetDistribution,
     onChangeAssetDistribution,
     onRemoveAssetDistribution,

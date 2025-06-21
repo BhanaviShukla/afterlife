@@ -48,15 +48,13 @@ const DistributionView = memo(
 
     useEffect(() => {
       // show the 1st empty beneficiary only on first render
-      if (!assets.length && renderCount === 1) {
+      if (!assets.length && isFirstRender) {
         onAddEmptyAssetDistribution();
         isFirstRender.current = false;
       }
     }, [assets, isLoading, onAddEmptyAssetDistribution]);
 
     const isAddNewCtaVisible = canShowAddNewCta(assets);
-
-    console.log("DistributionView", { isLoading });
 
     return (
       <div className="w-full md:min-h-96">

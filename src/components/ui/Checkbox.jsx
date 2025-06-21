@@ -1,10 +1,14 @@
 import React from "react";
 import { Typography } from "..";
 
-const Checkbox = ({ label, checked, onChange }) => {
+const Checkbox = ({ label, checked, onChange, className }) => {
   return (
     <div className="form__group">
-      <label className="flex items-center space-x-2 cursor-pointer">
+      <label
+        className={["flex items-center gap-2 cursor-pointer", className].join(
+          " "
+        )}
+      >
         {/* Custom Checkbox */}
         <input
           type="checkbox"
@@ -19,7 +23,7 @@ const Checkbox = ({ label, checked, onChange }) => {
                  ? "bg-secondary border-secondary"
                  : "bg-white border-gray-400"
              }`}
-          style={{ width: 16, height: 16 }}
+          style={{ width: 13, height: 13 }}
         >
           {checked && (
             <svg
@@ -40,7 +44,7 @@ const Checkbox = ({ label, checked, onChange }) => {
         </div>
 
         {/* Label */}
-        <Typography>{label}</Typography>
+        <Typography variant="caption">{label}</Typography>
       </label>
     </div>
   );
