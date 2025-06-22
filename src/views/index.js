@@ -5,6 +5,7 @@ import RitesView from "./Rites";
 import AssetsView from "./Assets";
 import AboutYouForm from "./AboutYou/ index";
 import ExecutorView from "./Executor";
+import DownloadView from "./Download";
 
 export {
   ExecutorView,
@@ -14,4 +15,5 @@ export {
   PetsView,
   RitesView,
   AssetsView,
+  DownloadView,
 };

@@ -9,11 +9,6 @@ import { useEffect, useRef } from "react";
 import { useExecutors } from "./useExecutorsHook";
 import { useRouter } from "next/navigation";
 
-const ADD_NEW_BENEFICIARY_OPTION = "Add a new executor";
-
-const EDIT_BENEFICIARY_MODAL = "edit-executor-details-modal";
-const ADD_BENEFICIARY_MODAL = "add-another-executor-modal";
-
 const ExecutorView = ({ ...props }) => {
   const {
     title,

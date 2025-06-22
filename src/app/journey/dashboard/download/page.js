@@ -1,6 +1,6 @@
 import { Button, InfoMessage, LinkButton, Typography } from "@/components";
-import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
-import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
+
+import { DownloadView } from "@/views";
 
 export default function Dashboard() {
   return (
@@ -18,33 +18,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="w-full">
-          Download will page
-          <div className="md:mt-12">
-            {
-              <InfoMessage
-                message={
-                  "You can still come back to edit your information as long as you don’t close this page."
-                }
-              />
-            }
-          </div>
-          <div className="flex mt-14 gap-4">
-            <LinkButton
-              variant="outlined"
-              className="self-start"
-              leftIcon={<ArrowLeftIcon />}
-              id="dashboard-back-to-people"
-              href="/journey/dashboard/people"
-            />
-            <Button
-              variant="filled"
-              className="self-start"
-              rightIcon={<ArrowRightIcon />}
-              id="dashboard-download-will-button"
-            >
-              Confirm
-            </Button>
-          </div>
+          <DownloadView />
         </div>
       </div>
     </div>
