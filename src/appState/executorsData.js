@@ -12,5 +12,5 @@ export const executorsData = {
   primaryCta: "Finalise will",
   secondaryCta: "",
   backLink: "/journey/will",
-  nextLink: "journey/dashboard",
+  nextLink: "/journey/dashboard",
 };

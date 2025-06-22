@@ -1,9 +1,8 @@
 import { Button, InfoMessage, LinkButton, Typography } from "@/components";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
-import Image from "next/image";
 
-export default function Dashboard() {
+export default function DashboardPeople() {
   return (
     <div className="container max-w-7xl mx-auto px-4">
       <div className="flex flex-col lg:flex-row lg:items-start lg:gap-20">
@@ -11,7 +10,7 @@ export default function Dashboard() {
         <div className="flex-1 max-w-2xl">
           <div className="mb-12">
             <Typography variant="title-small">
-              Here is everything you have planned for in your will.
+              Check the information for the people you have added in your will.
             </Typography>
             <Typography className="my-10 leading-8">
               Make sure all the information here is correct.
@@ -19,7 +18,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="w-full">
-          TEST
+          People
           <div className="md:mt-12">
             {
               <InfoMessage
@@ -34,15 +33,15 @@ export default function Dashboard() {
               variant="outlined"
               className="self-start"
               leftIcon={<ArrowLeftIcon />}
-              id="dashboard-back-to-will"
-              href="/journey/will"
+              id="dashboard-back-to-will-entries"
+              href="/journey/dashboard"
             />
             <LinkButton
               variant="filled"
               className="self-start"
               rightIcon={<ArrowRightIcon />}
-              id="dashboard-confirm-will-entries-button"
-              href="/journey/dashboard/people"
+              id="dashboard-download-will"
+              href="/journey/dashboard/download"
             >
               Confirm
             </LinkButton>

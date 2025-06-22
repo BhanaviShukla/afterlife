@@ -1,4 +1,3 @@
-import { Typography } from "@/components";
 import { ExecutorView } from "@/views";
 import Image from "next/image";
 

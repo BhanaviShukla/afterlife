@@ -9,7 +9,7 @@ const InfoMessage = ({
   colorClassName = "text-n300",
 }) => {
   return (
-    <div className="flex items-center gap-x-1.5 text-n400 mt-auto max-w-md">
+    <div className="flex items-center gap-x-1.5 text-n400 mt-auto">
       <div
         className="flex-shrink-0"
         style={{

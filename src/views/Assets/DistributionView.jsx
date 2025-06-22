@@ -102,7 +102,7 @@ const DistributionView = memo(
         </form>
 
         {tooltip && (
-          <div className="md:mt-12">
+          <div className="md:mt-12 max-w-md">
             <InfoMessage message={tooltip.description} />
           </div>
         )}
@@ -122,7 +122,7 @@ const DistributionView = memo(
             className="self-start"
             rightIcon={<ArrowRightIcon />}
             onClick={handleNext}
-            id="children-guardian-submit-button"
+            id="asset-distribution-submit-button"
             title={nextLink}
           >
             {primaryCta}

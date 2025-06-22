@@ -1,7 +1,6 @@
 import { Button, InfoMessage, LinkButton, Typography } from "@/components";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
-import Image from "next/image";
 
 export default function Dashboard() {
   return (
@@ -19,7 +18,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="w-full">
-          TEST
+          Download will page
           <div className="md:mt-12">
             {
               <InfoMessage
@@ -34,18 +33,17 @@ export default function Dashboard() {
               variant="outlined"
               className="self-start"
               leftIcon={<ArrowLeftIcon />}
-              id="dashboard-back-to-will"
-              href="/journey/will"
+              id="dashboard-back-to-people"
+              href="/journey/dashboard/people"
             />
-            <LinkButton
+            <Button
               variant="filled"
               className="self-start"
               rightIcon={<ArrowRightIcon />}
-              id="dashboard-confirm-will-entries-button"
-              href="/journey/dashboard/people"
+              id="dashboard-download-will-button"
             >
               Confirm
-            </LinkButton>
+            </Button>
           </div>
         </div>
       </div>

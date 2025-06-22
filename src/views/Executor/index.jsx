@@ -1,16 +1,9 @@
 "use client";
-import {
-  Button,
-  Checkbox,
-  EditableSelectInput,
-  InfoMessage,
-  Typography,
-} from "@/components";
+import { Button, Checkbox, InfoMessage, Typography } from "@/components";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import AddPersonIcon from "@/components/ui/Icons/Controls/add-user.svg";
 import ExecutorForm from "./ExecutorForm";
-import { useWill } from "@/appState/WillState";
 import { executorsData } from "@/appState/executorsData";
 import { useEffect, useRef } from "react";
 import { useExecutors } from "./useExecutorsHook";
@@ -26,15 +19,14 @@ const ExecutorView = ({ ...props }) => {
     title,
     description,
     tooltip,
-    formCta,
     primaryCta,
     secondaryCta,
     backLink,
     nextLink,
   } = executorsData;
 
-  const handleNext = () => {};
-  const handleBack = () => {};
+  const handleNext = () => router.push(nextLink);
+  const handleBack = () => router.back();
   const {
     executors,
     isLoading,
@@ -103,7 +95,7 @@ const ExecutorView = ({ ...props }) => {
         </div>
       )}
       {tooltip ? (
-        <div className="md:mt-12">
+        <div className="md:mt-12 max-w-md">
           {<InfoMessage message={tooltip.description} />}
         </div>
       ) : (
