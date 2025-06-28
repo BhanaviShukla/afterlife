@@ -1,7 +1,7 @@
 "use client";
 import { useWill } from "@/appState/WillState";
 import Mustache from "mustache";
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, LinkButton } from "@/components";
 import DownloadIcon from "@/components/ui/Icons/Controls/Buttons/download.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
