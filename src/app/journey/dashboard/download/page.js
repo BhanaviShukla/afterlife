@@ -27,7 +27,7 @@ export default function Dashboard() {
                 1.&nbsp;&nbsp;Print it out
               </Typography>
               <Typography className="">
-                Download your will and print once you're sure that the
+                Download your will and print once you’re sure that the
                 information is correct.
                 <br />
                 You can always go back to edit as long as you keep this window
