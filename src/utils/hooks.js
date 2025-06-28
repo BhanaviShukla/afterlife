@@ -111,3 +111,26 @@ export const useChildrenWithGuardians = () => {
 
   return [childrenWithGuardians, setChildrenWithGuardians];
 };
+
+export const usePetsWithCaretakers = () => {
+  const {
+    will: { pets, people },
+  } = useWill();
+  const [petsWithCaretaker, setPetsWithCaretaker] = useState([]);
+  useEffect(() => {
+    const petsFromWill = pets.sort(sortObjectByDob).map((pet) => ({
+      ...pet,
+      caretaker: {
+        main:
+          people.find((person) => person.id === pet.caretaker.main)?.name ||
+          undefined,
+        alternative:
+          people.find((person) => person.id === pet.caretaker.alternative)
+            ?.name || undefined,
+      },
+    }));
+    setPetsWithCaretaker(petsFromWill);
+  }, [pets]);
+
+  return [petsWithCaretaker, setPetsWithCaretaker];
+};

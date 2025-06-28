@@ -36,6 +36,7 @@ const DetailsView = ({
     "rites"
   );
   const [rites, setRites] = useCategoryList(1, "rites");
+  console.log("DETAILS", { rites });
 
   useEffect(() => {
     setReligion(String(searchParams.get("religion")));

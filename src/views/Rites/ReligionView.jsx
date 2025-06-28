@@ -44,6 +44,7 @@ const ReligionView = memo(
     }, [defaultNextLink, altNextLink, religion]);
 
     const handleNext = () => {
+      console.log("TEST", { rites });
       UNSAFE_replaceWillCategoryByValue("rites", [
         {
           ...rites,
