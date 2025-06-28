@@ -3,6 +3,8 @@ import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-rig
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import ChildrenPanel from "@/views/Dashboard/ChildrenPanel";
 import PetsPanel from "@/views/Dashboard/PetsPanel";
+import AssetsPanel from "@/views/Dashboard/AssetsPanel";
+import RitesPanel from "@/views/Dashboard/RitesPanel";
 
 export default function Dashboard() {
   return (
@@ -22,6 +24,8 @@ export default function Dashboard() {
         <div className="w-full flex flex-col lg:gap-10 gap-6">
           <ChildrenPanel />
           <PetsPanel />
+          <AssetsPanel />
+          <RitesPanel />
           <div className="">
             {
               <InfoMessage

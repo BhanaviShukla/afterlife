@@ -107,7 +107,7 @@ export const useChildrenWithGuardians = () => {
       },
     }));
     setChildrenWithGuardians(childrenFromWill);
-  }, [children]);
+  }, [children, people]);
 
   return [childrenWithGuardians, setChildrenWithGuardians];
 };
@@ -130,7 +130,24 @@ export const usePetsWithCaretakers = () => {
       },
     }));
     setPetsWithCaretaker(petsFromWill);
-  }, [pets]);
+  }, [pets, people]);
 
   return [petsWithCaretaker, setPetsWithCaretaker];
+};
+
+export const useAssetsWithBeneficiaries = () => {
+  const {
+    will: { assets, people },
+  } = useWill();
+
+  const [assetsWithBeneficiaries, setAssetsWithBeneficiaries] = useState([]);
+  useEffect(() => {
+    const assetsFromWill = assets.map((asset) => ({
+      ...asset,
+      beneficiary: people.find((person) => person.id === asset.beneficiary),
+    }));
+    setAssetsWithBeneficiaries(assetsFromWill);
+  }, [assets, people]);
+
+  return [assetsWithBeneficiaries, setAssetsWithBeneficiaries];
 };
