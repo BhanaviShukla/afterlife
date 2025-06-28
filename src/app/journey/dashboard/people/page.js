@@ -1,11 +1,11 @@
-import { Button, InfoMessage, LinkButton, Typography } from "@/components";
+import { InfoMessage, LinkButton, Typography } from "@/components";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 
 export default function DashboardPeople() {
   return (
     <div className="container max-w-7xl mx-auto px-4">
-      <div className="flex flex-col lg:flex-row lg:items-start lg:gap-20">
+      <div className="flex flex-col">
         {/* Left side - Form */}
         <div className="flex-1 max-w-2xl">
           <div className="mb-12">
@@ -17,9 +17,9 @@ export default function DashboardPeople() {
             </Typography>
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full flex flex-col lg:gap-10 gap-6">
           People
-          <div className="md:mt-12">
+          <div className="">
             {
               <InfoMessage
                 message={
@@ -28,7 +28,7 @@ export default function DashboardPeople() {
               />
             }
           </div>
-          <div className="flex mt-14 gap-4">
+          <div className="flex gap-4">
             <LinkButton
               variant="outlined"
               className="self-start"

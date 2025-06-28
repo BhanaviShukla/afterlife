@@ -1,26 +1,31 @@
 "use client";
 import { useWill } from "@/appState/WillState";
 import Mustache from "mustache";
-import { useEffect, useRef, useState } from "react";
-// import html2pdf from "html2pdf.js";
-import { Button, LinkButton, Typography } from "@/components";
+import { use, useEffect, useRef, useState } from "react";
+import { Button, LinkButton } from "@/components";
 import DownloadIcon from "@/components/ui/Icons/Controls/Buttons/download.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
+import {
+  useAssetsWithBeneficiaries,
+  useChildrenWithGuardians,
+  usePetsWithCaretakers,
+} from "@/utils/hooks";
 
 const PDF_OPTIONS = {
-  margin: 1,
+  margin: 0, // No margin, handle via CSS
   image: { type: "jpeg", quality: 1 },
-  html2canvas: { scale: 2 },
+  html2canvas: { scale: 2, useCORS: true },
   jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
 };
 
 const DownloadView = () => {
   const { will } = useWill();
+  const [childrenWithGuardians] = useChildrenWithGuardians();
+  const [petsWithCaretakers] = usePetsWithCaretakers();
+  const [assetsWithBeneficiaries] = useAssetsWithBeneficiaries();
   const [rendered, setRendered] = useState(undefined);
-
   const html2pdfRef = useRef(null);
 
-  // Dynamically import html2pdf.js on client
   useEffect(() => {
     import("html2pdf.js").then((mod) => {
       html2pdfRef.current = mod.default ? mod.default() : mod();
@@ -28,32 +33,68 @@ const DownloadView = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const generate = async () => {
+      // Fetch and render cover
+      const coverRes = await fetch("/Willcover.html");
+      const coverHtml = await coverRes.text();
+      // Fetch and render main will
+      const willRes = await fetch("/willTemplateV3.html");
+      const willHtml = await willRes.text();
+
+      const formattedWill = {
+        ...will,
+        children: childrenWithGuardians,
+        pets: petsWithCaretakers,
+        assets: assetsWithBeneficiaries,
+        date: new Date().toLocaleDateString(),
+      };
+
+      const absoluteUrl =
+        typeof window !== "undefined"
+          ? window.location.origin + "/images/image1.png"
+          : "/images/image1.png";
+      const coverHtmlWithAbsoluteImg = coverHtml.replace(
+        /src="\/images\/image1\.png"/g,
+        `src="${absoluteUrl}"`
+      );
+      // Render both templates
+      const renderedCover = Mustache.render(
+        coverHtmlWithAbsoluteImg,
+        formattedWill
+      );
+      const renderedWill = Mustache.render(willHtml, formattedWill);
+
+      // Combine with a page break
+      const combined = `
+        <div>
+          <div style="page-break-after: always; margin: 0;">${renderedCover}</div>
+          <div style="padding: 0;">${renderedWill}</div>
+        </div>
+      `;
+      setRendered(combined);
+    };
+    generate();
+    return () => {
+      if (html2pdfRef.current) html2pdfRef.current.from = undefined;
+    };
+  }, [
+    will,
+    childrenWithGuardians,
+    petsWithCaretakers,
+    assetsWithBeneficiaries,
+  ]);
+
   const downloadWill = () => {
-    console.log("downLoadWill", Boolean(rendered));
-    if (!rendered || !worker) {
+    if (!rendered || !html2pdfRef.current) {
       console.error("Couldn't generate pdf");
       return;
     }
     html2pdfRef.current.from(rendered).save("filled-template.pdf");
   };
 
-  useEffect(() => {
-    const generate = async () => {
-      const response = await fetch("/willTemplateV3.html");
-      const templateHtml = await response.text();
-
-      setRendered(Mustache.render(templateHtml, will));
-      // await worker.from(rendered).save("filled-template.pdf");
-    };
-    generate();
-    return () => {
-      if (html2pdfRef.current) html2pdfRef.current.from = undefined;
-    };
-  }, [will]);
-
   return (
     <div>
-      <Typography>Something here</Typography>
       <div className="flex mt-14 gap-4">
         <LinkButton
           variant="outlined"
@@ -69,7 +110,7 @@ const DownloadView = () => {
           className="self-start"
           rightIcon={<DownloadIcon />}
           id="dashboard-download-will-button"
-          onClick={() => downloadWill()}
+          onClick={downloadWill}
         >
           Download will
         </Button>

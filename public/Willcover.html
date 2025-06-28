@@ -1,0 +1,66 @@
+<style>
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .cover-container {
+    position: relative;
+    width: 100%;
+    height: 1050px;
+    /* Adjusted for letter size */
+    /* Letter page height at 96dpi ~1056px, adjust as needed */
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .cover-title {
+    position: absolute;
+    top: 100px;
+    left: 60px;
+    color: #103231;
+    font-size: 38px;
+    font-family: "Corben", serif;
+    font-weight: 400;
+  }
+
+  .cover-subtitle {
+    position: absolute;
+    top: 160px;
+    left: 62px;
+    color: #285857;
+    font-size: 20px;
+    font-family: "Epilogue", sans-serif;
+    font-weight: 400;
+  }
+
+  .cover-date {
+    position: absolute;
+    left: 62px;
+    bottom: 60px;
+    color: #285857;
+    font-size: 18px;
+    font-family: "Epilogue", sans-serif;
+    font-weight: 400;
+  }
+
+  .cover-image {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 480px;
+    height: 872px;
+    z-index: 0;
+  }
+</style>
+
+<div class="cover-container">
+  <div class="cover-title">Last Will &amp; Testament</div>
+  <div class="cover-subtitle">of {{user.0.userName}}</div>
+  <div class="cover-date">{{date}}</div>
+  <img class="cover-image" src="/images/image1.png" alt="">
+</div>

@@ -38,7 +38,7 @@ const LinkButton = ({
       style={{ pointerEvents: props.disabled ? "none" : "auto" }}
     >
       {leftIcon && <div className="mr-1">{leftIcon}</div>}
-      <label>{children}</label>
+      <label className="cursor-pointer">{children}</label>
       {rightIcon && (
         <div className="ml-1 mr-[-0.25rem] pb-0.5">{rightIcon}</div>
       )}
