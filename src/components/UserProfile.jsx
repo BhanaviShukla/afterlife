@@ -109,7 +109,7 @@ export const ChildProfileWithGuardian = ({ name, dob, guardian }) => {
 
 export const PetProfileWithCaretaker = ({ name, microchip, caretaker }) => {
   return (
-    <div className="" id={`pet-profile-with-caretaker-${microchip}`}>
+    <div className="flex-1" id={`pet-profile-with-caretaker-${microchip}`}>
       <PetProfileWithMicrochip name={name} microchip={microchip} />
 
       {/* Guardians Section */}

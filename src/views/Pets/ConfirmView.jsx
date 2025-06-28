@@ -4,6 +4,7 @@ import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left
 import { useRouter } from "next/navigation";
 import { useWill } from "@/appState/WillState";
 import Image from "next/image";
+import { usePetsWithCaretakers } from "@/utils/hooks";
 
 const ConfirmView = ({
   // searchParams,
@@ -19,8 +20,8 @@ const ConfirmView = ({
   console.log("pets -> CONFIRM VIEW");
   const router = useRouter();
 
-  const { will, addToWill, handleCompleted } = useWill();
-
+  const { handleCompleted } = useWill();
+  const [pets] = usePetsWithCaretakers();
   const handleNext = () => {
     handleCompleted("pets", true); // 0 is step id for petreb
     router.push(`${nextLink}`);
@@ -34,7 +35,7 @@ const ConfirmView = ({
       <Typography variant="title-small">{title}</Typography>
       <Typography className="my-4 leading-8">{description}</Typography>
       <form id="pets-confirm-form" action={handleNext}>
-        {will.pets.map((pet, index) => (
+        {pets.map((pet, index) => (
           <div key={pet?.id} className="flex items-center gap-3 mt-6">
             <Image
               src={`/images/backpack.png`}
@@ -48,16 +49,7 @@ const ConfirmView = ({
               <UserProfileVariants.PetProfileWithCaretaker
                 name={pet.petName}
                 microchip={pet.microchip}
-                caretaker={{
-                  main:
-                    will.people.find(
-                      (person) => person.id === pet.caretaker.main
-                    )?.name || undefined,
-                  alternative:
-                    will.people.find(
-                      (person) => person.id === pet.caretaker.alternative
-                    )?.name || undefined,
-                }}
+                caretaker={pet.caretaker}
               />
             </div>
           </div>

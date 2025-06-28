@@ -2,6 +2,7 @@ import { InfoMessage, LinkButton, Typography } from "@/components";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import ChildrenPanel from "@/views/Dashboard/ChildrenPanel";
+import PetsPanel from "@/views/Dashboard/PetsPanel";
 
 export default function Dashboard() {
   return (
@@ -18,9 +19,10 @@ export default function Dashboard() {
             </Typography>
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full flex flex-col lg:gap-10 gap-6">
           <ChildrenPanel />
-          <div className="md:mt-12">
+          <PetsPanel />
+          <div className="">
             {
               <InfoMessage
                 message={
@@ -29,7 +31,7 @@ export default function Dashboard() {
               />
             }
           </div>
-          <div className="flex mt-14 gap-4">
+          <div className="flex gap-4">
             <LinkButton
               variant="outlined"
               className="self-start"

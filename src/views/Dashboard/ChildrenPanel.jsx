@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const ChildrenPanel = () => {
   const [children] = useChildrenWithGuardians();
-  if (!children) return null;
+  if (!children || !children.length) return null;
   return (
     <div className="bg-slate-100 rounded-lg lg:p-14 p-6">
       <Typography variant="subtitle">Children (under 21)</Typography>
