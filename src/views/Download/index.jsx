@@ -1,9 +1,8 @@
 "use client";
-
 import { useWill } from "@/appState/WillState";
 import Mustache from "mustache";
-import { useEffect, useState } from "react";
-import html2pdf from "html2pdf.js";
+import { useEffect, useRef, useState } from "react";
+// import html2pdf from "html2pdf.js";
 import { Button, LinkButton, Typography } from "@/components";
 import DownloadIcon from "@/components/ui/Icons/Controls/Buttons/download.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
@@ -17,8 +16,17 @@ const PDF_OPTIONS = {
 
 const DownloadView = () => {
   const { will } = useWill();
-  const worker = html2pdf().set(PDF_OPTIONS);
   const [rendered, setRendered] = useState(undefined);
+
+  const html2pdfRef = useRef(null);
+
+  // Dynamically import html2pdf.js on client
+  useEffect(() => {
+    import("html2pdf.js").then((mod) => {
+      html2pdfRef.current = mod.default ? mod.default() : mod();
+      html2pdfRef.current.set(PDF_OPTIONS);
+    });
+  }, []);
 
   const downloadWill = () => {
     console.log("downLoadWill", Boolean(rendered));
@@ -26,7 +34,7 @@ const DownloadView = () => {
       console.error("Couldn't generate pdf");
       return;
     }
-    worker.from(rendered).save("filled-template.pdf");
+    html2pdfRef.current.from(rendered).save("filled-template.pdf");
   };
 
   useEffect(() => {
@@ -39,9 +47,9 @@ const DownloadView = () => {
     };
     generate();
     return () => {
-      worker.from = undefined;
+      if (html2pdfRef.current) html2pdfRef.current.from = undefined;
     };
-  }, []);
+  }, [will]);
 
   return (
     <div>
