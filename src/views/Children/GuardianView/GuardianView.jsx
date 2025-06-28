@@ -3,8 +3,8 @@ import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-rig
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import { useRouter } from "next/navigation";
 import { useWill } from "@/appState/WillState";
-import { sortObjectByDob } from "../useCountHook";
 import { GuardianForChild } from "./GuardianForChild";
+import { sortObjectByDob } from "@/utils/object";
 
 const GuardianView = ({
   // searchParams,

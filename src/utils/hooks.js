@@ -1,5 +1,6 @@
 import { useWill } from "@/appState/WillState";
 import { useRef, useCallback, useState, useEffect } from "react";
+import { sortObjectByDob } from "./object";
 // REF: https://medium.com/swlh/using-a-debounced-callback-in-react-ade57d31ca6b
 /**
  * Returns a memoized function that will only call the passed function when it hasn't been called for the wait period
@@ -86,4 +87,27 @@ export const useCategoryList = (count, category) => {
   }, [count, will[category]]);
 
   return [list, setList];
+};
+
+export const useChildrenWithGuardians = () => {
+  const {
+    will: { children, people },
+  } = useWill();
+  const [childrenWithGuardians, setChildrenWithGuardians] = useState([]);
+  useEffect(() => {
+    const childrenFromWill = children.sort(sortObjectByDob).map((child) => ({
+      ...child,
+      guardian: {
+        main:
+          people.find((person) => person.id === child.guardian.main)?.name ||
+          undefined,
+        alternative:
+          people.find((person) => person.id === child.guardian.alternative)
+            ?.name || undefined,
+      },
+    }));
+    setChildrenWithGuardians(childrenFromWill);
+  }, [children]);
+
+  return [childrenWithGuardians, setChildrenWithGuardians];
 };

@@ -4,6 +4,10 @@ import MicrochipIcon from "./ui/Icons/Informational/Dashboard/microchip.svg";
 import { Typography } from ".";
 const formatDate = (dateString) => {
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) {
+    console.error("Invalid date:", dateString);
+    return dateString;
+  }
   return new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
     month: "short",
@@ -77,7 +81,7 @@ export const PetProfileWithMicrochip = ({ name, microchip }) => {
 export const ChildProfileWithGuardian = ({ name, dob, guardian }) => {
   return (
     <div
-      className=""
+      className="flex-1"
       id={`child-profile-with-guardian-${getHtmlIdFromName(name)}`}
     >
       <UserProfileWithDob name={name} dob={dob} />

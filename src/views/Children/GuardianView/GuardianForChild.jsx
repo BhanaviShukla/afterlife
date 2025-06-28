@@ -7,11 +7,10 @@ import {
 import CrossIcon from "@/components/ui/Icons/Controls/cancel.svg";
 import { useWill } from "@/appState/WillState";
 import { memo, useEffect, useMemo, useState } from "react";
-import { sortObjectByDob } from "../useCountHook";
 import Image from "next/image";
 import EditPersonModal from "@/components/EditPersonModal/EditPersonModal";
 import { useDebouncedCallback } from "@/utils/hooks";
-import { areObjectsEqual } from "@/utils/object";
+import { areObjectsEqual, sortObjectByDob } from "@/utils/object";
 
 const ADD_ANOTHER_GUARDIAN_OPTION = "Add Another Guardian";
 

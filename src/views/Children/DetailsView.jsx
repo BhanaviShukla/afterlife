@@ -11,7 +11,8 @@ import {
   useCountFromWillOrSearchParams,
   useDebouncedCallback,
 } from "@/utils/hooks";
-import { sortObjectByDob, useChildrenList } from "./useCountHook";
+import { useChildrenList } from "./useCountHook";
+import { sortObjectByDob } from "@/utils/object";
 
 const DetailsView = ({
   searchParams,

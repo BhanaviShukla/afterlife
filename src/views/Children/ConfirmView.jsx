@@ -3,8 +3,8 @@ import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-rig
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
 import { useRouter } from "next/navigation";
 import { useWill } from "@/appState/WillState";
-import { sortObjectByDob } from "./useCountHook";
 import Image from "next/image";
+import { useChildrenWithGuardians } from "@/utils/hooks";
 
 const ConfirmView = ({
   // searchParams,
@@ -20,10 +20,12 @@ const ConfirmView = ({
   console.log("children -> CONFIRM VIEW");
   const router = useRouter();
 
-  const { will, handleCompleted } = useWill();
+  const { handleCompleted } = useWill();
+
+  const [children] = useChildrenWithGuardians();
 
   const handleNext = () => {
-    handleCompleted("children", true); 
+    handleCompleted("children", true);
     router.push(`${nextLink}`);
   };
   const handleBack = () => {
@@ -35,7 +37,7 @@ const ConfirmView = ({
       <Typography variant="title-small">{title}</Typography>
       <Typography className="my-4 leading-8">{description}</Typography>
       <form id="children-confirm-form" action={handleNext}>
-        {will.children.sort(sortObjectByDob).map((child, index) => (
+        {children.map((child, index) => (
           <div key={child?.id} className="flex items-center gap-3 mt-6">
             <Image
               src={`/images/backpack.png`}
@@ -49,16 +51,7 @@ const ConfirmView = ({
               <UserProfileVariants.ChildProfileWithGuardian
                 name={child.childName}
                 dob={child.dob}
-                guardian={{
-                  main:
-                    will.people.find(
-                      (person) => person.id === child.guardian.main
-                    )?.name || undefined,
-                  alternative:
-                    will.people.find(
-                      (person) => person.id === child.guardian.alternative
-                    )?.name || undefined,
-                }}
+                guardian={child.guardian}
               />
             </div>
           </div>

@@ -1,12 +1,12 @@
-import { Button, InfoMessage, LinkButton, Typography } from "@/components";
+import { InfoMessage, LinkButton, Typography } from "@/components";
 import ArrowRightIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-right.svg";
 import ArrowLeftIcon from "@/components/ui/Icons/Controls/Buttons/nav-arrow-left.svg";
-import Image from "next/image";
+import ChildrenPanel from "@/views/Dashboard/ChildrenPanel";
 
 export default function Dashboard() {
   return (
     <div className="container max-w-7xl mx-auto px-4">
-      <div className="flex flex-col lg:flex-row lg:items-start lg:gap-20">
+      <div className="flex flex-col">
         {/* Left side - Form */}
         <div className="flex-1 max-w-2xl">
           <div className="mb-12">
@@ -19,7 +19,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="w-full">
-          TEST
+          <ChildrenPanel />
           <div className="md:mt-12">
             {
               <InfoMessage

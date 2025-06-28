@@ -37,13 +37,3 @@ export const useChildrenList = (count) => {
 
   return [children, setChildren];
 };
-
-export const sortObjectByDob = (a, b) => {
-  // no sorting if DOB not provided to avoid confusion for the user
-  if (!a.dob || !b.dob) return 0; //
-  else return new Date(a.dob) - new Date(b.dob);
-};
-
-// const useGuardiansForChildren = () => {
-//   const { will, patchWillEntry } = useWill()
-// }

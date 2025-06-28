@@ -124,6 +124,9 @@ const DistributionView = memo(
             onClick={handleNext}
             id="asset-distribution-submit-button"
             title={nextLink}
+            disabled={
+              totalAssetPercentage < 100 || !assets.every((a) => a.beneficiary)
+            }
           >
             {primaryCta}
           </Button>
