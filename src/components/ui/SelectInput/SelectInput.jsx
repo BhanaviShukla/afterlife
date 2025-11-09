@@ -4,10 +4,12 @@ const SelectInput = ({
   placeholder,
   options = [],
   stateKey,
+  defaultValue,
   ...inputProps
 }) => {
-  const selectedIndex = inputProps.value
-    ? options.findIndex((option) => option.value === inputProps.value)
+  const valueToCompareInitially =  inputProps.value ?? defaultValue
+  const selectedIndex = valueToCompareInitially
+    ? options.findIndex((option) => option.value === valueToCompareInitially)
     : -1;
   const keyString = (value) => value.replace(" ", "_");
   return (
